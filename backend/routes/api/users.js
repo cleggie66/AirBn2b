@@ -13,8 +13,7 @@ router.post('/', async (req, res) => {
     await setTokenCookie(res, newUser);
 
     return res.json({ user: newUser })
-})
-
+});
 
 
 
