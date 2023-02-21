@@ -1,7 +1,28 @@
 const express = require('express');
 const router = express.Router();
 const sequelize = require ('sequelize')
-const { Spot, Review } = require('../../db/models');
+const { Spot, Review, User, ReviewImage } = require('../../db/models');
+
+router.get('/:spotId/reviews', async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.spotId, {
+        include: [
+            { model: Review, include: [User.scope('nameAndId')] },
+            { model: Review, include: [ReviewImage] }
+        ]
+    });
+
+    if(!spot) {
+        const err = new Error();
+        err.message = "Spot couldn't be found"
+        err.status = 404;
+        next(err);
+    }
+
+    let payload = {};
+    payload.Reviews = spot.Reviews
+    res.json(payload)
+    
+});
 
 router.get('/', async (req, res) => {
     const spots = await Spot.findAll({
