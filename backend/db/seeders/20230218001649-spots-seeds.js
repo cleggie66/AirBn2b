@@ -8,32 +8,13 @@ if (process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
     options.tableName = 'Spots';
     return queryInterface.bulkInsert(options, [
-      // {
-      //   ownerId: 1,
-      //   address: "Test",
-      //   city: "Test",
-      //   country: "Test",
-      //   lat: 132,
-      //   lng: 843,
-      //   name: "Test",
-      //   description: "Test",
-      //   price: 500,
-      // },
       {
         ownerId: 1,
         address: "Center of the Citadel on the seventh level of Minas Tirith",
         city: "Minas Tirith",
+        state: "Illinois",
         country: "Middle Earth",
         lat: 132,
         lng: 843,
@@ -45,6 +26,7 @@ module.exports = {
         ownerId: 2,
         address: "Bagshot Row",
         city: "Hobbiton",
+        state: "Illinois",
         country: "Middle Earth",
         lat: 396,
         lng: 215,
@@ -56,6 +38,7 @@ module.exports = {
         ownerId: 3,
         address: "Just outside",
         city: "Any of them",
+        state: "Illinois",
         country: "Middle Earth",
         lat: 234,
         lng: 354,
@@ -67,6 +50,7 @@ module.exports = {
         ownerId: 4,
         address: "Bagshot Row",
         city: "Hobbiton",
+        state: "Illinois",
         country: "Middle Earth",
         lat: 243,
         lng: 186,
@@ -78,6 +62,7 @@ module.exports = {
         ownerId: 5,
         address: "Underground",
         city: "Misty Mountains",
+        state: "Illinois",
         country: "Middle Earth",
         lat: 234,
         lng: 543,
@@ -89,12 +74,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
     options.tableName = 'Spots'
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {

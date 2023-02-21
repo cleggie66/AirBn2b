@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Spot.hasMany(models.SpotImage, {foreignKey: 'spotId'});
       Spot.hasMany(models.Review, {foreignKey: 'spotId'});
-      Spot.belongsTo(models.User, { foreignKey: 'ownerId'});
+      Spot.belongsTo(models.User, { foreignKey: 'ownerId', as: 'Owner'});
       Spot.belongsToMany(models.User, {
         through: 'Booking',
         otherKey: 'userId',
@@ -30,6 +30,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     city: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    state: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -59,6 +63,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Spot',
+    scopes: {
+      allDetails: {
+        attributes: {}
+      }
+    }
   });
   return Spot;
 };
