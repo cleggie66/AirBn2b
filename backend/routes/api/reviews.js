@@ -15,7 +15,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
             { model: Spot, attributes: { exclude: ['description', 'createdAt', 'updatedAt']} },
             { model: ReviewImage }
         ]
-    })
+    }) 
 
     const payload = { Reviews: reviews }
 
