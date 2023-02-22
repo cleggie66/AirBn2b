@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const sequelize = require('sequelize')
-const { Spot, Review, User, ReviewImage, SpotImage } = require('../../db/models');
+const { Spot, Review, User, ReviewImage, SpotImage, Booking } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
 
 
@@ -41,6 +41,44 @@ router.get('/current', requireAuth, async (req, res) => {
         delete spot.SpotImages;
 
         payload.Spots.push(spot)
+    }
+    res.json(payload)
+})
+
+router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.spotId);
+    if(!spot) {
+        const err = new Error;
+        err.status = 404;
+        err.message = "spot not found";
+        return next(err);
+    }
+
+    const bookings = await Booking.findAll({
+        where: {
+            spotId: req.params.spotId
+        },
+        include: [
+            { model: User.scope('nameAndId') },
+            { model: Spot }
+        ]
+    })
+
+    const payload = { Bookings: [] }
+
+    for (let i = 0; i < bookings.length; i++) {
+        const booking = bookings[i].toJSON();
+
+        if(booking.Spot.ownerId !== req.user.id) {
+            delete booking.User;
+            delete booking.id;
+            delete booking.userId;
+            delete booking.createdAt;
+            delete booking.updatedAt;
+        }
+        delete booking.Spot;
+
+        payload.Bookings.push(booking)
     }
     res.json(payload)
 })
