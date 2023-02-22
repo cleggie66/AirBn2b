@@ -3,6 +3,20 @@ const router = express.Router();
 const sequelize = require('sequelize')
 const { Spot, Review, User, ReviewImage, SpotImage, Booking } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
+const { check } = require('express-validator');
+const { handleValidationErrors } = require('../../utils/validation');
+
+const validateNewSpot = [
+    check('name')
+        .exists({ checkFalsy: true })
+        .isLength({ max: 50 })
+        .withMessage('Name must be less than 50 characters'),
+    check('description')
+        .exists({ checkFalsy: true })
+        .isLength({ max: 50 })
+        .withMessage('Description must be less than 50 characters'),
+    handleValidationErrors
+];
 
 
 router.get('/current', requireAuth, async (req, res) => {
@@ -157,8 +171,22 @@ router.get('/', async (req, res) => {
     res.json(payload)
 });
 
-router.post('/', requireAuth, async (req, res) => {
-    
+router.post('/', requireAuth, validateNewSpot, async (req, res) => {
+    const { address, city, state, country, lat, lng, name, description, price } = req.body;
+
+    // const newSpot = await Spot.create({
+    //     address,
+    //     city,
+    //     state,
+    //     country,
+    //     lat,
+    //     lng,
+    //     name,
+    //     description,
+    //     price
+    // })
+
+    res.status(201).json("newSpot")
 })
 
 module.exports = router;
