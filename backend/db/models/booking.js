@@ -37,11 +37,15 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isAfter: this.startDate
       }
-
     }
   }, {
     sequelize,
     modelName: 'Booking',
+    defaultScope: {
+      attributes: {
+        include: ['id']
+      }
+    }
   });
   return Booking;
 };
