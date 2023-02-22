@@ -157,4 +157,8 @@ router.get('/', async (req, res) => {
     res.json(payload)
 });
 
+router.post('/', requireAuth, async (req, res) => {
+    
+})
+
 module.exports = router;
