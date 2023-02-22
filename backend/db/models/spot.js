@@ -66,6 +66,11 @@ module.exports = (sequelize, DataTypes) => {
     scopes: {
       allDetails: {
         attributes: {}
+      },
+      noTimestamps: {
+        attributes: {
+          exclude: ['createdAt', 'updatedAt']
+        }
       }
     }
   });
