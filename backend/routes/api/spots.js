@@ -7,17 +7,44 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
 const validateNewSpot = [
+    check('address')
+        .exists({ checkFalsy: true })
+        .withMessage('Street address is required'),
+    check('city')
+        .exists({ checkFalsy: true })
+        .withMessage('City is required'),
+    check('state')
+        .exists({ checkFalsy: true })
+        .withMessage('State is required'),
+    check('country')
+        .exists({ checkFalsy: true })
+        .withMessage('Country is required'),
+    check('lat')
+        .exists({ checkFalsy: true })
+        .isNumeric()
+        .withMessage('Latitude is not valid'),
+    check('lng')
+        .exists({ checkFalsy: true })
+        .isNumeric()
+        .withMessage('Longitude is not valid'),
     check('name')
         .exists({ checkFalsy: true })
         .isLength({ max: 50 })
         .withMessage('Name must be less than 50 characters'),
     check('description')
         .exists({ checkFalsy: true })
-        .isLength({ max: 50 })
-        .withMessage('Description must be less than 50 characters'),
+        .withMessage('Description is required'),
+    check('price')
+        .exists({ checkFalsy: true })
+        .withMessage('Price per day is required'),
     handleValidationErrors
 ];
 
+router.get('/testget', async (req, res) => {
+    const spots = await Spot.findAll();
+
+    res.json(spots)
+})
 
 router.get('/current', requireAuth, async (req, res) => {
     const spots = await Spot.findAll({
@@ -148,45 +175,59 @@ router.get('/:spotId', async (req, res, next) => {
 router.get('/', async (req, res) => {
     const spots = await Spot.findAll({
         include: [
-            { model: SpotImage, where: { preview: true } },
+            { model: SpotImage },
             { model: Review }
-        ],
-        attributes: {
-            include: [
-                [sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating']
-            ]
-        },
-        group: ['Spot.id']
+        ]
     })
+    // console.log(spots)
 
     let payload = { Spots: [] };
-    spots.forEach(spot => {
-        const newSpot = spot.toJSON();
-        newSpot.previewImage = newSpot.SpotImages[0].url;
-        delete newSpot.Reviews;
-        delete newSpot.SpotImages;
-        payload.Spots.push(newSpot);
-    });
 
+    for (let i = 0; i < spots.length; i++) {
+        const spot = spots[i].toJSON();
+
+        for (let i = 0; i < spot.SpotImages.length; i++) {
+            const image = spot.SpotImages[i];
+            if (image.preview === true) {
+                spot.previewImage = image.url;
+            }         
+        }
+        delete spot.SpotImages;
+
+        let reviewData = await Review.findOne({
+            where: {
+                spotId: spot.id
+            },
+            attributes: {
+                include: [
+                    [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']
+                ]
+            }
+        })
+        spot.avgRating = reviewData.toJSON().avgRating;
+        delete spot.Reviews;
+
+        payload.Spots.push(spot);
+    }
     res.json(payload)
 });
 
 router.post('/', requireAuth, validateNewSpot, async (req, res) => {
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
 
-    // const newSpot = await Spot.create({
-    //     address,
-    //     city,
-    //     state,
-    //     country,
-    //     lat,
-    //     lng,
-    //     name,
-    //     description,
-    //     price
-    // })
+    const newSpot = await Spot.create({
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price
+    });
 
-    res.status(201).json("newSpot")
+    res.status(201).json(newSpot)
 })
 
 module.exports = router;
