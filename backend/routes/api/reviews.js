@@ -7,9 +7,7 @@ const { User, Review, Spot, ReviewImage, SpotImage } = require('../../db/models'
 router.get('/current', requireAuth, async (req, res, next) => {
     const user = await User.findByPk(req.user.id)
     const reviews = await Review.findAll({
-        where: {
-            userId: req.user.id
-        },
+        where: { userId: req.user.id },
         include: [
             { model: User.scope('nameAndId') },
             { model: Spot, attributes: { exclude: ['description', 'createdAt', 'updatedAt']} },
@@ -21,15 +19,53 @@ router.get('/current', requireAuth, async (req, res, next) => {
 
     for (review of payload.Reviews) {
         const img = await SpotImage.findOne({
-            where: {
-                spotId: review.Spot.id
-            }
+            where: { spotId: review.Spot.id }
         })
         review.Spot.dataValues.previewImage = img.url
     }
-
     res.json(payload)
+});
 
+router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
+    const { url } = req.body;
+    const review = await Review.findByPk(req.params.reviewId);
+    const images = await ReviewImage.findOne({
+        where: { reviewId: review.id },
+        attributes: {
+            include: [[ sequelize.fn("COUNT", sequelize.col("url")), "totalImages"]]
+        }
+    });
+    
+    if(!review) {
+        const err = new Error();
+        err.message = "Review couldn't be found";
+        err.status = 404;
+        return next(err);
+    };
+    if(review.userId !== req.user.id) {
+        const err = new Error();
+        err.message = "You do not have permission to add this image";
+        err.status = 403;
+        return next(err);
+    };
+    if (images.toJSON().totalImages >= 10) {
+        const err = new Error();
+        err.message = "Maximum number of images for this resource was reached";
+        err.status = 403;
+        return next(err);
+    };
+
+    const image = await ReviewImage.create({
+        reviewId: review.id,
+        url,
+    });
+    const imageCheck = await ReviewImage.findOne({
+        where: {
+            reviewId: review.id,
+            url
+        }
+    })
+    res.json(imageCheck)
 })
 
 module.exports = router;
