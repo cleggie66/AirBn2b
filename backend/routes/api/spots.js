@@ -292,6 +292,40 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     res.json(bookingCheck);
 })
 
+router.post('/:spotId/images', requireAuth, async (req, res, next) => {
+    const { url, preview } = req.body;
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    if(!spot) {
+        const err = new Error();
+        err.message = "Spot couldn't be found";
+        err.status = 404;
+        return next(err);
+    }
+
+    if(req.user.id !== spot.ownerId){
+        const err = new Error();
+        err.message = "You do not have permission to add this image";
+        err.status = 403;
+        return next(err);
+    }
+
+    const image = await SpotImage.create({
+        spotId: req.params.spotId,
+        url,
+        preview
+    });
+    const imageCheck = await SpotImage.findOne({
+        where: {
+            spotId: req.params.spotId,
+            url,
+            preview
+        }
+    })
+    
+    res.status(200).json(imageCheck);
+})
+
 router.post('/:spotId/reviews', requireAuth, validateNewReview, async (req, res, next) => {
     const { review, stars } = req.body;
     const spot = await Spot.findByPk(req.params.spotId, {
