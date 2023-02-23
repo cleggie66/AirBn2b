@@ -364,6 +364,30 @@ router.put('/:spotId', requireAuth, validateNewSpot, async (req, res, next) => {
     const spotCheck = await Spot.findByPk(req.params.spotId);
 
     res.json(spotCheck);
+});
+
+router.delete('/:spotId', requireAuth, async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    if(!spot) {
+        const err = new Error();
+        err.message = "Spot couldn't be found";
+        err.status = 404;
+        return next(err);
+    };
+    if (req.user.id !== spot.ownerId) {
+        const err = new Error();
+        err.message = "You do not have permission to delete this spot"
+        err.status = 403;
+        return next(err);
+    };
+
+    await spot.destroy();
+
+    res.json({
+        message: "Successfully deleted",
+        statusCode: 200
+    });
 })
 
 module.exports = router;
