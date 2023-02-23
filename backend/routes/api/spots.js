@@ -177,8 +177,7 @@ router.get('/:spotId', async (req, res, next) => {
         delete payload.Reviews;
         res.json(payload)
     }
-
-})
+});
 
 router.get('/', async (req, res) => {
     const spots = await Spot.findAll({
@@ -290,7 +289,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     });
 
     res.json(bookingCheck);
-})
+});
 
 router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     const { url, preview } = req.body;
@@ -324,7 +323,7 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     })
     
     res.status(200).json(imageCheck);
-})
+});
 
 router.post('/:spotId/reviews', requireAuth, validateNewReview, async (req, res, next) => {
     const { review, stars } = req.body;
@@ -361,7 +360,7 @@ router.post('/:spotId/reviews', requireAuth, validateNewReview, async (req, res,
     })
 
     res.status(201).json(newReview);
-})
+});
 
 router.post('/', requireAuth, validateNewSpot, async (req, res) => {
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
@@ -379,6 +378,40 @@ router.post('/', requireAuth, validateNewSpot, async (req, res) => {
     });
 
     res.status(201).json(newSpot)
+});
+
+router.put('/:spotId', requireAuth, validateNewSpot, async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.spotId);
+    const { address, city, state, country, lat, lng, name, description, price } = req.body;
+
+    if(!spot) {
+        const err = new Error();
+        err.message = "Spot couldn't be found";
+        err.status = 404;
+        return next(err);
+    }
+    if(req.user.id !== spot.ownerId) {
+        const err = new Error();
+        err.message = "You do not have permission to edit this spot";
+        err.status = 403;
+        return next(err);
+    };
+    
+    await spot.update({
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price
+    });
+
+    const spotCheck = await Spot.findByPk(req.params.spotId);
+
+    res.json(spotCheck);
 })
 
 module.exports = router;
