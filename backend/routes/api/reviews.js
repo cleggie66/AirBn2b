@@ -94,6 +94,6 @@ router.put('/:reviewId', requireAuth, validateNewReview, async (req, res, next) 
     const reviewCheck = await Review.findByPk(req.params.reviewId);
 
     res.json(reviewCheck);
-})
+});
 
 module.exports = router;
