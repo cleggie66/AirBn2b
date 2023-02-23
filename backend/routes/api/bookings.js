@@ -106,6 +106,10 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
 
     const checkBooking = await Booking.findByPk(req.params.bookingId);
     res.json(checkBooking);
+});
+
+router.delete('/:bookingId', async (req, res) => {
+    const booking = Booking.findByPk(req.params.bookingId);
 })
 
 module.exports = router;
