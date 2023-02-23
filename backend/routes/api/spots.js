@@ -40,6 +40,17 @@ const validateNewSpot = [
     handleValidationErrors
 ];
 
+const validateNewReview = [
+    check('review')
+        .exists({ checkFalsy: true })
+        .withMessage('Review text is required'),
+    check('stars')
+        .exists({ checkFalsy: true })
+        .isNumeric()
+        .withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
+];
+
 router.get('/testget', async (req, res) => {
     const spots = await Spot.findAll();
 
@@ -178,8 +189,7 @@ router.get('/', async (req, res) => {
             { model: SpotImage },
             { model: Review }
         ]
-    })
-    // console.log(spots)
+    });
 
     let payload = { Spots: [] };
 
@@ -211,6 +221,19 @@ router.get('/', async (req, res) => {
     }
     res.json(payload)
 });
+
+router.post('/:spotId/review', requireAuth, async (req, res) => {
+    const { review, stars } = req.body;
+
+    const newReview = await Review.create({
+        spotId: req.params.spotId,
+        userId: req.user.id,
+        review,
+        stars
+    })
+
+    res.json(newReview);
+})
 
 router.post('/', requireAuth, validateNewSpot, async (req, res) => {
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
