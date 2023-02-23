@@ -3,6 +3,7 @@ const { requireAuth } = require('../../utils/auth');
 const router = express.Router();
 const sequelize = require('sequelize')
 const { User, Review, Spot, ReviewImage, SpotImage } = require('../../db/models')
+const { validateNewReview } = require('../../utils/custom-validators');
 
 router.get('/current', requireAuth, async (req, res, next) => {
     const user = await User.findByPk(req.user.id)
@@ -66,6 +67,33 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
         }
     })
     res.json(imageCheck)
+})
+
+router.put('/:reviewId', requireAuth, validateNewReview, async (req, res, next) => {
+    const { stars, review } = req.body;
+    const currReview = await Review.findByPk(req.params.reviewId);
+
+    if(!currReview) {
+        const err = new Error();
+        err.message = "Review couldn't be found";
+        err.status = 404;
+        return next(err);
+    };
+    if(req.user.id !== currReview.userId) {
+        const err = new Error();
+        err.message = "You do not have permission to edit this review";
+        err.status = 403;
+        return next(err);
+    };
+
+    await currReview.update({
+        stars,
+        review
+    });
+
+    const reviewCheck = await Review.findByPk(req.params.reviewId);
+
+    res.json(reviewCheck);
 })
 
 module.exports = router;
