@@ -292,7 +292,7 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
 
     if (req.user.id !== spot.ownerId) {
         const err = new Error();
-        err.message = "You do not have permission to add this image";
+        err.message = "Forbidden";
         err.status = 403;
         return next(err);
     }
@@ -381,7 +381,7 @@ router.put('/:spotId', requireAuth, validateNewSpot, async (req, res, next) => {
     }
     if (req.user.id !== spot.ownerId) {
         const err = new Error();
-        err.message = "You do not have permission to edit this spot";
+        err.message = "Forbidden";
         err.status = 403;
         return next(err);
     };
@@ -414,7 +414,7 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
     };
     if (req.user.id !== spot.ownerId) {
         const err = new Error();
-        err.message = "You do not have permission to delete this spot"
+        err.message = "Forbidden"
         err.status = 403;
         return next(err);
     };

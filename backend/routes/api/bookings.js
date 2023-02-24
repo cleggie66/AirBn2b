@@ -70,7 +70,7 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
     }
     if(req.user.id !== booking.userId) {
         const err = new Error();
-        err.message = "You do not have permission to edit this booking";
+        err.message = "Forbidden";
         err.status = 404;
         return next(err);
     };
@@ -122,7 +122,7 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
     };
     if(!(req.user.id === booking.userId || req.user.id === booking.Spot.ownerId)) {
         const err = new Error();
-        err.message = "You do not have permission to delete this booking";
+        err.message = "Forbidden";
         err.status = 403;
         return next(err);
     };
