@@ -17,7 +17,7 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
 
     if(req.user.id !== spot.ownerId) {
         const err = new Error();
-        err.message = "You do not have permission to delete this image";
+        err.message = "Forbidden";
         err.status = 403;
         return next(err);
     }

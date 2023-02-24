@@ -45,7 +45,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
     };
     if(review.userId !== req.user.id) {
         const err = new Error();
-        err.message = "You do not have permission to add this image";
+        err.message = "Forbidden";
         err.status = 403;
         return next(err);
     };
@@ -81,7 +81,7 @@ router.put('/:reviewId', requireAuth, validateNewReview, async (req, res, next) 
     };
     if(req.user.id !== currReview.userId) {
         const err = new Error();
-        err.message = "You do not have permission to edit this review";
+        err.message = "Forbidden";
         err.status = 403;
         return next(err);
     };
@@ -111,7 +111,7 @@ router.delete('/:reviewId', requireAuth, async (req, res, next) => {
     };
     if(req.user.id !== review.userId) {
         const err = new Error();
-        err.message = "You do not have permission to delete this review";
+        err.message = "Forbidden";
         err.status = 403;
         return next(err);
     };
