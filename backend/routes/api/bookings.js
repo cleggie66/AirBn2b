@@ -106,7 +106,9 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
         endDate
     })
 
-    const checkBooking = await Booking.findByPk(req.params.bookingId);
+    const checkBooking = await Booking.findOne({
+        where: { id: req.params.bookingId }
+    });
     res.json(checkBooking);
 });
 
