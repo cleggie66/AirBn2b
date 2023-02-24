@@ -107,12 +107,7 @@ router.get('/:spotId', async (req, res, next) => {
     const spot = await Spot.scope('allDetails').findByPk(req.params.spotId, {
         include: [
             { model: SpotImage },
-            { model: Review },
             { model: User.scope('nameAndId'), as: 'Owner' },
-        ],
-        attributes: [
-                [sequelize.fn('AVG', sequelize.col('stars')), 'avgStarRating'],
-                [sequelize.fn('COUNT', sequelize.col('stars')), 'numReviews']
         ]
     });
 
@@ -121,11 +116,34 @@ router.get('/:spotId', async (req, res, next) => {
         err.message = "Spot couldn't be found"
         err.status = 404;
         next(err);
-    } else {
-        const payload = spot.toJSON();
-        delete payload.Reviews;
-        res.json(payload)
     }
+
+    const payload = spot.toJSON();
+
+    //avgStarRating
+    let avgReviewData = await Review.findOne({
+        where: {
+            spotId: spot.id
+        },
+        attributes: [
+            [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']
+        ]
+    })
+    payload.avgRating = avgReviewData.toJSON().avgRating;
+
+    //numReviews
+    let countReviewData = await Review.findOne({
+        where: {
+            spotId: spot.id
+        },
+        attributes: [
+            [sequelize.fn('COUNT', sequelize.col('stars')), 'numReviews']
+        ]
+    })
+    payload.numReviews = countReviewData.toJSON().numReviews;
+
+
+    res.json(payload)
 });
 
 router.get('/', validateQuery, async (req, res) => {
