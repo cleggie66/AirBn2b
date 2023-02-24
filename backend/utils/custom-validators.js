@@ -91,5 +91,17 @@ const validateQuery = [
     handleValidationErrors
 ];
 
+const validateLogin = [
+    check('credential')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Email or username is required'),
+    check('password')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Password is required'),
+    handleValidationErrors
+];
 
-module.exports = { validateNewSpot, validateNewReview, validateQuery }
+
+module.exports = { validateNewSpot, validateNewReview, validateQuery, validateLogin }
