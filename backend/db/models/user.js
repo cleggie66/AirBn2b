@@ -1,5 +1,5 @@
 'use strict';
-const { Model, Validator } = require('sequelize');
+const { Model } = require('sequelize');
 const bcrypt = require('bcryptjs');
 
 
@@ -107,7 +107,12 @@ module.exports = (sequelize, DataTypes) => {
         attributes: {
           exclude: ['hashedPassword', 'updatedAt', 'createdAt', 'email', 'username']
         }
-      }
+      },
+      noDates: {
+        attributes: {
+          exclude: ['hashedPassword', 'updatedAt', 'createdAt']
+        }
+      },
     }
   });
   return User;
