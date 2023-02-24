@@ -136,10 +136,10 @@ router.get('/', validateQuery, async (req, res) => {
 
     if (!page) page = 1;
     if (!size) size = 20;
-    if (!minLat) minLat = -180;
-    if (!maxLat) maxLat = 180;
-    if (!minLng) minLng = -90;
-    if (!maxLng) maxLng = 90;
+    if (!minLat) minLat = -90;
+    if (!maxLat) maxLat = 90;
+    if (!minLng) minLng = -180;
+    if (!maxLng) maxLng = 180;
     if (!minPrice) minPrice = 0;
     if (!maxPrice) maxPrice = 1000000000000000;
 
