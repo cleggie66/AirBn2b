@@ -30,6 +30,13 @@ router.get('/current', requireAuth, async (req, res, next) => {
 router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
     const { url } = req.body;
     const review = await Review.findByPk(req.params.reviewId);
+    if(!review) {
+        const err = new Error();
+        err.message = "Review couldn't be found";
+        err.status = 404;
+        return next(err);
+    };
+    
     const images = await ReviewImage.findOne({
         where: { reviewId: review.id },
         attributes: [
@@ -37,12 +44,6 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
         ]
     });
     
-    if(!review) {
-        const err = new Error();
-        err.message = "Review couldn't be found";
-        err.status = 404;
-        return next(err);
-    };
     if(review.userId !== req.user.id) {
         const err = new Error();
         err.message = "Forbidden";
