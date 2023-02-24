@@ -66,7 +66,7 @@ app.use((err, req, res, next) => {
         message: err.message,
         statusCode: err.status,
         errors: err.errors,
-        stack: isProduction ? null : err.stack
+        stack: isProduction ? undefined : err.stack
     });
 });
 

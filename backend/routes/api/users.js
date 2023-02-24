@@ -37,7 +37,7 @@ router.post('/', validateSignup, async (req, res, next) => {
     delete payload.updatedAt;
     payload.token = token;
 
-    return res.json(users)
+    return res.json(payload)
 });
 
 
