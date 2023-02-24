@@ -40,7 +40,9 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
     const { startDate, endDate } = req.body;
     const start = new Date(startDate);
     const end = new Date(endDate);
-    const booking = await Booking.findByPk(req.params.bookingId);
+    const booking = await Booking.findOne({
+        where: { id: req.params.bookingId }
+    });
 
     if (start >= end) {
         const err = new Error();
