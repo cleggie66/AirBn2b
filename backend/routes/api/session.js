@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { setTokenCookie, restoreUser } = require('../../utils/auth');
+const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
 
 const router = express.Router();
@@ -19,6 +19,16 @@ const validateLogin = [
     handleValidationErrors
 ];
 
+router.get('/', restoreUser, requireAuth, async (req, res) => {
+    const { user } = req;
+
+    if (user) {
+        return res.json({
+            user: await User.scope('noDates').findByPk(user.id)
+        });
+    } else return res.json({ user: null });
+});
+
 router.post('/', validateLogin, async (req, res, next) => {
     const { credential, password } = req.body;
     const user = await User.login({ credential, password});
@@ -29,32 +39,19 @@ router.post('/', validateLogin, async (req, res, next) => {
         err.title = 'Login failed';
         err.errors = ['The provided credentials were invalid.'];
         return next(err);
-    }
+    };
 
     await setTokenCookie(res, user);
 
     return res.json({
         user: user
-    })
-})
+    });
+});
 
 router.delete('/', (req, res) => {
     res.clearCookie('token');
     return res.json({message: 'successfully logged out'})
-})
-
-router.get('/', restoreUser, (req, res) => {
-    const { user } = req;
-    if (user) {
-        return res.json({
-            user: user.toSafeObject()
-        });
-    } else return res.json({ user: null });
-}
-);
-
-
-
+});
 
 
 module.exports = router;
