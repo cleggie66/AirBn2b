@@ -5,9 +5,7 @@ const { ReviewImage, Review, User } = require('../../db/models')
 
 router.delete('/:imageId', requireAuth, async (req, res, next) => {
     const image = await ReviewImage.findByPk(req.params.imageId, {
-        include: {
-            model: Review
-        }
+        include: { model: Review }
     })
 
     if (!image) {
@@ -17,19 +15,19 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
         return next(err);
     }
 
-    if (req.user.id === image.Review.userId) {
-        await image.destroy();
-
-        res.json({
-            message: 'Successfully deleted',
-            statusCode: 200
-        })
-    } else {
+    if (req.user.id !== image.Review.userId) {
         const err = new Error();
         err.message = "You must own this image to delete it"
         err.status = 403;
         return next(err);
-    }
+    };
+
+    await image.destroy();
+
+    res.json({
+        message: 'Successfully deleted',
+        statusCode: 200
+    })
 });
 
 module.exports = router;
