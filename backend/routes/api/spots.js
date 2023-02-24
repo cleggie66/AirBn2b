@@ -85,6 +85,14 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
 
 
 router.get('/:spotId/reviews', async (req, res, next) => {
+    const spotCheck = await Spot.findByPk(req.params.spotId)
+    if (!spotCheck) {
+        const err = new Error();
+        err.message = "Spot couldn't be found"
+        err.status = 404;
+        next(err);
+    }
+
     const spot = await Spot.findByPk(req.params.spotId, {
         include: [
             { model: Review, include: [User.scope('nameAndId')] },
@@ -92,12 +100,6 @@ router.get('/:spotId/reviews', async (req, res, next) => {
         ]
     });
 
-    if (!spot) {
-        const err = new Error();
-        err.message = "Spot couldn't be found"
-        err.status = 404;
-        next(err);
-    }
     let payload = {};
     payload.Reviews = spot.Reviews
     res.json(payload)
@@ -111,7 +113,7 @@ router.get('/:spotId', async (req, res, next) => {
         ]
     });
 
-    if (!spot.id) {
+    if (!spot) {
         const err = new Error();
         err.message = "Spot couldn't be found"
         err.status = 404;
