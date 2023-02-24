@@ -110,12 +110,10 @@ router.get('/:spotId', async (req, res, next) => {
             { model: Review },
             { model: User.scope('nameAndId'), as: 'Owner' },
         ],
-        attributes: {
-            include: [
+        attributes: [
                 [sequelize.fn('AVG', sequelize.col('stars')), 'avgStarRating'],
                 [sequelize.fn('COUNT', sequelize.col('stars')), 'numReviews']
-            ],
-        }
+        ]
     });
 
     if (!spot.id) {
@@ -178,11 +176,9 @@ router.get('/', validateQuery, async (req, res) => {
             where: {
                 spotId: spot.id
             },
-            attributes: {
-                include: [
+            attributes: [
                     [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']
                 ]
-            }
         })
         spot.avgRating = reviewData.toJSON().avgRating;
         delete spot.Reviews;
