@@ -15,12 +15,12 @@ const validateNewSpot = [
         .exists({ checkFalsy: true })
         .withMessage('Country is required'),
     check('lat')
-        .exists({ checkFalsy: true })
-        .isNumeric()
+        .custom((value) => value <= 180 && value >= -180)
+        .isDecimal()
         .withMessage('Latitude is not valid'),
     check('lng')
-        .exists({ checkFalsy: true })
-        .isNumeric()
+        .custom((value) => value <= 90 && value >= -90)
+        .isDecimal()
         .withMessage('Longitude is not valid'),
     check('name')
         .exists({ checkFalsy: true })
@@ -49,4 +49,47 @@ const validateNewReview = [
     handleValidationErrors
 ];
 
-module.exports = { validateNewSpot, validateNewReview }
+const validateQuery = [
+    check('page')
+        .optional()
+        .isInt({ min: 1 })
+        .withMessage('Page must be greater than or equal to 1'),
+    check('size')
+        .optional()
+        .isInt({ min: 1 })
+        .withMessage('Size must be greater than or equal to 1'),
+    check('minLat')
+        .optional()
+        .custom((value) => value <= 180 && value >= -180)
+        .isDecimal()
+        .withMessage('Minimum latitude is invalid'),
+    check('maxLat')
+        .optional()
+        .custom((value) => value <= 180 && value >= -180)
+        .isDecimal()
+        .withMessage('Maximum latitude is invalid'),
+    check('minLng')
+        .optional()
+        .custom((value) => value <= 90 && value >= -90)
+        .isDecimal()
+        .withMessage('Minimum longitude is invalid'),
+    check('maxLng')
+        .optional()
+        .custom((value) => value <= 90 && value >= -90)
+        .isDecimal()
+        .withMessage('Maximum longitude is invalid'),
+    check('minPrice')
+        .optional()
+        .custom((value) => value >= 0)
+        .isDecimal()
+        .withMessage('Minimum price must be greater than or equal to 0'),
+    check('maxPrice')
+        .optional()
+        .custom((value) => value >= 0)
+        .isDecimal()
+        .withMessage('Maximum price must be greater than or equal to 0'),
+    handleValidationErrors
+];
+
+
+module.exports = { validateNewSpot, validateNewReview, validateQuery }
