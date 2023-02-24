@@ -31,7 +31,7 @@ module.exports = {
         reviewId: 5,
         url: "https://r2.mt.ru/r23/photo2E21/20831474630-0/png/bp.webp",
       },
-    ])
+    ], {})
   },
 
   async down(queryInterface, Sequelize) {
@@ -48,6 +48,6 @@ module.exports = {
           'https://r2.mt.ru/r23/photo2E21/20831474630-0/png/bp.webp'
         ]
       }
-    })
+    }, {})
   }
 };
