@@ -41,7 +41,7 @@ module.exports = {
        review: 'Awful, just awful. The place smelled horrible and the owner tried to hunt me down with a firey whip when i just wanted to sleep.',
        stars: 0
      }
-   ])
+   ], {})
   },
 
   async down (queryInterface, Sequelize) {
@@ -52,6 +52,6 @@ module.exports = {
       id: {
         [Op.in]: [1,2,3,4,5]
       }
-    })
+    }, {})
   }
 };

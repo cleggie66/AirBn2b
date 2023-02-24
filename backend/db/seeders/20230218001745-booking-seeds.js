@@ -47,7 +47,7 @@ module.exports = {
        startDate: '2024-06-13',
        endDate: '2024-06-18'
      },
-   ])
+   ], {})
   },
 
   async down (queryInterface, Sequelize) {
@@ -58,6 +58,6 @@ module.exports = {
       id: {
         [Op.in]: [1,2,3,4,5]
       }
-    })
+    }, {})
   }
 };
