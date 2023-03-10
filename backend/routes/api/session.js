@@ -5,7 +5,7 @@ const router = express.Router();
 const { validateLogin } = require('../../utils/custom-validators')
 
 
-router.get('/', restoreUser, requireAuth, async (req, res) => {
+router.get('/', restoreUser, async (req, res) => {
     const { user } = req;
 
     if (user) {
