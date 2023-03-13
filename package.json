@@ -21,5 +21,15 @@
   "bugs": {
     "url": "https://github.com/cleggie66/AA-AirBnb/issues"
   },
-  "homepage": "https://github.com/cleggie66/AA-AirBnb#readme"
+  "homepage": "https://github.com/cleggie66/AA-AirBnb#readme",
+  "dependencies": {
+    "js-cookie": "^3.0.1",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^5.3.4",
+    "redux": "^4.2.1",
+    "redux-thunk": "^2.4.2"
+  },
+  "devDependencies": {
+    "redux-logger": "^3.0.6"
+  }
 }

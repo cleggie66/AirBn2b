@@ -25,7 +25,6 @@ router.post('/', validateSignup, async (req, res, next) => {
             err.errors = { username: "User with that username already exists" }
             return next(err);
         };
-        
     }
 
     const newUser = await User.signup({ email, password, username, firstName, lastName })
@@ -37,7 +36,7 @@ router.post('/', validateSignup, async (req, res, next) => {
     delete payload.updatedAt;
     payload.token = token;
 
-    return res.json(payload)
+    return res.json({user: payload})
 });
 
 
