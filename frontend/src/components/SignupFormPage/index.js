@@ -26,14 +26,16 @@ function SignupFormPage() {
                     if (data && data.errors) setErrors(data.errors);
                 });
         }
-        return setErrors(['Confirm Password field must be the same as the Password field']);
+        return setErrors(['Passwords must match']);
     };
 
     return (
         <form onSubmit={handleSubmit}>
+            {errors.length > 0 && (
             <ul>
                 {errors.map((error, idx) => <li key={idx}>{error}</li>)}
             </ul>
+            )}
             <label>
                 Email
                 <input
