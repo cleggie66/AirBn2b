@@ -23,12 +23,11 @@ const CreateSpotForm = () => {
 
     const dispatch = useDispatch();
 
-
     const onSubmit = (e) => {
         e.preventDefault();
 
         setErrors([]);
-        return dispatch(addNewSpot({ name }))
+        return dispatch(addNewSpot({ address, city, state, country, name, description, price }))
             .catch(async (res) => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(Object.values(data.errors))
@@ -36,7 +35,7 @@ const CreateSpotForm = () => {
     }
 
     return (
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} className="create-spot-form">
             {errors.length > 0 && (
                 <ul>
                     {errors.map((error, idx) => <li key={idx}>{error}</li>)}
