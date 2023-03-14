@@ -19,12 +19,13 @@ const LoginFormModal = () => {
             .then(closeModal)
             .catch(async (res) => {
                 const data = await res.json();
+                console.log(data.message)
                 if (data && data.errors) setErrors(Object.values(data.errors));
             });
     }
 
     return (
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} className="login-form">
             {errors.length > 0 && (
                 <ul>
                     {errors.map((error, idx) => <li key={idx}>{error}</li>)}
@@ -36,7 +37,6 @@ const LoginFormModal = () => {
                     type="text"
                     value={credential}
                     onChange={(e) => setCredential(e.target.value)}
-                    required
                 />
             </label>
             <label>
@@ -45,7 +45,6 @@ const LoginFormModal = () => {
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    required
                 />
             </label>
             <button type='submit'>Log In</button>
