@@ -34,8 +34,11 @@ function Navigation({ isLoaded }) {
 
     return (
         <ul>
-            <li>
+            <li className='nav'>
                 <NavLink exact to="/">Home</NavLink>
+            </li>
+            <li className='nav'>
+                <NavLink to='/CreateSpot'>Create a New Spot</NavLink>
             </li>
             {isLoaded && sessionLinks}
         </ul>
