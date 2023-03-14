@@ -1,16 +1,18 @@
 import './SpotsIndexItem.css'
 
-const SpotsIndexItem = ({spot}) => {
+const SpotsIndexItem = ({ spot }) => {
 
     return (
         <div className='spot-index'>
-            <img src={spot.previewImage} alt={spot.name}></img>
-            <h3>{`${spot.city}, ${spot.state}`}</h3>
-            <div>
-                <i class="fa-solid fa-star"></i>
+            <div className='image-container'>
+                <img src={spot.previewImage} alt={spot.name}></img>
+            </div>
+            <h3 className='spot-location'>{`${spot.city}, ${spot.state}`}</h3>
+            <div className='spot-review'>
+                <i className="fa-solid fa-star"></i>
                 <h3>{`${spot.avgRating || 'New'}`}</h3>
             </div>
-            <h3>{`$${spot.price}/night`}</h3>
+            <h3 className='spot-price'>{`$${spot.price}/night`}</h3>
         </div>
     )
 }
