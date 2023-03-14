@@ -8,22 +8,22 @@ const normalizer = (arr) => {
     return obj;
 };
 
-const getDatabaseSpots = async () => {
-    const spots = await csrfFetch('/api/spots', {
-        method: 'GET',
-    })
-    const spotData = await spots.json();
-    console.log('RETURN VALUE CHECK:', normalizer(spotData.Spots))
-    return normalizer(spotData.Spots);
-}
-
 const SET_SPOT = 'spots/setSpot';
+const SET_SPOTS = 'spots/setSpots';
+
 
 //ACTIONS
 export const setSpot = (spot) => {
     return {
         type: SET_SPOT,
-        payload: spot
+        spot
+    }
+}
+
+export const setSpots = (spots) => {
+    return {
+        type: SET_SPOTS,
+        spots
     }
 }
 
@@ -49,13 +49,28 @@ export const addNewSpot = (spot) => async (dispatch) => {
     return response;
 }
 
-const initialState = getDatabaseSpots()
+export const setAllSpots = () => async (dispatch) => {
+    const spots = await csrfFetch('/api/spots')
+    const spotData = await spots.json();
+    const convData = normalizer(spotData.Spots)
+
+    dispatch(setSpots(convData));
+    return convData;
+}
+
+// const initialState = {
+//     allSpots: {},
+//     singleSpot: {}
+// }
 
 //REDUCER
-const allSpotsReducer = (state = initialState, action) => {
+const allSpotsReducer = (state = {}, action) => {
     let newState;
-    console.log("STATE CHECK:", state)
+    // console.log("STATE CHECK:", state)
     switch (action.type) {
+        case SET_SPOTS:
+            newState = { ...state, ...action.spots };
+            return newState
         case SET_SPOT:
             newState = { ...state, [action.spot.id]: action.spot};
             return newState
