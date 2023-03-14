@@ -1,10 +1,5 @@
 import { csrfFetch } from './csrf'
 
-// const spots = await csrfFetch('/api/spots', {
-//     method: 'GET',
-// })
-// const spotData = await spots.json();
-
 const normalizer = (arr) => {
     const obj = {};
     arr.forEach((el) => {
@@ -12,6 +7,15 @@ const normalizer = (arr) => {
     })
     return obj;
 };
+
+const getDatabaseSpots = async () => {
+    const spots = await csrfFetch('/api/spots', {
+        method: 'GET',
+    })
+    const spotData = await spots.json();
+    console.log('RETURN VALUE CHECK:', normalizer(spotData.Spots))
+    return normalizer(spotData.Spots);
+}
 
 const SET_SPOT = 'spots/setSpot';
 
@@ -45,11 +49,12 @@ export const addNewSpot = (spot) => async (dispatch) => {
     return response;
 }
 
-const initialState = {}
+const initialState = getDatabaseSpots()
 
 //REDUCER
-export function allSpotsReducer(state = initialState, action) {
+const allSpotsReducer = (state = initialState, action) => {
     let newState;
+    console.log("STATE CHECK:", state)
     switch (action.type) {
         case SET_SPOT:
             newState = { ...state, [action.spot.id]: action.spot};
@@ -57,4 +62,6 @@ export function allSpotsReducer(state = initialState, action) {
         default:
             return state;
     }
-}
+};
+
+export default allSpotsReducer;
