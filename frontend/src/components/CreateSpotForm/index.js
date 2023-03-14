@@ -5,20 +5,20 @@ import './CreateSpotForm.css'
 
 
 const CreateSpotForm = () => {
-    const [address, setAddress] = useState('')
-    const [city, setCity] = useState('')
-    const [state, setState] = useState('')
-    const [country, setCountry] = useState('')
-    const [lat, setLat] = useState('')
-    const [lng, setLng] = useState('')
-    const [name, setName] = useState('')
-    const [description, setDescription] = useState('')
-    const [price, setPrice] = useState('')
-    const [previewPhoto, setPreviewPhoto] = useState('')
-    const [photo2, setPhoto2] = useState('')
-    const [photo3, setPhoto3] = useState('')
-    const [photo4, setPhoto4] = useState('')
-    const [photo5, setPhoto5] = useState('')
+    const [country, setCountry] = useState('Country')
+    const [address, setAddress] = useState('Address')
+    const [city, setCity] = useState('City')
+    const [state, setState] = useState('STATE')
+    // const [lat, setLat] = useState('Latitude')
+    // const [lng, setLng] = useState('Longitude')
+    const [description, setDescription] = useState('Please write at least 30 characters')
+    const [name, setName] = useState('Name of your spot')
+    const [price, setPrice] = useState('Price per night (USD)')
+    const [previewPhoto, setPreviewPhoto] = useState('Preview Image URL')
+    const [photo2, setPhoto2] = useState('Image URL')
+    const [photo3, setPhoto3] = useState('Image URL')
+    const [photo4, setPhoto4] = useState('Image URL')
+    const [photo5, setPhoto5] = useState('Image URL')
     const [errors, setErrors] = useState([])
 
     const dispatch = useDispatch();
@@ -86,7 +86,7 @@ const CreateSpotForm = () => {
                 fast wif or parking, and what you love about the neighborhood.
             </p>
             <input
-                type="text"
+                type="textarea"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
             />
@@ -142,7 +142,8 @@ const CreateSpotForm = () => {
                 value={photo5}
                 onChange={(e) => setPhoto5(e.target.value)}
             />
-            
+            <hr />
+            <button tpye='submit'>Create Spot</button>
 
         </form>
     );
