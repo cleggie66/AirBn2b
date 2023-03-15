@@ -47,7 +47,7 @@ function Navigation({ isLoaded }) {
             <ul className='left-nav'>
                 <li className='nav'>
                     <NavLink exact to="/">
-                        <img src='../../media/logos/AirBn2B-Logo.jpg' alt='logo'></img>
+                        <img className='logo' src='https://raw.githubusercontent.com/cleggie66/AA-AirBnb/main/frontend/src/media/logos/AirBn2B-Logo.jpg' alt='logo'></img>
                     </NavLink>
                 </li>
             </ul>
