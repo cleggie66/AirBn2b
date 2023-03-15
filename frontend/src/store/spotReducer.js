@@ -8,21 +8,22 @@ const normalizer = (arr) => {
     return obj;
 };
 
-const SET_SPOT = 'spots/setSpot';
-const SET_SPOTS = 'spots/setSpots';
+const SET_SINGLE_SPOT = 'spots/setSpot';
+const SET_ALL_SPOTS = 'spots/setSpots';
+const ADD_SPOT = 'spots/addSpot';
 
 
 //ACTIONS
 export const setSpot = (spot) => {
     return {
-        type: SET_SPOT,
+        type: SET_SINGLE_SPOT,
         spot
     }
 }
 
 export const setSpots = (spots) => {
     return {
-        type: SET_SPOTS,
+        type: SET_ALL_SPOTS,
         spots
     }
 }
@@ -50,33 +51,43 @@ export const addNewSpot = (spot) => async (dispatch) => {
 }
 
 export const setAllSpots = () => async (dispatch) => {
-    const spots = await csrfFetch('/api/spots')
+    const spots = await csrfFetch('/api/spots');
     const spotData = await spots.json();
-    const convData = normalizer(spotData.Spots)
+    const convData = normalizer(spotData.Spots);
 
     dispatch(setSpots(convData));
     return convData;
 }
 
-// const initialState = {
-//     allSpots: {},
-//     singleSpot: {}
-// }
+export const getSpot = (spotId) => async (dispatch) => {
+    const spot = await csrfFetch(`/api/spots/${spotId}`);
+    const response = await spot.json();
+    dispatch(setSpot(response));
+    return response;
+}
+
+const initialState = {
+    allSpots: {},
+    singleSpot: {}
+}
 
 //REDUCER
-const allSpotsReducer = (state = {}, action) => {
+const spotReducer = (state = initialState, action) => {
     let newState;
-    // console.log("STATE CHECK:", state)
     switch (action.type) {
-        case SET_SPOTS:
-            newState = { ...state, ...action.spots };
+        case SET_ALL_SPOTS:
+            newState = { ...state };
+            newState.allSpots = { ...state.allSpots, ...action.spots }
             return newState
-        case SET_SPOT:
-            newState = { ...state, [action.spot.id]: action.spot};
+        case SET_SINGLE_SPOT:
+            newState = { ...state };
+            newState.singleSpot = action.spot;
             return newState
+        case ADD_SPOT:
+            
         default:
             return state;
     }
 };
 
-export default allSpotsReducer;
+export default spotReducer;

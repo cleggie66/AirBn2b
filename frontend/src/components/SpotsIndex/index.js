@@ -12,7 +12,7 @@ const SpotsIndex = () => {
         dispatch(setAllSpots());
     }, [dispatch]);
 
-    const spotState = useSelector(state=>state.spots)
+    const spotState = useSelector(state=>state.spots.allSpots)
     const spots = Object.values(spotState);
 
     return (
