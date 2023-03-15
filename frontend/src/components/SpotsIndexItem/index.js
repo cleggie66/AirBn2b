@@ -4,6 +4,7 @@ const SpotsIndexItem = ({ spot }) => {
 
     return (
         <div className='spot-index'>
+            <span class="tooltip">{spot.name}</span>
             <div className='image-container'>
                 <img src={spot.previewImage} alt={spot.name}></img>
             </div>
