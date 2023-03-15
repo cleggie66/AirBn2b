@@ -14,21 +14,40 @@ const ADD_SPOT = 'spots/addSpot';
 
 
 //ACTIONS
-export const setSpot = (spot) => {
-    return {
-        type: SET_SINGLE_SPOT,
-        spot
-    }
-}
-
 export const setSpots = (spots) => {
     return {
         type: SET_ALL_SPOTS,
         spots
     }
+};
+export const setSpot = (spot) => {
+    return {
+        type: SET_SINGLE_SPOT,
+        spot
+    }
+};
+export const addSpot = (spot) => {
+    return {
+        type: ADD_SPOT,
+        spot
+    }
 }
 
 //THUNKS
+export const setAllSpots = () => async (dispatch) => {
+    const spots = await csrfFetch('/api/spots');
+    const spotData = await spots.json();
+    const convData = normalizer(spotData.Spots);
+
+    dispatch(setSpots(convData));
+    return convData;
+};
+export const getSpot = (spotId) => async (dispatch) => {
+    const spot = await csrfFetch(`/api/spots/${spotId}`);
+    const response = await spot.json();
+    dispatch(setSpot(response));
+    return response;
+};
 export const addNewSpot = (spot) => async (dispatch) => {
     const { address, city, state, country, lat, lng, name, description, price } = spot
     const response = await csrfFetch("api/spots", {
@@ -47,24 +66,8 @@ export const addNewSpot = (spot) => async (dispatch) => {
     });
     const data = await response.json();
     dispatch(setSpot(data));
-    return response;
-}
-
-export const setAllSpots = () => async (dispatch) => {
-    const spots = await csrfFetch('/api/spots');
-    const spotData = await spots.json();
-    const convData = normalizer(spotData.Spots);
-
-    dispatch(setSpots(convData));
-    return convData;
-}
-
-export const getSpot = (spotId) => async (dispatch) => {
-    const spot = await csrfFetch(`/api/spots/${spotId}`);
-    const response = await spot.json();
-    dispatch(setSpot(response));
-    return response;
-}
+    return data;
+};
 
 const initialState = {
     allSpots: {},
@@ -84,7 +87,9 @@ const spotReducer = (state = initialState, action) => {
             newState.singleSpot = action.spot;
             return newState
         case ADD_SPOT:
-            
+            newState = { ...state };
+            newState.allSpots = { ...state.allSpots, [action.spot.id]: action.spot }
+            return newState
         default:
             return state;
     }
