@@ -6,6 +6,7 @@ import Navigation from "./components/Navigation";
 
 import CreateSpotForm from "./components/CreateSpotForm";
 import SpotsIndex from "./components/SpotsIndex";
+import ShowSpot from "./components/ShowSpot";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ function App() {
         <Switch>
           <Route exact path='/' component={SpotsIndex} />
           <Route path="/CreateSpot" component={CreateSpotForm} />
+          <Route path="/spots/:spotId" component={ShowSpot} />
         </Switch> 
       )}
     </>
