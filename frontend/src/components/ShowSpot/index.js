@@ -16,8 +16,6 @@ const ShowSpot = () => {
 
     const spot = useSelector(state => state.spots.singleSpot)
 
-    console.log(spot)
-
     if (Object.values(spot).length < 1) {
         return (<h2>Loading...</h2>)
     }

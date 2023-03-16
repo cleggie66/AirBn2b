@@ -15,6 +15,8 @@ const SpotsIndex = () => {
     const spotState = useSelector(state=>state.spots.allSpots)
     const spots = Object.values(spotState);
 
+    console.log(spots)
+
     return (
         <div className='spots-container'>
             {spots.map(spot => {

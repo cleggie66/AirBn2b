@@ -10,20 +10,27 @@ const normalizer = (arr) => {
 
 const SET_SINGLE_SPOT = 'spots/setSpot';
 const SET_ALL_SPOTS = 'spots/setSpots';
+const SET_CURRENT_SPOTS = 'spots/setCurrentSpots'
 const ADD_SPOT = 'spots/addSpot';
 
 
 //ACTIONS
+export const setSpot = (spot) => {
+    return {
+        type: SET_SINGLE_SPOT,
+        spot
+    }
+};
 export const setSpots = (spots) => {
     return {
         type: SET_ALL_SPOTS,
         spots
     }
 };
-export const setSpot = (spot) => {
+export const setCurrSpots = (spots) => {
     return {
-        type: SET_SINGLE_SPOT,
-        spot
+        type: SET_ALL_SPOTS,
+        spots
     }
 };
 export const addSpot = (spot) => {
@@ -36,10 +43,16 @@ export const addSpot = (spot) => {
 //THUNKS
 export const setAllSpots = () => async (dispatch) => {
     const spots = await csrfFetch('/api/spots');
-    const spotData = await spots.json();
-    const convData = normalizer(spotData.Spots);
-
+    const data = await spots.json();
+    const convData = normalizer(data.Spots);
     dispatch(setSpots(convData));
+    return convData;
+};
+export const setCurrentSpots = () => async (dispatch) => {
+    const response = await csrfFetch("/api/spots/current");
+    const data = await response.json();
+    const convData = normalizer(data.Spots);
+    dispatch(setCurrSpots(convData))
     return convData;
 };
 export const getSpot = (spotId) => async (dispatch) => {
@@ -70,7 +83,8 @@ export const addNewSpot = (spot) => async (dispatch) => {
 
 const initialState = {
     allSpots: {},
-    singleSpot: {}
+    singleSpot: {},
+    currentSpots: {}
 }
 
 //REDUCER
@@ -84,6 +98,10 @@ const spotReducer = (state = initialState, action) => {
         case SET_SINGLE_SPOT:
             newState = { ...state };
             newState.singleSpot = action.spot;
+            return newState
+        case SET_CURRENT_SPOTS:
+            newState = { ...state };
+            newState.currentSpots = action.spots;
             return newState
         case ADD_SPOT:
             newState = { ...state };
