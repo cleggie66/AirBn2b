@@ -1,7 +1,14 @@
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import './SpotsIndexItem.css'
+import OpenModalButton from '../OpenModalButton';
+import DeleteSpotModal from '../DeleteSpotModal';
 
-const SpotsIndexItem = ({ spot }) => {
+const SpotsIndexItem = ({ spot, currentSpots }) => {
+    const history = useHistory()
+
+    const handleUpdate = () => {
+        history.push(`/spots/${spot.id}/edit`)
+    }
 
     return (
         <div className='spot-index'>
@@ -15,6 +22,15 @@ const SpotsIndexItem = ({ spot }) => {
                 <h3>{`${spot.avgRating || 'New'}`}</h3>
             </div>
             <h3 className='spot-price'>{`$${spot.price}/night`}</h3>
+            {currentSpots && (
+                <div>
+                    <button onClick={handleUpdate}>Update</button>
+                    <OpenModalButton
+                        buttonText="Delete"
+                        modalComponent={<DeleteSpotModal />}
+                    />
+                </div>
+            )}
         </div>
     )
 }

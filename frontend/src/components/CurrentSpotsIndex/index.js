@@ -9,20 +9,17 @@ const CurrentSpotsIndex = () => {
 
     useEffect(() => {
         dispatch(setCurrentSpots())
-    })
+    }, [dispatch])
 
     const spotState = useSelector(state => state.spots.currentSpots)
     const spots = Object.values(spotState);
 
-    // console.log(spotState)
-
-    // const spotState = useSelector(state=>state.spots.allSpots)
-    // const spots = Object.values(spotState);
+    console.log("NOT WORKING:", spots)
 
     return (
         <div className='spots-container'>
             {spots.map(spot => {
-                return <SpotsIndexItem spot={spot} key={spot.id} />
+                return <SpotsIndexItem spot={spot} key={spot.id} currentSpots={true}/>
             })}
         </div>
     )
