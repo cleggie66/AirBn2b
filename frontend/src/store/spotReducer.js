@@ -29,7 +29,7 @@ export const setSpots = (spots) => {
         spots
     }
 };
-export const setCurrSpots = (spots) => {
+export const setCurrentSpotsAction = (spots) => {
     return {
         type: SET_CURRENT_SPOTS,
         spots
@@ -66,7 +66,8 @@ export const setCurrentSpots = () => async (dispatch) => {
     const response = await csrfFetch("/api/spots/current");
     const data = await response.json();
     const convData = normalizer(data.Spots);
-    dispatch(setCurrSpots(convData))
+    dispatch(setCurrentSpotsAction(convData))
+    console.log(data)
     return convData;
 };
 export const getSpot = (spotId) => async (dispatch) => {
