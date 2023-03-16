@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getSpot } from "../../store/spotReducer";
 import { setSpotReviews } from '../../store/reviewReducer';
+import OpenModalButton from '../OpenModalButton';
+import AddReviewModal from '../AddReviewModal';
 import './ShowSpot.css'
 
 const ShowSpot = () => {
@@ -85,7 +87,10 @@ const ShowSpot = () => {
                         <h2>{`${spot.numReviews} review(s)`}</h2>
                     </div>
                     { sessionUser && (
-                        <button>Post Your Review</button>
+                        <OpenModalButton
+                            buttonText="Post Your Review"
+                            modalComponent={<AddReviewModal spot={spot}/>}
+                        />
                     )}
                     {reviews.map((review) => {
                         return (

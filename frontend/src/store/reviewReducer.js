@@ -28,12 +28,26 @@ export const addReviewAction = (review) => {
 
 //THUNKS
 export const setSpotReviews = (spotId) => async (dispatch) => {
+    console.log('test')
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`);
     const data = await response.json();
     const convData = normalizer(data.Reviews);
     dispatch(setSpotReviewsAction(convData))
     return convData;
 };
+export const addReview = (reviewObj) => async (dispatch) => {
+    const { review, stars, spotId } = reviewObj
+    const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+        method: 'POST',
+        body: JSON.stringify({
+            review,
+            stars
+        })
+    });
+    const data = await response.json()
+    dispatch(setSpotReviews(spotId));
+    return data;
+}
 
 const initialState = {
     spot: {},
@@ -41,7 +55,7 @@ const initialState = {
 };
 
 //REDUCER
-const reviewReducer = (state = {}, action) => {
+const reviewReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case SET_SPOT_REVIEWS:
