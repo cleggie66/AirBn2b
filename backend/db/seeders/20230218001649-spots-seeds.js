@@ -91,7 +91,8 @@ module.exports = {
         lat: 89.9999999,
         lng: -179.9999999,
         name: "Robinson House",
-        description: "Fabulous ranch w/spacious open floor plan is completely updated-windows, siding, roof, furnace, a/c, beautiful hardwood floors, some fresh paint, new garage door w/keyless entry. Big granite kitchen is a cook's delight with stainless steel appliances, lovely maple cabinets & roomy eating area. The family room opens to a great 4 season sun room w/terricotta floor & slider to a deck overlooking a lovely large fenced yard. King-size master bedroom w/generous closets & updated private bath. Large second bedroom w/private bath is perfect for guests!",
+        description: "Fabulous ranch w/spacious open floor plan is completely updated-windows, siding, roof, furnace, a/c, beautiful hardwood floors, some fresh paint, new garage door w/keyless entry.",
+        // description: "Fabulous ranch w/spacious open floor plan is completely updated-windows, siding, roof, furnace, a/c, beautiful hardwood floors, some fresh paint, new garage door w/keyless entry. Big granite kitchen is a cook's delight with stainless steel appliances, lovely maple cabinets & roomy eating area. The family room opens to a great 4 season sun room w/terricotta floor & slider to a deck overlooking a lovely large fenced yard. King-size master bedroom w/generous closets & updated private bath. Large second bedroom w/private bath is perfect for guests!",
         price: 300,
       },
       {
