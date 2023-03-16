@@ -19,7 +19,6 @@ const LoginFormModal = () => {
             .then(closeModal)
             .catch(async (res) => {
                 const data = await res.json();
-                console.log(data.message)
                 if (data && data.errors) setErrors(Object.values(data.errors));
             });
     }

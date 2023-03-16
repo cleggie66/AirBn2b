@@ -1,37 +1,54 @@
 import { useState } from 'react';
 import { useDispatch } from "react-redux";
-import { addNewSpot } from "../../store/spotReducer";
-import './CreateSpotForm.css'
+import { useHistory } from 'react-router-dom';
+import { addNewSpot, updateSpot } from "../../store/spotReducer";
+import './SpotForm.css'
 
 
-const CreateSpotForm = () => {
-    const [country, setCountry] = useState('Country')
-    const [address, setAddress] = useState('Address')
-    const [city, setCity] = useState('City')
-    const [state, setState] = useState('STATE')
-    // const [lat, setLat] = useState('Latitude')
-    // const [lng, setLng] = useState('Longitude')
-    const [description, setDescription] = useState('Please write at least 30 characters')
-    const [name, setName] = useState('Name of your spot')
-    const [price, setPrice] = useState('Price per night (USD)')
-    const [previewPhoto, setPreviewPhoto] = useState('Preview Image URL')
-    const [photo2, setPhoto2] = useState('Image URL')
-    const [photo3, setPhoto3] = useState('Image URL')
-    const [photo4, setPhoto4] = useState('Image URL')
-    const [photo5, setPhoto5] = useState('Image URL')
+const SpotForm = ({spot, formType}) => {
+    const [country, setCountry] = useState(spot.country)
+    const [address, setAddress] = useState(spot.address)
+    const [city, setCity] = useState(spot.city)
+    const [state, setState] = useState(spot.state)
+    const [lat, setLat] = useState(spot.lat)
+    const [lng, setLng] = useState(spot.lng)
+    const [description, setDescription] = useState(spot.description)
+    const [name, setName] = useState(spot.name)
+    const [price, setPrice] = useState(spot.price)
+    const [previewPhoto, setPreviewPhoto] = useState(spot.previewPhoto)
+    const [photo2, setPhoto2] = useState(spot.photo2)
+    const [photo3, setPhoto3] = useState(spot.photo3)
+    const [photo4, setPhoto4] = useState(spot.photo4)
+    const [photo5, setPhoto5] = useState(spot.photo5)
     const [errors, setErrors] = useState([])
+    let spotId;
+    if (spot.id) {spotId = spot.id}
 
     const dispatch = useDispatch();
+    const history = useHistory()
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
 
         setErrors([]);
-        return dispatch(addNewSpot({ address, city, state, country, name, description, price }))
-            .catch(async (res) => {
-                const data = await res.json();
-                if (data && data.errors) setErrors(Object.values(data.errors))
-            })
+        let spot;
+
+        if (formType === 'Create Spot') {
+            spot = await dispatch(addNewSpot({ address, city, state, country, lat, lng, name, description, price }))
+                .catch(async (res) => {
+                    const data = await res.json();
+                    if (data && data.errors) setErrors(Object.values(data.errors))
+                })
+        }
+        if (formType === 'Update Spot') {
+            spot = await dispatch(updateSpot({ spotId, address, city, state, country, lat, lng, name, description, price }))
+                .catch(async (res) => {
+                    const data = await res.json();
+                    if (data && data.errors) setErrors(Object.values(data.errors))
+                })
+        }
+
+        history.push(`/spots/${spot.id}`)
     }
 
     return (
@@ -52,6 +69,7 @@ const CreateSpotForm = () => {
             <input
                 type="text"
                 value={country}
+                placeholder="Country"
                 onChange={(e) => setCountry(e.target.value)}
             />
             <label>
@@ -60,6 +78,7 @@ const CreateSpotForm = () => {
             <input
                 type="text"
                 value={address}
+                placeholder="Address"
                 onChange={(e) => setAddress(e.target.value)}
             />
             <label>
@@ -68,6 +87,7 @@ const CreateSpotForm = () => {
             <input
                 type="text"
                 value={city}
+                placeholder="City"
                 onChange={(e) => setCity(e.target.value)}
             />
             <label>
@@ -76,6 +96,7 @@ const CreateSpotForm = () => {
             <input
                 type="text"
                 value={state}
+                placeholder="STATE"
                 onChange={(e) => setState(e.target.value)}
             />
             <hr />
@@ -87,6 +108,7 @@ const CreateSpotForm = () => {
             <input
                 type="textarea"
                 value={description}
+                placeholder="Please write at least 30 characters"
                 onChange={(e) => setDescription(e.target.value)}
             />
             <hr />
@@ -98,6 +120,7 @@ const CreateSpotForm = () => {
             <input
                 type="text"
                 value={name}
+                placeholder="Name of your spot"
                 onChange={(e) => setName(e.target.value)}
             />
             <hr />
@@ -109,6 +132,7 @@ const CreateSpotForm = () => {
             <input
                 type="text"
                 value={price}
+                placeholder="Price per night (USD)"
                 onChange={(e) => setPrice(e.target.value)}
             />
             <hr />
@@ -119,26 +143,31 @@ const CreateSpotForm = () => {
             <input
                 type="text"
                 value={previewPhoto}
+                placeholder="Preview Image URL"
                 onChange={(e) => setPreviewPhoto(e.target.value)}
             />
             <input
                 type="text"
                 value={photo2}
+                placeholder="Image URL"
                 onChange={(e) => setPhoto2(e.target.value)}
             />
             <input
                 type="text"
                 value={photo3}
+                placeholder="Image URL"
                 onChange={(e) => setPhoto3(e.target.value)}
             />
             <input
                 type="text"
                 value={photo4}
+                placeholder="Image URL"
                 onChange={(e) => setPhoto4(e.target.value)}
             />
             <input
                 type="text"
                 value={photo5}
+                placeholder="Image URL"
                 onChange={(e) => setPhoto5(e.target.value)}
             />
             <hr />
@@ -148,4 +177,4 @@ const CreateSpotForm = () => {
     );
 }
 
-export default CreateSpotForm;
+export default SpotForm;
