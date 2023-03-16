@@ -65,7 +65,6 @@ export const addNewSpot = (spot) => async (dispatch) => {
         })
     });
     const data = await response.json();
-    dispatch(setSpot(data));
     return data;
 };
 

@@ -8,13 +8,15 @@ import './ShowSpot.css'
 const ShowSpot = () => {
     const dispatch = useDispatch();
     const { spotId } = useParams();
-    const spot = useSelector(state => state.spots.singleSpot)
     const missingNo = 'https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'
-    console.log(spot)
 
     useEffect(() => {
         dispatch(getSpot(spotId))
     }, [dispatch, spotId])
+
+    const spot = useSelector(state => state.spots.singleSpot)
+
+    console.log(spot)
 
     if (Object.values(spot).length < 1) {
         return (<h2>Loading...</h2>)
