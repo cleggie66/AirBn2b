@@ -71,7 +71,7 @@ export const getSpot = (spotId) => async (dispatch) => {
 };
 export const addNewSpot = (spot) => async (dispatch) => {
     const { address, city, state, country, lat, lng, name, description, price } = spot
-    const response = await csrfFetch("api/spots", {
+    const response = await csrfFetch("/api/spots", {
         method: 'POST',
         body: JSON.stringify({
             address,
@@ -90,7 +90,7 @@ export const addNewSpot = (spot) => async (dispatch) => {
 };
 export const updateSpot = (spot) => async (dispatch) => {
     const { spotId, address, city, state, country, lat, lng, name, description, price } = spot
-    const response = await csrfFetch(`api/spots/${spotId}`, {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
         method: 'PUT',
         body: JSON.stringify({
             address,
@@ -108,7 +108,7 @@ export const updateSpot = (spot) => async (dispatch) => {
     return data;
 }
 export const deleteSpot = (spot) => async (dispatch) => {
-    const response = await csrfFetch(`api/spots/${spot.id}`, {
+    const response = await csrfFetch(`/api/spots/${spot.id}`, {
         method: 'DELETE'
     })
     const data = await response.json();
