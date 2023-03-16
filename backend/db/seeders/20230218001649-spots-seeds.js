@@ -116,7 +116,7 @@ module.exports = {
         lat: 35.1261336,
         lng: -106.5365668,
         name: "Southern getaway house with POOL!",
-        description: "Me and my wife Skyler have lived here for years our son, Walter Junior lives here with us alongside our newborn baby. If you find bags of blue crystals in the crawlspace under the house, just ignore it, and if you find any money, turn it into the government.",
+        description: "Me and my wife Skyler have lived here for years our son, Walter Junior lives here with us alongside our newborn baby. If you find bags of blue crystals in the crawlspace under the house, just ignore it.",
         price: 50,
       },
       {
