@@ -15,7 +15,7 @@ const SpotsIndex = () => {
     const spotState = useSelector(state=>state.spots.allSpots)
     const spots = Object.values(spotState);
 
-    console.log(spots)
+    console.log("WORKING:", spots)
 
     return (
         <div className='spots-container'>
