@@ -92,7 +92,7 @@ module.exports = {
         lng: -179.9999999,
         name: "Robinson House",
         description: "Fabulous ranch w/spacious open floor plan is completely updated-windows, siding, roof, furnace, a/c, beautiful hardwood floors, some fresh paint, new garage door w/keyless entry. Big granite kitchen is a cook's delight with stainless steel appliances, lovely maple cabinets & roomy eating area. The family room opens to a great 4 season sun room w/terricotta floor & slider to a deck overlooking a lovely large fenced yard. King-size master bedroom w/generous closets & updated private bath. Large second bedroom w/private bath is perfect for guests!",
-        price: 0,
+        price: 300,
       },
       {
         ownerId: 1,
@@ -129,19 +129,7 @@ module.exports = {
         name: "Butterfly Mansion",
         description: "Rest up and heal at the butterfly mansion and spa! Our top of the line amenities will have you feeling refreshed and ready for your next adventure!",
         price: 50,
-      },
-      // {
-      //   ownerId: 1,
-      //   address: "",
-      //   city: "",
-      //   state: "",
-      //   country: "",
-      //   lat: 89.9999999,
-      //   lng: -179.9999999,
-      //   name: "",
-      //   description: "",
-      //   price: 50,
-      // },
+      }
     ], {})
   },
 
