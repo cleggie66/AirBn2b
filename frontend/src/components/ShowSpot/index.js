@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getSpot } from "../../store/spotReducer";
+import { setSpotReviews } from '../../store/reviewReducer';
 import './ShowSpot.css'
 
 const ShowSpot = () => {
@@ -12,13 +13,18 @@ const ShowSpot = () => {
 
     useEffect(() => {
         dispatch(getSpot(spotId))
+        dispatch(setSpotReviews(spotId))
     }, [dispatch, spotId])
 
     const spot = useSelector(state => state.spots.singleSpot)
+    const reviewState = useSelector(state => state.reviews.spot)
+    const sessionUser = useSelector(state => state.session.user);
 
     if (Object.values(spot).length < 1) {
         return (<h2>Loading...</h2>)
     }
+
+    const reviews = (Object.values(reviewState))
 
     // valid image check
     let img1;
@@ -73,10 +79,23 @@ const ShowSpot = () => {
                 </div>
                 <hr></hr>
                 <div className='review-section'>
-                    <i className="fa-solid fa-star"></i>
-                    <h2>{spot.avgRating}</h2>
-                    <h2>{`${spot.numReviews} review(s)`}</h2>
-                    {/* TODO: add review data here */}
+                    <div className='review-header'>
+                        <i className="fa-solid fa-star"></i>
+                        <h2>{spot.avgRating}</h2>
+                        <h2>{`${spot.numReviews} review(s)`}</h2>
+                    </div>
+                    { sessionUser && (
+                        <button>Post Your Review</button>
+                    )}
+                    {reviews.map((review) => {
+                        return (
+                            <div className='review' key={review.id}>
+                                <h3>{`${review.User.firstName} ${review.User.lastName}`}</h3>
+                                <h5>{review.createdAt}</h5>
+                                <p>{review.review}</p>
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
         </div>
