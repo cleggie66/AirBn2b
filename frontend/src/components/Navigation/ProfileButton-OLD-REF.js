@@ -35,10 +35,9 @@ function ProfileButton({ user }) {
 
     return (
         <>
-            <div className="profile-button" style={{ cursor: 'pointer' }} onClick={openMenu}>
-                <i className="fa-solid fa-bars" />
+            <button onClick={openMenu}>
                 <i className="fas fa-user-circle" />
-            </div>
+            </button>
             <ul className={ulClassName} ref={ulRef}>
                 <li>{user.username}</li>
                 <li>{user.firstName} {user.lastName}</li>
