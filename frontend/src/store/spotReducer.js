@@ -67,7 +67,6 @@ export const setCurrentSpots = () => async (dispatch) => {
     const data = await response.json();
     const convData = normalizer(data.Spots);
     dispatch(setCurrentSpotsAction(convData))
-    console.log(data)
     return convData;
 };
 export const getSpot = (spotId) => async (dispatch) => {
@@ -120,7 +119,7 @@ export const deleteSpot = (spot) => async (dispatch) => {
         method: 'DELETE'
     })
     const data = await response.json();
-    dispatch(deleteSpotAction(data))
+    dispatch(deleteSpotAction(spot))
     return data;
 }
 
@@ -157,6 +156,8 @@ const spotReducer = (state = initialState, action) => {
         case DELETE_SPOT:
             newState = { ...state };
             delete newState.allSpots[action.spot.id]
+            delete newState.currentSpots[action.spot.id]
+            console.log('state changed', newState)
             return newState
         default:
             return state;
