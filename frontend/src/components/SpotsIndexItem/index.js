@@ -27,7 +27,7 @@ const SpotsIndexItem = ({ spot, currentSpots }) => {
                     <button onClick={handleUpdate}>Update</button>
                     <OpenModalButton
                         buttonText="Delete"
-                        modalComponent={<DeleteSpotModal />}
+                        modalComponent={<DeleteSpotModal spot={spot} />}
                     />
                 </div>
             )}

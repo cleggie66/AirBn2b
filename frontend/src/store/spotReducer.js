@@ -12,7 +12,7 @@ const SET_SINGLE_SPOT = 'spots/setSpot';
 const SET_ALL_SPOTS = 'spots/setSpots';
 const SET_CURRENT_SPOTS = 'spots/setCurrentSpots'
 const ADD_SPOT = 'spots/addSpot';
-
+const UPDATE_SPOT = 'spots/update'
 const DELETE_SPOT = 'spots/delete'
 
 
@@ -38,6 +38,12 @@ export const setCurrSpots = (spots) => {
 export const addSpot = (spot) => {
     return {
         type: ADD_SPOT,
+        spot
+    }
+}
+export const updateSpotAction = (spot) => {
+    return {
+        type: UPDATE_SPOT,
         spot
     }
 }
@@ -105,6 +111,7 @@ export const updateSpot = (spot) => async (dispatch) => {
         })
     });
     const data = await response.json();
+    dispatch(updateSpot(data))
     return data;
 }
 export const deleteSpot = (spot) => async (dispatch) => {
@@ -142,6 +149,10 @@ const spotReducer = (state = initialState, action) => {
             newState = { ...state };
             newState.allSpots = { ...state.allSpots, [action.spot.id]: action.spot }
             return newState
+        case UPDATE_SPOT: 
+            newState = { ...state };
+            newState.allSpots[action.spot.id] = action.spot
+            return newState;
         case DELETE_SPOT:
             newState = { ...state };
             delete newState.allSpots[action.spot.id]
