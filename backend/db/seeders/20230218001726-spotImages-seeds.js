@@ -36,6 +36,26 @@ module.exports = {
         url: "https://r2.mt.ru/r23/photo2E21/20831474630-0/png/bp.webp",
         preview: true
       },
+      {
+        spotId: 6,
+        url: "https://raw.githubusercontent.com/cleggie66/AA-AirBnb/main/frontend/src/media/images/80s-McDonalds/2022-04-24.jpg",
+        preview: true
+      },
+      {
+        spotId: 8,
+        url: "https://github.com/cleggie66/AA-AirBnb/blob/main/frontend/src/media/images/bebop/E7v6q9nXoAMMFJI.jpg?raw=true",
+        preview: true
+      },
+      {
+        spotId: 9,
+        url: "https://github.com/cleggie66/AA-AirBnb/blob/main/frontend/src/media/images/breaking-bad/bb5-1556809406.jpg?raw=true",
+        preview: true
+      },
+      {
+        spotId: 10,
+        url: "https://raw.githubusercontent.com/cleggie66/AA-AirBnb/main/frontend/src/media/images/butterfly-mansion/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f776174747061642d6d656469612d736572766963652f53746f7279496d6167652f784d61354d6c4d7a3039782d57773d3d2d3833303731333832312e313565633733363036376466366566383331323038323530323134322e706e67.png",
+        preview: true
+      },
     ], {})
   },
 

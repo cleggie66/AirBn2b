@@ -1,26 +1,28 @@
 import { useState } from 'react';
 import { useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
-import { addNewSpot } from "../../store/spotReducer";
-import './CreateSpotForm.css'
+import { addNewSpot, updateSpot } from "../../store/spotReducer";
+import './SpotForm.css'
 
 
-const CreateSpotForm = () => {
-    const [country, setCountry] = useState('')
-    const [address, setAddress] = useState('')
-    const [city, setCity] = useState('')
-    const [state, setState] = useState('')
-    const [lat, setLat] = useState(-122.4730327)
-    const [lng, setLng] = useState(-122.4730327)
-    const [description, setDescription] = useState('')
-    const [name, setName] = useState('')
-    const [price, setPrice] = useState(0)
-    const [previewPhoto, setPreviewPhoto] = useState('')
-    const [photo2, setPhoto2] = useState('')
-    const [photo3, setPhoto3] = useState('')
-    const [photo4, setPhoto4] = useState('')
-    const [photo5, setPhoto5] = useState('')
+const SpotForm = ({spot, formType}) => {
+    const [country, setCountry] = useState(spot.country)
+    const [address, setAddress] = useState(spot.address)
+    const [city, setCity] = useState(spot.city)
+    const [state, setState] = useState(spot.state)
+    const [lat, setLat] = useState(spot.lat)
+    const [lng, setLng] = useState(spot.lng)
+    const [description, setDescription] = useState(spot.description)
+    const [name, setName] = useState(spot.name)
+    const [price, setPrice] = useState(spot.price)
+    const [previewPhoto, setPreviewPhoto] = useState(spot.previewPhoto)
+    const [photo2, setPhoto2] = useState(spot.photo2)
+    const [photo3, setPhoto3] = useState(spot.photo3)
+    const [photo4, setPhoto4] = useState(spot.photo4)
+    const [photo5, setPhoto5] = useState(spot.photo5)
     const [errors, setErrors] = useState([])
+    let spotId;
+    if (spot.id) {spotId = spot.id}
 
     const dispatch = useDispatch();
     const history = useHistory()
@@ -29,12 +31,22 @@ const CreateSpotForm = () => {
         e.preventDefault();
 
         setErrors([]);
+        let spot;
 
-        const spot = await dispatch(addNewSpot({ address, city, state, country, lat, lng, name, description, price }))
-            .catch(async (res) => {
-                const data = await res.json();
-                if (data && data.errors) setErrors(Object.values(data.errors))
-            })
+        if (formType === 'Create Spot') {
+            spot = await dispatch(addNewSpot({ address, city, state, country, lat, lng, name, description, price }))
+                .catch(async (res) => {
+                    const data = await res.json();
+                    if (data && data.errors) setErrors(Object.values(data.errors))
+                })
+        }
+        if (formType === 'Update Spot') {
+            spot = await dispatch(updateSpot({ spotId, address, city, state, country, lat, lng, name, description, price }))
+                .catch(async (res) => {
+                    const data = await res.json();
+                    if (data && data.errors) setErrors(Object.values(data.errors))
+                })
+        }
 
         history.push(`/spots/${spot.id}`)
     }
@@ -165,4 +177,4 @@ const CreateSpotForm = () => {
     );
 }
 
-export default CreateSpotForm;
+export default SpotForm;
