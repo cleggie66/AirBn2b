@@ -171,7 +171,7 @@ const SpotForm = ({spot, formType}) => {
                 onChange={(e) => setPhoto5(e.target.value)}
             />
             <hr />
-            <button tpye='submit'>Create Spot</button>
+            <button type='submit'>{formType}</button>
 
         </form>
     );
