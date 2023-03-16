@@ -1,7 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { deleteSpot } from "../../store/spotReducer";
-import { setCurrentSpots } from "../../store/spotReducer";
 
 const DeleteSpotModal = ({spot}) => {
     const { closeModal } = useModal();
