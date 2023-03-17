@@ -27,6 +27,8 @@ const ShowSpot = () => {
         return (<h2>Loading...</h2>)
     }
 
+    if (spot.avgRating) { spot.avgRating = parseInt(spot.avgRating).toFixed(2) }
+
     const reviews = (Object.values(reviewState))
 
     // valid image check

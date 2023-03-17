@@ -33,7 +33,6 @@ const SpotForm = ({ spot, formType }) => {
 
         setErrors([]);
         let newSpot;
-        let img;
 
         if (formType === 'Create Spot') {
             newSpot = await dispatch(addNewSpot({ address, city, state, country, lat, lng, name, description, price }))

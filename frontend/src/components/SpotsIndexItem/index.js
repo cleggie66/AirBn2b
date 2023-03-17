@@ -5,6 +5,8 @@ import DeleteSpotModal from '../DeleteSpotModal';
 const SpotsIndexItem = ({ spot, currentSpots }) => {
     const history = useHistory()
 
+    if (spot.avgRating) {spot.avgRating = parseInt(spot.avgRating).toFixed(2)}
+
     const handleUpdate = () => {
         history.push(`/spots/${spot.id}/edit`)
     }
