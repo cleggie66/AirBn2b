@@ -32,6 +32,17 @@ const LoginFormModal = () => {
             });
     }
 
+    const loginDemo = (e) => {
+        e.preventDefault();
+        
+        return dispatch(sessionActions.login({ credential: "demo@user.org", password: "password" }))
+            .then(closeModal)
+            .catch(async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(Object.values(data.errors));
+            });
+    }
+
     return (
         <form onSubmit={onSubmit} className="login-form">
             {errors.length > 0 && (
@@ -60,6 +71,7 @@ const LoginFormModal = () => {
                 />
             </label>
             <button disabled={disabled} type='submit'>Log In</button>
+            <button onClick={loginDemo}>Log in as a Demo User</button>
         </form>
     )
 }
