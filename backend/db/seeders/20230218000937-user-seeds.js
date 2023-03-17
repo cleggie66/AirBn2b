@@ -44,6 +44,13 @@ module.exports = {
         email: 'balrog@lotr.io',
         username: 'balrog_of_morgoth',
         hashedPassword: bcrypt.hashSync('password5')
+      },
+      {
+        firstName: "demo",
+        lastName: 'user',
+        email: 'demo@user.org',
+        username: 'demo-user',
+        hashedPassword: bcrypt.hashSync('password')
       }
     ], {});
   },
