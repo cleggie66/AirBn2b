@@ -1,7 +1,3 @@
-* {
-    font-family: Helvetica, Arial, sans-serif
-}
-
 .login-form {
     display: flex;
     flex-direction: column;

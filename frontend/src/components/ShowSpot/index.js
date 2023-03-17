@@ -46,8 +46,8 @@ const ShowSpot = () => {
     return (
         <div className='page'>
             <div className='show-spot'>
-                <h2>{spot.name}</h2>
-                <h3>{`${spot.city},${spot.state},${spot.country}`}</h3>
+                <h2 className='title'>{spot.name}</h2>
+                <h3 className='title-location'>{`${spot.city}, ${spot.state}, ${spot.country}`}</h3>
                 <div className='image-gallery'>
                     <div className='preview-image'>
                         <div className='preview-image-container img1'>
@@ -71,7 +71,7 @@ const ShowSpot = () => {
                 </div>
                 <div className='spot-info'>
                     <div className='spot-info-text'>
-                        <h2>{`Hosted By ${spot.Owner.firstName} ${spot.Owner.lastName}`}</h2>
+                        <h2 className='hosted-by'>{`Hosted By ${spot.Owner.firstName} ${spot.Owner.lastName}`}</h2>
                         <p>{spot.description}</p>
                     </div>
                     <div className='spot-info-action-box'>
@@ -88,15 +88,17 @@ const ShowSpot = () => {
                         <button className='reserve-button'>Reserve</button>
                     </div>
                 </div>
-                <hr></hr>
+                <hr className='line-break'></hr>
                 <div className='review-section'>
                     <div className='review-header'>
                         <i className="fa-solid fa-star"></i>
                         <h2>{spot.avgRating}</h2>
+                        <h2>•</h2>
                         <h2>{`${spot.numReviews} review(s)`}</h2>
                     </div>
                     {sessionUser && (
                         <OpenModalButton
+                            className="post-review-button"
                             buttonText="Post Your Review"
                             modalComponent={<AddReviewModal spot={spot} />}
                         />
@@ -105,11 +107,12 @@ const ShowSpot = () => {
                         return (
                             <div className='review' key={review.id}>
                                 <h3>{`${review.User.firstName} ${review.User.lastName}`}</h3>
-                                <h5>{review.createdAt}</h5>
+                                <h5 className='review-date'>{review.createdAt}</h5>
                                 <p>{review.review}</p>
                                 {sessionUser.id === review.User.id && (
                                     <OpenModalButton
                                         buttonText="Delete"
+                                        className="delete-review-button"
                                         modalComponent={<DeleteReviewModal review={review} />}
                                     />
                                 )}
