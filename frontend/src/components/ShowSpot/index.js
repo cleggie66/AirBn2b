@@ -75,11 +75,17 @@ const ShowSpot = () => {
                         <p>{spot.description}</p>
                     </div>
                     <div className='spot-info-action-box'>
-                        <h2>{`$${spot.price} night`}</h2>
-                        <i className="fa-solid fa-star"></i>
-                        <h4>{spot.avgRating}</h4>
-                        <h4>{`${spot.numReviews} review(s)`}</h4>
-                        <button>Reserve</button>
+                        <div className='price-per-night'>
+                            <h2>{`$${spot.price}`}</h2>
+                            <h4>night</h4>
+                        </div>
+                        <div className='review-totals'>
+                            <i className="fa-solid fa-star"></i>
+                            <h4>{spot.avgRating}</h4>
+                            <h4>•</h4>
+                            <h4>{`${spot.numReviews} review(s)`}</h4>
+                        </div>
+                        <button className='reserve-button'>Reserve</button>
                     </div>
                 </div>
                 <hr></hr>
@@ -89,10 +95,10 @@ const ShowSpot = () => {
                         <h2>{spot.avgRating}</h2>
                         <h2>{`${spot.numReviews} review(s)`}</h2>
                     </div>
-                    { sessionUser && (
+                    {sessionUser && (
                         <OpenModalButton
                             buttonText="Post Your Review"
-                            modalComponent={<AddReviewModal spot={spot}/>}
+                            modalComponent={<AddReviewModal spot={spot} />}
                         />
                     )}
                     {reviews.map((review) => {

@@ -17,32 +17,81 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 5px; 
-}
-
-.spot-image {
-    width: auto;
-    height: 100%;
+    gap: 5px;
 }
 
 .preview-image-container {
     max-width: 480px;
     max-height: 380px;
     overflow: hidden;
+    display: flex;
+    align-content: center;
+    justify-content: center;
 }
 
 .side-image-container {
     max-width: 240px;
     max-height: 187.5px;
     overflow: hidden;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.spot-image {
+    width: auto;
+    height: 100%;
+    object-fit: cover;
 }
 
 .img1 {
-border-radius: 3% 0 0 3%
+    border-radius: 3% 0 0 3%
 }
+
 .img3 {
-border-radius: 0 5% 0 0
+    border-radius: 0 5% 0 0
 }
+
 .img5 {
-border-radius: 0 0 5% 0
+    border-radius: 0 0 5% 0
+}
+
+.spot-info {
+    width: 1000px;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+}
+
+.spot-info-action-box {
+    width: 300px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    border: solid;
+    border-color: rgb(113, 113, 113);
+    border-width: 2px;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.price-per-night {
+    display: flex;
+    align-items: end;
+    gap: 3px;
+}
+
+.review-totals {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.reserve-button {
+    width: 300px;
+    height: 50px;
+    margin-top: 10px;
+    color: white;
+    background-color: #205072;
 }
