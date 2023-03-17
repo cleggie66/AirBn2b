@@ -13,7 +13,7 @@ router.get('/current', requireAuth, async (req, res) => {
             ownerId: req.user.id
         },
         include: [
-            { model: SpotImage, where: { preview: true } }
+            { model: SpotImage }
         ]
     })
 
@@ -32,12 +32,14 @@ router.get('/current', requireAuth, async (req, res) => {
         })
         spot.avgRating = reviewData.toJSON().avgRating;
 
-        let previewImage = spot.SpotImages[0].url;
-        if (previewImage) {
-            spot.previewImage = previewImage;
-        } else {
-            spot.previewImage = 'No preview image'
-        };
+        spot.previewImage = 'No preview image'
+        if (spot.SpotImages) {
+            for (let i = 0; i < spot.SpotImages.length; i++) {
+                const image = spot.SpotImages[i];
+                if (image.preview) spot.previewImage = image.url
+            }
+        }
+
         delete spot.SpotImages;
 
         payload.Spots.push(spot)

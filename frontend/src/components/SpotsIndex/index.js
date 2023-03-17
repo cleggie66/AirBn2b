@@ -12,16 +12,16 @@ const SpotsIndex = () => {
         dispatch(setAllSpots());
     }, [dispatch]);
 
-    const spotState = useSelector(state=>state.spots.allSpots)
+    const spotState = useSelector(state => state.spots.allSpots)
     const spots = Object.values(spotState);
 
-    console.log("WORKING:", spots)
-
     return (
-        <div className='spots-container'>
-            {spots.map(spot => {
-                return <SpotsIndexItem spot={spot} key={spot.id}/>
-            })}
+        <div className='page'>
+            <div className='spots-container'>
+                {spots.map(spot => {
+                    return <SpotsIndexItem spot={spot} key={spot.id} />
+                })}
+            </div>
         </div>
     )
 }

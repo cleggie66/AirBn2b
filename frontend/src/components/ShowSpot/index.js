@@ -3,7 +3,11 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getSpot } from "../../store/spotReducer";
-import './ShowSpot.css'
+import { setSpotReviews } from '../../store/reviewReducer';
+import OpenModalButton from '../OpenModalButton';
+import AddReviewModal from '../AddReviewModal';
+import DeleteReviewModal from '../DeleteReviewModal';
+import './ShowSpot.css';
 
 const ShowSpot = () => {
     const dispatch = useDispatch();
@@ -12,13 +16,20 @@ const ShowSpot = () => {
 
     useEffect(() => {
         dispatch(getSpot(spotId))
+        dispatch(setSpotReviews(spotId))
     }, [dispatch, spotId])
 
     const spot = useSelector(state => state.spots.singleSpot)
+    const reviewState = useSelector(state => state.reviews.spot)
+    const sessionUser = useSelector(state => state.session.user);
 
     if (Object.values(spot).length < 1) {
         return (<h2>Loading...</h2>)
     }
+
+    if (spot.avgRating) { spot.avgRating = parseInt(spot.avgRating).toFixed(2) }
+
+    const reviews = (Object.values(reviewState))
 
     // valid image check
     let img1;
@@ -33,28 +44,28 @@ const ShowSpot = () => {
     if (spot.SpotImages[4]) { img5 = spot.SpotImages[4].url }
 
     return (
-        <div className='show-spot-page'>
+        <div className='page'>
             <div className='show-spot'>
                 <h2>{spot.name}</h2>
                 <h3>{`${spot.city},${spot.state},${spot.country}`}</h3>
                 <div className='image-gallery'>
                     <div className='preview-image'>
-                        <div className='preview-image-container'>
-                            <img className='img-1' src={img1 || missingNo} alt={spot.name}></img>
+                        <div className='preview-image-container img1'>
+                            <img className='spot-image' src={img1 || missingNo} alt={spot.name}></img>
                         </div>
                     </div>
-                    <div className='side-images'>
-                        <div className='side-image-container'>
-                            <img className='img-2' src={img2 || missingNo} alt={spot.name}></img>
+                    <div className='side-images-collection'>
+                        <div className='side-image-container img2'>
+                            <img className='spot-image' src={img2 || missingNo} alt={spot.name}></img>
                         </div>
-                        <div className='side-image-container'>
-                            <img className='img-3' src={img3 || missingNo} alt={spot.name}></img>
+                        <div className='side-image-container img3'>
+                            <img className='spot-image' src={img3 || missingNo} alt={spot.name}></img>
                         </div>
-                        <div className='side-image-container'>
-                            <img className='img-4' src={img4 || missingNo} alt={spot.name}></img>
+                        <div className='side-image-container img4'>
+                            <img className='spot-image' src={img4 || missingNo} alt={spot.name}></img>
                         </div>
-                        <div className='side-image-container'>
-                            <img className='img-5' src={img5 || missingNo} alt={spot.name}></img>
+                        <div className='side-image-container img5'>
+                            <img className='spot-image' src={img5 || missingNo} alt={spot.name}></img>
                         </div>
                     </div>
                 </div>
@@ -73,10 +84,32 @@ const ShowSpot = () => {
                 </div>
                 <hr></hr>
                 <div className='review-section'>
-                    <i className="fa-solid fa-star"></i>
-                    <h2>{spot.avgRating}</h2>
-                    <h2>{`${spot.numReviews} review(s)`}</h2>
-                    {/* TODO: add review data here */}
+                    <div className='review-header'>
+                        <i className="fa-solid fa-star"></i>
+                        <h2>{spot.avgRating}</h2>
+                        <h2>{`${spot.numReviews} review(s)`}</h2>
+                    </div>
+                    { sessionUser && (
+                        <OpenModalButton
+                            buttonText="Post Your Review"
+                            modalComponent={<AddReviewModal spot={spot}/>}
+                        />
+                    )}
+                    {reviews.map((review) => {
+                        return (
+                            <div className='review' key={review.id}>
+                                <h3>{`${review.User.firstName} ${review.User.lastName}`}</h3>
+                                <h5>{review.createdAt}</h5>
+                                <p>{review.review}</p>
+                                {sessionUser.id === review.User.id && (
+                                    <OpenModalButton
+                                        buttonText="Delete"
+                                        modalComponent={<DeleteReviewModal review={review} />}
+                                    />
+                                )}
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
         </div>

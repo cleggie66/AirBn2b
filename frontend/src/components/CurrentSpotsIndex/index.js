@@ -6,15 +6,13 @@ import SpotsIndexItem from '../SpotsIndexItem';
 
 const CurrentSpotsIndex = () => {
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(setCurrentSpots())
-    }, [dispatch])
-
+    
     const spotState = useSelector(state => state.spots.currentSpots)
     const spots = Object.values(spotState);
-
-    console.log("NOT WORKING:", spots)
+    
+    useEffect(() => {
+        dispatch(setCurrentSpots())
+    }, [dispatch, spots.length])
 
     return (
         <div className='spots-container'>

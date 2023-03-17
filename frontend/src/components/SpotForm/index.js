@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
 import { addNewSpot, updateSpot } from "../../store/spotReducer";
+import { addNewSpotImage } from '../../store/spotReducer';
 import './SpotForm.css'
 
 
-const SpotForm = ({spot, formType}) => {
+const SpotForm = ({ spot, formType }) => {
     const [country, setCountry] = useState(spot.country)
     const [address, setAddress] = useState(spot.address)
     const [city, setCity] = useState(spot.city)
@@ -22,7 +23,7 @@ const SpotForm = ({spot, formType}) => {
     const [photo5, setPhoto5] = useState(spot.photo5)
     const [errors, setErrors] = useState([])
     let spotId;
-    if (spot.id) {spotId = spot.id}
+    if (spot.id) { spotId = spot.id }
 
     const dispatch = useDispatch();
     const history = useHistory()
@@ -31,24 +32,29 @@ const SpotForm = ({spot, formType}) => {
         e.preventDefault();
 
         setErrors([]);
-        let spot;
+        let newSpot;
 
         if (formType === 'Create Spot') {
-            spot = await dispatch(addNewSpot({ address, city, state, country, lat, lng, name, description, price }))
+            newSpot = await dispatch(addNewSpot({ address, city, state, country, lat, lng, name, description, price }))
                 .catch(async (res) => {
                     const data = await res.json();
                     if (data && data.errors) setErrors(Object.values(data.errors))
-                })
+                });
+            await dispatch(addNewSpotImage({ url: previewPhoto, preview: true, spotId: newSpot.id }))
+            await dispatch(addNewSpotImage({ url: photo2, preview: false, spotId: newSpot.id }))
+            await dispatch(addNewSpotImage({ url: photo3, preview: false, spotId: newSpot.id }))
+            await dispatch(addNewSpotImage({ url: photo4, preview: false, spotId: newSpot.id }))
+            await dispatch(addNewSpotImage({ url: photo5, preview: false, spotId: newSpot.id }))
         }
         if (formType === 'Update Spot') {
-            spot = await dispatch(updateSpot({ spotId, address, city, state, country, lat, lng, name, description, price }))
+            newSpot = await dispatch(updateSpot({ spotId, address, city, state, country, lat, lng, name, description, price }))
                 .catch(async (res) => {
                     const data = await res.json();
                     if (data && data.errors) setErrors(Object.values(data.errors))
                 })
         }
 
-        history.push(`/spots/${spot.id}`)
+        history.push(`/spots/${newSpot.id}`)
     }
 
     return (
@@ -136,41 +142,45 @@ const SpotForm = ({spot, formType}) => {
                 onChange={(e) => setPrice(e.target.value)}
             />
             <hr />
-            <h3>Liven up your spot with photos</h3>
-            <p>
-                Submit a link to at least one photo to publish your spot.
-            </p>
-            <input
-                type="text"
-                value={previewPhoto}
-                placeholder="Preview Image URL"
-                onChange={(e) => setPreviewPhoto(e.target.value)}
-            />
-            <input
-                type="text"
-                value={photo2}
-                placeholder="Image URL"
-                onChange={(e) => setPhoto2(e.target.value)}
-            />
-            <input
-                type="text"
-                value={photo3}
-                placeholder="Image URL"
-                onChange={(e) => setPhoto3(e.target.value)}
-            />
-            <input
-                type="text"
-                value={photo4}
-                placeholder="Image URL"
-                onChange={(e) => setPhoto4(e.target.value)}
-            />
-            <input
-                type="text"
-                value={photo5}
-                placeholder="Image URL"
-                onChange={(e) => setPhoto5(e.target.value)}
-            />
-            <hr />
+            {formType === 'Create Spot' && (
+                <>
+                    <h3>Liven up your spot with photos</h3>
+                    <p>
+                        Submit a link to at least one photo to publish your spot.
+                    </p>
+                    <input
+                        type="text"
+                        value={previewPhoto}
+                        placeholder="Preview Image URL"
+                        onChange={(e) => setPreviewPhoto(e.target.value)}
+                    />
+                    <input
+                        type="text"
+                        value={photo2}
+                        placeholder="Image URL"
+                        onChange={(e) => setPhoto2(e.target.value)}
+                    />
+                    <input
+                        type="text"
+                        value={photo3}
+                        placeholder="Image URL"
+                        onChange={(e) => setPhoto3(e.target.value)}
+                    />
+                    <input
+                        type="text"
+                        value={photo4}
+                        placeholder="Image URL"
+                        onChange={(e) => setPhoto4(e.target.value)}
+                    />
+                    <input
+                        type="text"
+                        value={photo5}
+                        placeholder="Image URL"
+                        onChange={(e) => setPhoto5(e.target.value)}
+                    />
+                    <hr />
+                </>
+            )}
             <button type='submit'>{formType}</button>
 
         </form>
