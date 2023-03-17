@@ -109,7 +109,7 @@ const ShowSpot = () => {
                                 <h3>{`${review.User.firstName} ${review.User.lastName}`}</h3>
                                 <h5 className='review-date'>{review.createdAt}</h5>
                                 <p>{review.review}</p>
-                                {sessionUser.id === review.User.id && (
+                                {(sessionUser && (sessionUser.id === review.User.id)) && (
                                     <OpenModalButton
                                         buttonText="Delete"
                                         className="delete-review-button"

@@ -11,3 +11,8 @@
     display: flex;
     justify-content: center;
 }
+
+.error {
+    color: red;
+    list-style-type: none
+}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
@@ -8,9 +8,18 @@ const LoginFormModal = () => {
     const [credential, setCredential] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState([]);
+    const [disabled, setDisabled] = useState(true)
     const dispatch = useDispatch();
-    const { closeModal } = useModal()
+    const { closeModal } = useModal();
 
+    useEffect(() => {
+        if (password.length >= 4 && credential.length >= 6) {
+            setDisabled(false)
+        } else {
+            setDisabled(true)
+        }
+    }, [credential, password])
+    
     const onSubmit = (e) => {
         e.preventDefault();
 
@@ -27,7 +36,7 @@ const LoginFormModal = () => {
         <form onSubmit={onSubmit} className="login-form">
             {errors.length > 0 && (
                 <ul>
-                    {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                    {errors.map((error, idx) => <li className="error" key={idx}>{error}</li>)}
                 </ul>
             )}
             <label>
@@ -35,7 +44,9 @@ const LoginFormModal = () => {
                 <input
                     type="text"
                     value={credential}
-                    onChange={(e) => setCredential(e.target.value)}
+                    onChange={(e) => {
+                        setCredential(e.target.value);
+                    }}
                 />
             </label>
             <label>
@@ -43,10 +54,12 @@ const LoginFormModal = () => {
                 <input
                     type="password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => {
+                        setPassword(e.target.value)
+                    }}
                 />
             </label>
-            <button type='submit'>Log In</button>
+            <button disabled={disabled} type='submit'>Log In</button>
         </form>
     )
 }
