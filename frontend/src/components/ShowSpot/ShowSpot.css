@@ -17,32 +17,41 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 5px; 
-}
-
-.spot-image {
-    width: auto;
-    height: 100%;
+    gap: 5px;
 }
 
 .preview-image-container {
     max-width: 480px;
     max-height: 380px;
     overflow: hidden;
+    display: flex;
+    align-content: center;
+    justify-content: center;
 }
 
 .side-image-container {
     max-width: 240px;
     max-height: 187.5px;
     overflow: hidden;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.spot-image {
+    width: auto;
+    height: 100%;
+    object-fit: cover;
 }
 
 .img1 {
-border-radius: 3% 0 0 3%
+    border-radius: 3% 0 0 3%
 }
+
 .img3 {
-border-radius: 0 5% 0 0
+    border-radius: 0 5% 0 0
 }
+
 .img5 {
-border-radius: 0 0 5% 0
+    border-radius: 0 0 5% 0
 }

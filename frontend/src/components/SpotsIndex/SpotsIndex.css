@@ -20,22 +20,20 @@
 }
 
 .image-container {
-    /* display: inline-block;
-    position: relative; */
     grid-area: img;
     width: 225px;
     height: 225px;
     overflow: hidden;
     border-radius: 5%;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+        align-content: center;
+        justify-content: center;
 }
 
 .index-preview-image {
     width: auto;
-    height: 100%;
+        height: 100%;
+        object-fit: cover;
 }
 
 .spot-index>.spot-location {
