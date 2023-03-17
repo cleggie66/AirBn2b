@@ -45,32 +45,33 @@ function ProfileButton({ user }) {
                 <i className="fas fa-user-circle" />
             </div>
             {user ? (
-                <ul className={ulClassName} ref={ulRef}>
-                    <li>{user.username}</li>
-                    <li>{user.firstName} {user.lastName}</li>
-                    <li>{user.email}</li>
-                    <li>
+                <div className={ulClassName} ref={ulRef}>
+                    <h4>{`Hello, ${user.firstName}!`}</h4>
+                    <p>{user.email}</p>
+                    <hr className="profile-dropdown-divider"></hr>
+                    <h4>
                         <Link to='/spots/current'>Manage Spots</Link>
-                    </li>
-                    <li>
-                        <button onClick={logout}>Log Out</button>
-                    </li>
-                </ul>
+                    </h4>
+                    <hr className="profile-dropdown-divider"></hr>
+                    <button className="logout-button" onClick={logout}>Log Out</button>
+                </div>
             ) : (
-                <ul className={ulClassName} ref={ulRef}>
-                    <li>
+                <div className={ulClassName} ref={ulRef}>
+                    <h4>
                         <OpenModalButton
                             buttonText="Log In"
+                            className="signup-login-button"
                             modalComponent={<LoginFormModal />}
                         />
-                    </li>
-                    <li>
+                    </h4>
+                    <h4>
                         <OpenModalButton
                             buttonText="Sign Up"
+                            className="signup-login-button"
                             modalComponent={<SignupFormModal />}
                         />
-                    </li>
-                </ul>
+                    </h4>
+                </div>
             )}
         </>
     );

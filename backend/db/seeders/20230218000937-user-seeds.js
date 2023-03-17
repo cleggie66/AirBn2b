@@ -11,7 +11,7 @@ module.exports = {
     options.tableName = 'Users';
     return queryInterface.bulkInsert(options, [
       {
-        firstName: 'Aragorn II',
+        firstName: 'Aragorn',
         lastName: 'Elessar',
         email: 'aragorn@lotr.io',
         username: 'king_returned_33',
