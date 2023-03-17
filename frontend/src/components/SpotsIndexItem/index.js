@@ -1,5 +1,4 @@
 import { Link, useHistory } from 'react-router-dom';
-import './SpotsIndexItem.css'
 import OpenModalButton from '../OpenModalButton';
 import DeleteSpotModal from '../DeleteSpotModal';
 
@@ -14,7 +13,7 @@ const SpotsIndexItem = ({ spot, currentSpots }) => {
         <div className='spot-index'>
             <span className="tooltip">{spot.name}</span>
             <Link to={`/spots/${spot.id}`} className='image-container'>
-                <img src={spot.previewImage} alt={spot.name}></img>
+                <img src={spot.previewImage} alt={spot.name} className='index-preview-image'></img>
             </Link>
             <h3 className='spot-location'>{`${spot.city}, ${spot.state}`}</h3>
             <div className='spot-review'>

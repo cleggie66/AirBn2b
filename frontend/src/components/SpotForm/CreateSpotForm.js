@@ -27,11 +27,11 @@ const CreateSpotForm = () => {
         description: 'This is a really cool totally real spot that i am not just making up for testing purposes',
         name: 'TEST',
         price: 10000,
-        previewPhoto: 'image.png',
-        photo2: 'image.png',
-        photo3: '',
-        photo4: '',
-        photo5: ''
+        previewPhoto: 'https://pyxis.nymag.com/v1/imgs/bcc/d5b/348d3f4a520447a43b969323f2bd826fe9-gandolfini-pool-cover.2x.rhorizontal.w807.jpg',
+        photo2: 'https://cdn.britannica.com/48/103148-050-1CBE7D69/Cast-members-The-Sopranos-Steve-Van-Zandt.jpg',
+        photo3: 'https://i.insider.com/5aa1827765c6e6224b8b45e4?width=1300&format=jpeg&auto=webp',
+        photo4: 'https://ychef.files.bbci.co.uk/1600x900/p06xj8jl.webp',
+        photo5: 'https://static.wikia.nocookie.net/sopranos/images/6/60/The_Soprano_Crew-_Tony_Soprano%2C_Christopher_Moltisanti%2C_Paulie_Gualtieri_and_Silvio_Dante.jpg/revision/latest/scale-to-width-down/1000?cb=20211026135123'
     };
 
     return (

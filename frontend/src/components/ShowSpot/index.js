@@ -42,28 +42,28 @@ const ShowSpot = () => {
     if (spot.SpotImages[4]) { img5 = spot.SpotImages[4].url }
 
     return (
-        <div className='show-spot-page'>
+        <div className='page'>
             <div className='show-spot'>
                 <h2>{spot.name}</h2>
                 <h3>{`${spot.city},${spot.state},${spot.country}`}</h3>
                 <div className='image-gallery'>
                     <div className='preview-image'>
-                        <div className='preview-image-container'>
-                            <img className='img-1' src={img1 || missingNo} alt={spot.name}></img>
+                        <div className='preview-image-container img1'>
+                            <img className='spot-image' src={img1 || missingNo} alt={spot.name}></img>
                         </div>
                     </div>
-                    <div className='side-images'>
-                        <div className='side-image-container'>
-                            <img className='img-2' src={img2 || missingNo} alt={spot.name}></img>
+                    <div className='side-images-collection'>
+                        <div className='side-image-container img2'>
+                            <img className='spot-image' src={img2 || missingNo} alt={spot.name}></img>
                         </div>
-                        <div className='side-image-container'>
-                            <img className='img-3' src={img3 || missingNo} alt={spot.name}></img>
+                        <div className='side-image-container img3'>
+                            <img className='spot-image' src={img3 || missingNo} alt={spot.name}></img>
                         </div>
-                        <div className='side-image-container'>
-                            <img className='img-4' src={img4 || missingNo} alt={spot.name}></img>
+                        <div className='side-image-container img4'>
+                            <img className='spot-image' src={img4 || missingNo} alt={spot.name}></img>
                         </div>
-                        <div className='side-image-container'>
-                            <img className='img-5' src={img5 || missingNo} alt={spot.name}></img>
+                        <div className='side-image-container img5'>
+                            <img className='spot-image' src={img5 || missingNo} alt={spot.name}></img>
                         </div>
                     </div>
                 </div>

@@ -94,6 +94,19 @@ export const addNewSpot = (spot) => async (dispatch) => {
     const data = await response.json();
     return data;
 };
+export const addNewSpotImage = (images) => async (dispatch) => {
+    const { url, preview, spotId } = images;
+    const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+        method: 'POST',
+        body: JSON.stringify({
+            url,
+            preview
+        })
+    });
+    const data = await response.json();
+    return data;
+
+};
 export const updateSpot = (spot) => async (dispatch) => {
     const { spotId, address, city, state, country, lat, lng, name, description, price } = spot
     const response = await csrfFetch(`/api/spots/${spotId}`, {

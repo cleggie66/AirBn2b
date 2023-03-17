@@ -1,6 +1,78 @@
 .spots-container {
     display: flex;
-    align-content: space-between;
+    justify-content: flex-start;
     flex-wrap: wrap;
     padding: 0 60px;
+    max-width: 1000px;
+}
+
+.spot-index {
+    padding: 10px;
+    height: 325px;
+    width: 225px;
+    display: grid;
+    grid-template-areas:
+        "img img img"
+        "location location review"
+        "price price price";
+    grid-template-rows: 1fr 2em 2em;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.image-container {
+    /* display: inline-block;
+    position: relative; */
+    grid-area: img;
+    width: 225px;
+    height: 225px;
+    overflow: hidden;
+    border-radius: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.index-preview-image {
+    width: auto;
+    height: 100%;
+}
+
+.spot-index>.spot-location {
+    grid-area: location;
+    align-self: center;
+}
+
+.spot-index>.spot-review {
+    grid-area: review;
+    justify-self: end;
+    align-self: center;
+    display: flex;
+    align-items: center;
+}
+
+.spot-index>.spot-price {
+    grid-area: price;
+    align-self: center;
+}
+
+.tooltip {
+    visibility: hidden;
+    position: relative;
+    top: 1em;
+    grid-area: img;
+    justify-self: center;
+    font-weight: bold;
+    text-align: center;
+    width: auto;
+    height: fit-content;
+    color: #ffffff;
+    font-size: 12px;
+    background-color: #329d9c;
+    border-radius: 10px;
+    padding: 10px 15px 10px 15px;
+}
+
+.spot-index:hover .tooltip {
+    visibility: visible;
 }
