@@ -6,7 +6,8 @@ import { getSpot } from "../../store/spotReducer";
 import { setSpotReviews } from '../../store/reviewReducer';
 import OpenModalButton from '../OpenModalButton';
 import AddReviewModal from '../AddReviewModal';
-import './ShowSpot.css'
+import DeleteReviewModal from '../DeleteReviewModal';
+import './ShowSpot.css';
 
 const ShowSpot = () => {
     const dispatch = useDispatch();
@@ -98,6 +99,12 @@ const ShowSpot = () => {
                                 <h3>{`${review.User.firstName} ${review.User.lastName}`}</h3>
                                 <h5>{review.createdAt}</h5>
                                 <p>{review.review}</p>
+                                {sessionUser.id === review.User.id && (
+                                    <OpenModalButton
+                                        buttonText="Delete"
+                                        modalComponent={<DeleteReviewModal review={review} />}
+                                    />
+                                )}
                             </div>
                         )
                     })}

@@ -9,7 +9,6 @@ const normalizer = (arr) => {
 };
 
 const SET_SPOT_REVIEWS = '/reviews/setSpotReviews'
-const ADD_REVIEW = '/reviews/add'
 
 
 //ACTIONS
@@ -19,16 +18,9 @@ export const setSpotReviewsAction = (reviews) => {
         reviews
     }
 };
-export const addReviewAction = (review) => {
-    return {
-        type: ADD_REVIEW,
-        review
-    }
-};
 
 //THUNKS
 export const setSpotReviews = (spotId) => async (dispatch) => {
-    console.log('test')
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`);
     const data = await response.json();
     const convData = normalizer(data.Reviews);
@@ -48,10 +40,18 @@ export const addReview = (reviewObj) => async (dispatch) => {
     dispatch(setSpotReviews(spotId));
     return data;
 }
+export const deleteReview = ({ reviewId, spotId }) => async (dispatch) => {
+    const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+        method: 'DELETE'
+    });
+    const data = await response.json();
+    dispatch(setSpotReviews(spotId))
+    return data;
+}
 
 const initialState = {
     spot: {},
-    user: {},
+    user: {}, //Currently not in use, optional feature for later
 };
 
 //REDUCER
@@ -62,12 +62,6 @@ const reviewReducer = (state = initialState, action) => {
             newState = {
                 spot: { ...action.reviews },
                 user: { ...state.user }
-            }
-            return newState
-        case ADD_REVIEW:
-            newState = {
-                spot: { ...state.spot, [action.review.id]: action.review },
-                user: { ...state.user } //Is this line needed??
             }
             return newState
         default:
