@@ -1,25 +1,41 @@
-/* hr {
-    color: #333;
-    height: 10px;
-} */
-
 .create-spot-form {
-    width: 600px;
-    /* display: flex;
+    width: 500px;
+    height: auto;
+    border-radius: 10px;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: auto;
-    padding: 10px;
-    box-shadow: 0px 0px 4px rgba(59, 59, 59, 0.6);
-    gap: 10px; */
+    padding: 20px;
+    gap: 5px;
 }
 
-textarea {
-    padding: 10px;
-    max-width: 100%;
-    line-height: 1.5;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    box-shadow: 1px 1px 1px #999;
+
+
+.create-spot-form>label {
+    align-self: flex-start;
+}
+
+.create-spot-form>span {
+    width: 100%;
+    display: inline-block;
+}
+
+.create-spot-form>span>input {
+    float: left;
+    width: 100%;
+}
+
+.spot-form-button {
+    display: block;
+    width: 100%;
+    height: 50px;
+    color: white;
+    background-color: #205072;
+    margin-top: 20px;
+}
+
+.spot-form-button:disabled {
+    color: #666666;
+    background-color: #cccccc;
 }

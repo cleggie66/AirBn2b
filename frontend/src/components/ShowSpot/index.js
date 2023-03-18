@@ -29,7 +29,10 @@ const ShowSpot = () => {
 
     if (spot.avgRating) { spot.avgRating = parseInt(spot.avgRating).toFixed(2) }
 
-    const reviews = (Object.values(reviewState))
+    const reviewArray = (Object.values(reviewState))
+    const reviews = reviewArray.sort((a, b) => {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    })
 
     // valid image check
     let img1;
@@ -81,20 +84,38 @@ const ShowSpot = () => {
                         </div>
                         <div className='review-totals'>
                             <i className="fa-solid fa-star"></i>
-                            <h4>{spot.avgRating}</h4>
-                            <h4>•</h4>
-                            <h4>{`${spot.numReviews} review(s)`}</h4>
+                            {spot.avgRating && (
+                                <>
+                                    <h4>{spot.avgRating}</h4>
+                                    <h4>•</h4>
+                                    <h4>{`${spot.numReviews} ${(spot.numReviews === 1) ? "review" : "reviews"}`}</h4>
+                                </>
+                            )}
+                            {!spot.avgRating && (
+                                <>
+                                    <h4>New</h4>
+                                </>
+                            )}
                         </div>
-                        <button className='reserve-button'>Reserve</button>
+                        <button className='reserve-button' onClick={() => window.alert("Feature coming soon")}>Reserve</button>
                     </div>
                 </div>
                 <hr className='line-break'></hr>
                 <div className='review-section'>
                     <div className='review-header'>
                         <i className="fa-solid fa-star"></i>
-                        <h2>{spot.avgRating}</h2>
-                        <h2>•</h2>
-                        <h2>{`${spot.numReviews} review(s)`}</h2>
+                        {spot.avgRating && (
+                            <>
+                                <h2>{spot.avgRating}</h2>
+                                <h2>•</h2>
+                                <h2>{`${spot.numReviews} ${(spot.numReviews === 1) ? "review" : "reviews"}`}</h2>
+                            </>
+                        )}
+                        {!spot.avgRating && (
+                            <>
+                                <h2>New</h2>
+                            </>
+                        )}
                     </div>
                     {sessionUser && (
                         <OpenModalButton
@@ -103,11 +124,14 @@ const ShowSpot = () => {
                             modalComponent={<AddReviewModal spot={spot} />}
                         />
                     )}
+                    {(!reviews.length && sessionUser.id !== spot.ownerId && (
+                        <h2>Be the first to post a review!</h2>
+                    ))}
                     {reviews.map((review) => {
                         return (
                             <div className='review' key={review.id}>
                                 <h3>{`${review.User.firstName} ${review.User.lastName}`}</h3>
-                                <h5 className='review-date'>{review.createdAt}</h5>
+                                <h5 className='review-date'>{`${new Date(review.createdAt).toLocaleString('default', { month: 'long' }) } ${new Date(review.createdAt).getFullYear()}`}</h5>
                                 <p>{review.review}</p>
                                 {(sessionUser && (sessionUser.id === review.User.id)) && (
                                     <OpenModalButton
