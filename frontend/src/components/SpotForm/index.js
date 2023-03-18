@@ -33,18 +33,33 @@ const SpotForm = ({ spot, formType }) => {
 
         setErrors([]);
         let newSpot;
+        let allowedImages = ["png", "jpg", 'jpeg']
 
+        if (!previewPhoto) {
+            return setErrors(['Preview image is required'])
+        }
+        if (previewPhoto && !allowedImages.includes(previewPhoto.split('.')[previewPhoto.split('.').length - 1])) return setErrors(['Image URL must end in .png, .jpg, or .jpeg'])
+        if (photo2 && !allowedImages.includes(photo2.split('.')[photo2.split('.').length - 1])) return setErrors(['Image URL must end in .png, .jpg, or .jpeg'])
+        if (photo3 && !allowedImages.includes(photo3.split('.')[photo3.split('.').length - 1])) return setErrors(['Image URL must end in .png, .jpg, or .jpeg'])
+        if (photo4 && !allowedImages.includes(photo4.split('.')[photo4.split('.').length - 1])) return setErrors(['Image URL must end in .png, .jpg, or .jpeg'])
+        if (photo5 && !allowedImages.includes(photo5.split('.')[photo5.split('.').length - 1])) return setErrors(['Image URL must end in .png, .jpg, or .jpeg'])
         if (formType === 'Create Spot') {
             newSpot = await dispatch(addNewSpot({ address, city, state, country, lat, lng, name, description, price }))
                 .catch(async (res) => {
                     const data = await res.json();
                     if (data && data.errors) setErrors(Object.values(data.errors))
                 });
-            await dispatch(addNewSpotImage({ url: previewPhoto, preview: true, spotId: newSpot.id }))
-            await dispatch(addNewSpotImage({ url: photo2, preview: false, spotId: newSpot.id }))
-            await dispatch(addNewSpotImage({ url: photo3, preview: false, spotId: newSpot.id }))
-            await dispatch(addNewSpotImage({ url: photo4, preview: false, spotId: newSpot.id }))
-            await dispatch(addNewSpotImage({ url: photo5, preview: false, spotId: newSpot.id }))
+            if (newSpot) {
+                await dispatch(addNewSpotImage({ url: previewPhoto, preview: true, spotId: newSpot.id }))
+                    .catch(async (res) => {
+                        const data = await res.json();
+                        if (data && data.errors) setErrors(Object.values(data.errors))
+                    });
+                await dispatch(addNewSpotImage({ url: photo2, preview: false, spotId: newSpot.id }))
+                await dispatch(addNewSpotImage({ url: photo3, preview: false, spotId: newSpot.id }))
+                await dispatch(addNewSpotImage({ url: photo4, preview: false, spotId: newSpot.id }))
+                await dispatch(addNewSpotImage({ url: photo5, preview: false, spotId: newSpot.id }))
+            }
         }
         if (formType === 'Update Spot') {
             newSpot = await dispatch(updateSpot({ spotId, address, city, state, country, lat, lng, name, description, price }))
@@ -53,8 +68,7 @@ const SpotForm = ({ spot, formType }) => {
                     if (data && data.errors) setErrors(Object.values(data.errors))
                 })
         }
-
-        history.push(`/spots/${newSpot.id}`)
+        if (!errors.length) history.push(`/spots/${newSpot.id}`)
     }
 
     return (
@@ -62,7 +76,7 @@ const SpotForm = ({ spot, formType }) => {
             <form onSubmit={onSubmit} className="create-spot-form">
                 {errors.length > 0 && (
                     <ul>
-                        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                        {errors.map((error, idx) => <li className="error" key={idx}>{error}</li>)}
                     </ul>
                 )}
                 <h2>Create a New Spot</h2>

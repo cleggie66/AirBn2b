@@ -29,6 +29,9 @@ const validateNewSpot = [
     check('description')
         .exists({ checkFalsy: true })
         .withMessage('Description is required'),
+    check('description')
+        .custom((value) => value.length >= 30)
+        .withMessage('Description needs 30 or more characters'),
     check('price')
         .exists({ checkFalsy: true })
         .withMessage('Price per day is required'),
