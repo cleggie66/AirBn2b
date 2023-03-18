@@ -92,100 +92,124 @@ const SpotForm = ({ spot, formType }) => {
                         onChange={(e) => setAddress(e.target.value)}
                     />
                 </span>
-                <label>
-                    City:
-                </label>
-                <input
-                    type="text"
-                    value={city}
-                    placeholder="City"
-                    onChange={(e) => setCity(e.target.value)}
-                />
-                <label>
-                    State:
-                </label>
-                <input
-                    type="text"
-                    value={state}
-                    placeholder="STATE"
-                    onChange={(e) => setState(e.target.value)}
-                />
-                <hr />
+                <div className='dual-input'>
+                    <div className='city-input'>
+                        <label>
+                            City:
+                        </label>
+                        <input
+                            type="text"
+                            value={city}
+                            placeholder="City"
+                            onChange={(e) => setCity(e.target.value)}
+                        />
+                    </div>
+                    <h3>,</h3>
+                    <div className='state-input'>
+                        <label>
+                            State:
+                        </label>
+                        <input
+                            type="text"
+                            value={state}
+                            placeholder="STATE"
+                            onChange={(e) => setState(e.target.value)}
+                        />
+                    </div>
+                </div>
+                <hr className='spot-form-divider' />
                 <h3>Describe your place to guests</h3>
                 <p>
                     Mention the best features of your space, any special amentities like
                     fast wif or parking, and what you love about the neighborhood.
                 </p>
-                <input
-                    type="textarea"
+                <textarea
+                    className='textarea'
                     value={description}
                     placeholder="Please write at least 30 characters"
                     onChange={(e) => setDescription(e.target.value)}
                 />
-                <hr />
+                <hr className='spot-form-divider' />
                 <h3>Create a title for your spot</h3>
                 <p>
                     Catch guests' attention with a spot title that highlights what makes
                     your place special.
                 </p>
-                <input
-                    type="text"
-                    value={name}
-                    placeholder="Name of your spot"
-                    onChange={(e) => setName(e.target.value)}
-                />
-                <hr />
+                <span>
+                    <input
+                        type="text"
+                        value={name}
+                        placeholder="Name of your spot"
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                </span>
+                <hr className='spot-form-divider' />
                 <h3>Set a base price for your spot</h3>
                 <p>
                     Competitive pricing can help your listing stand out and rank higher
                     in search results.
                 </p>
-                <input
-                    type="text"
-                    value={price}
-                    placeholder="Price per night (USD)"
-                    onChange={(e) => setPrice(e.target.value)}
-                />
-                <hr />
+                <div className='price-input'>
+                    <h4>$</h4>
+                    <span>
+                        <input
+                            type="text"
+                            value={price}
+                            placeholder="Price per night (USD)"
+                            onChange={(e) => setPrice(e.target.value)}
+                        />
+                    </span>
+                </div>
+                <hr className='spot-form-divider' />
                 {formType === 'Create Spot' && (
                     <>
                         <h3>Liven up your spot with photos</h3>
                         <p>
                             Submit a link to at least one photo to publish your spot.
                         </p>
-                        <input
-                            type="text"
-                            value={previewPhoto}
-                            placeholder="Preview Image URL"
-                            onChange={(e) => setPreviewPhoto(e.target.value)}
-                        />
-                        <input
-                            type="text"
-                            value={photo2}
-                            placeholder="Image URL"
-                            onChange={(e) => setPhoto2(e.target.value)}
-                        />
-                        <input
-                            type="text"
-                            value={photo3}
-                            placeholder="Image URL"
-                            onChange={(e) => setPhoto3(e.target.value)}
-                        />
-                        <input
-                            type="text"
-                            value={photo4}
-                            placeholder="Image URL"
-                            onChange={(e) => setPhoto4(e.target.value)}
-                        />
-                        <input
-                            type="text"
-                            value={photo5}
-                            placeholder="Image URL"
-                            onChange={(e) => setPhoto5(e.target.value)}
-                        />
-                        <hr />
+                        <span>
+                            <input
+                                type="text"
+                                value={previewPhoto}
+                                placeholder="Preview Image URL"
+                                onChange={(e) => setPreviewPhoto(e.target.value)}
+                            />
+                        </span>
+                        <span>
+                            <input
+                                type="text"
+                                value={photo2}
+                                placeholder="Image URL"
+                                onChange={(e) => setPhoto2(e.target.value)}
+                            />
+                        </span>
+                        <span>
+                            <input
+                                type="text"
+                                value={photo3}
+                                placeholder="Image URL"
+                                onChange={(e) => setPhoto3(e.target.value)}
+                            />
+                        </span>
+                        <span>
+                            <input
+                                type="text"
+                                value={photo4}
+                                placeholder="Image URL"
+                                onChange={(e) => setPhoto4(e.target.value)}
+                            />
+                        </span>
+                        <span>
+                            <input
+                                type="text"
+                                value={photo5}
+                                placeholder="Image URL"
+                                onChange={(e) => setPhoto5(e.target.value)}
+                            />
+                        </span>
                     </>
                 )}
+                <hr className='spot-form-divider' />
                 <button
                     type='submit'
                     className='spot-form-button'

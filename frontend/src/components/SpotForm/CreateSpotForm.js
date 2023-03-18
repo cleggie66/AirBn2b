@@ -10,7 +10,7 @@ const CreateSpotForm = () => {
         lng: -122.4730327,
         description: '',
         name: '',
-        price: 0,
+        price: '',
         previewPhoto: '',
         photo2: '',
         photo3: '',
