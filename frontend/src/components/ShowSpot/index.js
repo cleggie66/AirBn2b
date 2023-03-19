@@ -31,7 +31,7 @@ const ShowSpot = () => {
         dispatch(getSpot(spotId))
         dispatch(setSpotReviews(spotId))
         dispatch(setUserReviews())
-    }, [dispatch, spotId])
+    }, [dispatch, spotId, userReviews.length])
 
     useEffect(() => {
         let boolean = false;
@@ -60,8 +60,7 @@ const ShowSpot = () => {
         return (<h2>Loading...</h2>)
     }
 
-    // if (spot.avgRating) { spot.avgRating = parseInt(spot.avgRating).toFixed(2) }
-    // NEED TO FIX ^^ AND USE
+    if (spot.avgRating) { spot.avgRating = parseFloat(spot.avgRating).toFixed(2) }
 
     // valid image check
     let img1;
@@ -146,7 +145,6 @@ const ShowSpot = () => {
                             </>
                         )}
                     </div>
-                    {/* sessionUser && sessionUser.id !== spot.ownerId && */}
                     {!disabled && (
                         <OpenModalButton
                             className="post-review-button"
