@@ -16,12 +16,12 @@ const SpotForm = ({ spot, formType }) => {
     const [description, setDescription] = useState(spot.description)
     const [name, setName] = useState(spot.name)
     const [price, setPrice] = useState(spot.price)
-    const [previewPhoto, setPreviewPhoto] = useState(spot.previewPhoto)
+    const [photo1, setPhoto1] = useState(spot.photo1)
     const [photo2, setPhoto2] = useState(spot.photo2)
     const [photo3, setPhoto3] = useState(spot.photo3)
     const [photo4, setPhoto4] = useState(spot.photo4)
     const [photo5, setPhoto5] = useState(spot.photo5)
-    const [errors, setErrors] = useState([])
+    const [errors, setErrors] = useState({})
     let spotId;
     if (spot.id) { spotId = spot.id }
 
@@ -38,30 +38,27 @@ const SpotForm = ({ spot, formType }) => {
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        setErrors([]);
+        setErrors({});
         let newSpot;
         let allowedImages = ["png", "jpg", 'jpeg']
 
-        if (previewPhoto && !allowedImages.includes(previewPhoto.split('.')[previewPhoto.split('.').length - 1])) return setErrors(['Image URL must end in .png, .jpg, or .jpeg'])
-        if (photo2 && !allowedImages.includes(photo2.split('.')[photo2.split('.').length - 1])) return setErrors(['Image URL must end in .png, .jpg, or .jpeg'])
-        if (photo3 && !allowedImages.includes(photo3.split('.')[photo3.split('.').length - 1])) return setErrors(['Image URL must end in .png, .jpg, or .jpeg'])
-        if (photo4 && !allowedImages.includes(photo4.split('.')[photo4.split('.').length - 1])) return setErrors(['Image URL must end in .png, .jpg, or .jpeg'])
-        if (photo5 && !allowedImages.includes(photo5.split('.')[photo5.split('.').length - 1])) return setErrors(['Image URL must end in .png, .jpg, or .jpeg'])
+        if (photo1 && !allowedImages.includes(photo1.split('.')[photo1.split('.').length - 1])) return setErrors({ ...errors, photo1: 'Image URL must end in .png, .jpg, or .jpeg'})
+        if (photo2 && !allowedImages.includes(photo2.split('.')[photo2.split('.').length - 1])) return setErrors({ ...errors, photo2: 'Image URL must end in .png, .jpg, or .jpeg'})
+        if (photo3 && !allowedImages.includes(photo3.split('.')[photo3.split('.').length - 1])) return setErrors({ ...errors, photo3: 'Image URL must end in .png, .jpg, or .jpeg'})
+        if (photo4 && !allowedImages.includes(photo4.split('.')[photo4.split('.').length - 1])) return setErrors({ ...errors, photo4: 'Image URL must end in .png, .jpg, or .jpeg'})
+        if (photo5 && !allowedImages.includes(photo5.split('.')[photo5.split('.').length - 1])) return setErrors({ ...errors, photo5: 'Image URL must end in .png, .jpg, or .jpeg'})
+        setErrors({yup: "yes"})
         if (formType === 'Create Spot') {
-            if (!previewPhoto) {
-                return setErrors(['Preview image is required'])
+            if (!photo1) {
+                setErrors({ ...errors, photo1: 'Preview image is required'})
             }
             newSpot = await dispatch(addNewSpot({ address, city, state, country, lat, lng, name, description, price }))
                 .catch(async (res) => {
                     const data = await res.json();
-                    if (data && data.errors) setErrors(Object.values(data.errors))
+                    if (data && data.errors) setErrors({...errors, ...data.errors})
                 });
             if (newSpot) {
-                await dispatch(addNewSpotImage({ url: previewPhoto, preview: true, spotId: newSpot.id }))
-                    .catch(async (res) => {
-                        const data = await res.json();
-                        if (data && data.errors) setErrors(Object.values(data.errors))
-                    });
+                await dispatch(addNewSpotImage({ url: photo1, preview: true, spotId: newSpot.id }))
                 await dispatch(addNewSpotImage({ url: photo2, preview: false, spotId: newSpot.id }))
                 await dispatch(addNewSpotImage({ url: photo3, preview: false, spotId: newSpot.id }))
                 await dispatch(addNewSpotImage({ url: photo4, preview: false, spotId: newSpot.id }))
@@ -72,10 +69,11 @@ const SpotForm = ({ spot, formType }) => {
             newSpot = await dispatch(updateSpot({ spotId, address, city, state, country, lat, lng, name, description, price }))
                 .catch(async (res) => {
                     const data = await res.json();
-                    if (data && data.errors) setErrors(Object.values(data.errors))
+                    if (data && data.errors) setErrors({ ...errors, ...data.errors })
                 })
         }
-        if (!errors.length) {
+        console.log(errors)
+        if (!Object.values(errors).length) {
             history.push(`/spots/${newSpot.id}`)
         } else {
             jumpToTop()
@@ -85,11 +83,6 @@ const SpotForm = ({ spot, formType }) => {
     return (
         <div className='page'>
             <form onSubmit={onSubmit} className="create-spot-form">
-                {errors.length > 0 && (
-                    <ul>
-                        {errors.map((error, idx) => <li className="error" key={idx}>{error}</li>)}
-                    </ul>
-                )}
                 <h2>{formType === 'Create Spot' ? "Create a New Spot" : "Update Your Spot"}</h2>
                 <h3>Where's your place located?</h3>
                 <p>
@@ -106,6 +99,7 @@ const SpotForm = ({ spot, formType }) => {
                         onChange={(e) => setCountry(e.target.value)}
                     />
                 </span>
+                {Object.values(errors)}
                 <label>
                     Street Address:
                 </label>
@@ -195,9 +189,9 @@ const SpotForm = ({ spot, formType }) => {
                         <span>
                             <input
                                 type="text"
-                                value={previewPhoto}
+                                value={photo1}
                                 placeholder="Preview Image URL"
-                                onChange={(e) => setPreviewPhoto(e.target.value)}
+                                onChange={(e) => setPhoto1(e.target.value)}
                             />
                         </span>
                         <span>
