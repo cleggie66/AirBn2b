@@ -6,7 +6,7 @@ function OpenModalButton({
     buttonText,
     onButtonClick,
     onModalClose,
-    className,
+    className
 }) {
     const { setModalContent, setOnModalClose } = useModal();
 

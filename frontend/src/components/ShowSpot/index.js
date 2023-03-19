@@ -14,6 +14,18 @@ const ShowSpot = () => {
     const { spotId } = useParams();
     const missingNo = 'https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'
     const [isReviewed, setIsReviewed] = useState(false)
+    const [disabled, setDisabled] = useState(true)
+
+    const spot = useSelector(state => state.spots.singleSpot)
+    const spotReviewState = useSelector(state => state.reviews.spot)
+    const userReviewState = useSelector(state => state.reviews.user)
+    const sessionUser = useSelector(state => state.session.user);
+
+    const spotReviewArray = (Object.values(spotReviewState));
+    const spotReviews = spotReviewArray.sort((a, b) => {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    });
+    const userReviews = (Object.values(userReviewState));
 
     useEffect(() => {
         dispatch(getSpot(spotId))
@@ -21,10 +33,28 @@ const ShowSpot = () => {
         dispatch(setUserReviews())
     }, [dispatch, spotId])
 
-    const spot = useSelector(state => state.spots.singleSpot)
-    const spotReviewState = useSelector(state => state.reviews.spot)
-    const userReviewState = useSelector(state => state.reviews.user)
-    const sessionUser = useSelector(state => state.session.user);
+    useEffect(() => {
+        let boolean = false;
+        for (let i = 0; i < userReviews.length; i++) {
+            const review = userReviews[i];
+            if (review.spotId === spot.id) boolean = true;
+        }
+        if (boolean) {
+            setIsReviewed(true)
+        } else {
+            setIsReviewed(false)
+        };
+    }, [userReviews, setIsReviewed, spot])
+
+    useEffect(() => {
+        setDisabled(
+            (
+                sessionUser &&
+                sessionUser.id !== spot.ownerId &&
+                !isReviewed
+            ) ? false : true
+        )
+    }, [sessionUser, spot, isReviewed])
 
     if (Object.values(spot).length < 1) {
         return (<h2>Loading...</h2>)
@@ -32,20 +62,6 @@ const ShowSpot = () => {
 
     // if (spot.avgRating) { spot.avgRating = parseInt(spot.avgRating).toFixed(2) }
     // NEED TO FIX ^^ AND USE
-
-    const spotReviewArray = (Object.values(spotReviewState));
-    const spotReviews = spotReviewArray.sort((a, b) => {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    })
-    // const userReviews = (Object.values(userReviewState));
-
-    // const reviewCheck = () => {
-    //     for (let i = 0; i < userReviews.length; i++) {
-    //         const review = userReviews[i];
-    //         if (review.spotId === spot.id) setIsReviewed(true);
-    //     }
-    //     return isReviewed;
-    // }
 
     // valid image check
     let img1;
@@ -130,13 +146,15 @@ const ShowSpot = () => {
                             </>
                         )}
                     </div>
-                    {sessionUser && sessionUser.id !== spot.ownerId && (
-                            <OpenModalButton
-                                className="post-review-button"
-                                buttonText="Post Your Review"
-                                modalComponent={<AddReviewModal spot={spot} />}
-                            />
-                        )}
+                    {/* sessionUser && sessionUser.id !== spot.ownerId && */}
+                    {!disabled && (
+                        <OpenModalButton
+                            className="post-review-button"
+                            disabled={disabled}
+                            buttonText="Post Your Review"
+                            modalComponent={<AddReviewModal spot={spot} />}
+                        />
+                    )}
                     {(!spotReviews.length && sessionUser.id !== spot.ownerId && (
                         <h2>Be the first to post a review!</h2>
                     ))}
