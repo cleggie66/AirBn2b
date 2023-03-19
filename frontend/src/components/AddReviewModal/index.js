@@ -4,13 +4,13 @@ import { useModal } from "../../context/Modal"
 import { addReview } from "../../store/reviewReducer";
 import './AddReviewModal.css'
 
-const AddReviewModal = ({spot}) => {
+const AddReviewModal = ({ spot }) => {
     const spotId = spot.id
     const { closeModal } = useModal();
     const dispatch = useDispatch();
-    const [ rating, setRating ] = useState(0)
-    const [ activeRating, setActiveRating ] = useState(0)
-    const [ review, setReview ] = useState('')
+    const [rating, setRating] = useState(0)
+    const [activeRating, setActiveRating] = useState(0)
+    const [review, setReview] = useState('')
 
     useEffect(() => {
         setActiveRating(rating)
@@ -22,13 +22,13 @@ const AddReviewModal = ({spot}) => {
             stars: rating,
             spotId
         }))
-        .then(closeModal)
+            .then(closeModal)
     }
 
     const reviewStarSetup = (num) => {
         return (
             <i
-                className={ activeRating >= num ? "fa-solid fa-star" : "fa-regular fa-star"}
+                className={activeRating >= num ? "fa-solid fa-star" : "fa-regular fa-star"}
                 onMouseEnter={(() => setActiveRating(num))}
                 onMouseLeave={(() => setActiveRating(rating))}
                 onClick={() => setRating(num)}
@@ -39,22 +39,28 @@ const AddReviewModal = ({spot}) => {
 
 
     return (
-        <div>
+        <div className="add-review-modal">
             <h2>How was your stay?</h2>
             <textarea
-                placeholder="Just a quick review."
+                placeholder="Leave your review here..."
                 value={review}
-                onChange={(e)=>setReview(e.target.value)}
+                onChange={(e) => setReview(e.target.value)}
             >
             </textarea>
-            <div>
+            <div className="add-review-stars">
                 {reviewStarSetup(1)}
                 {reviewStarSetup(2)}
                 {reviewStarSetup(3)}
                 {reviewStarSetup(4)}
                 {reviewStarSetup(5)}
+                <h4>Stars</h4>
             </div>
-            <button onClick={onSubmit}>Submit Your Review</button>
+            <button
+                className="add-review-button"
+                onClick={onSubmit}
+            >
+                Submit Your Review
+            </button>
         </div>
     )
 }

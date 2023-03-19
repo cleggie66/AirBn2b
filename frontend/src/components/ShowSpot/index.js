@@ -117,7 +117,7 @@ const ShowSpot = () => {
                             </>
                         )}
                     </div>
-                    {sessionUser && (
+                    {sessionUser && sessionUser.id !== spot.ownerId && (
                         <OpenModalButton
                             className="post-review-button"
                             buttonText="Post Your Review"

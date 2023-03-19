@@ -18,6 +18,9 @@ export const setSpotReviewsAction = (reviews) => {
         reviews
     }
 };
+export const setUserReviewsAction = (reviews) => {
+    
+}
 
 //THUNKS
 export const setSpotReviews = (spotId) => async (dispatch) => {

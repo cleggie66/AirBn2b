@@ -35,15 +35,15 @@ const SpotForm = ({ spot, formType }) => {
         let newSpot;
         let allowedImages = ["png", "jpg", 'jpeg']
 
-        if (!previewPhoto) {
-            return setErrors(['Preview image is required'])
-        }
         if (previewPhoto && !allowedImages.includes(previewPhoto.split('.')[previewPhoto.split('.').length - 1])) return setErrors(['Image URL must end in .png, .jpg, or .jpeg'])
         if (photo2 && !allowedImages.includes(photo2.split('.')[photo2.split('.').length - 1])) return setErrors(['Image URL must end in .png, .jpg, or .jpeg'])
         if (photo3 && !allowedImages.includes(photo3.split('.')[photo3.split('.').length - 1])) return setErrors(['Image URL must end in .png, .jpg, or .jpeg'])
         if (photo4 && !allowedImages.includes(photo4.split('.')[photo4.split('.').length - 1])) return setErrors(['Image URL must end in .png, .jpg, or .jpeg'])
         if (photo5 && !allowedImages.includes(photo5.split('.')[photo5.split('.').length - 1])) return setErrors(['Image URL must end in .png, .jpg, or .jpeg'])
         if (formType === 'Create Spot') {
+            if (!previewPhoto) {
+                return setErrors(['Preview image is required'])
+            }
             newSpot = await dispatch(addNewSpot({ address, city, state, country, lat, lng, name, description, price }))
                 .catch(async (res) => {
                     const data = await res.json();
@@ -79,7 +79,7 @@ const SpotForm = ({ spot, formType }) => {
                         {errors.map((error, idx) => <li className="error" key={idx}>{error}</li>)}
                     </ul>
                 )}
-                <h2>Create a New Spot</h2>
+                <h2>{formType === 'Create Spot' ? "Create a New Spot" : "Update Your Spot"}</h2>
                 <h3>Where's your place located?</h3>
                 <p>
                     Guests will only get your exact address once they booked a reservation
@@ -221,9 +221,9 @@ const SpotForm = ({ spot, formType }) => {
                                 onChange={(e) => setPhoto5(e.target.value)}
                             />
                         </span>
+                        <hr className='spot-form-divider' />
                     </>
                 )}
-                <hr className='spot-form-divider' />
                 <button
                     type='submit'
                     className='spot-form-button'

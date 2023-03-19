@@ -1,0 +1,28 @@
+.manage-spots-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 0 60px;
+    width: 1000px;
+}
+
+.manage-spots-header>h2 {
+    padding: 20px 0;
+}
+
+.create-a-new-spot-button {
+    width: 150px;
+    height: 40px;
+    align-self: flex-start;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    text-decoration: none;
+
+    background-color: #205072;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
