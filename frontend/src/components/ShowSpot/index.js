@@ -1,9 +1,9 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getSpot } from "../../store/spotReducer";
-import { setSpotReviews } from '../../store/reviewReducer';
+import { setSpotReviews, setUserReviews } from '../../store/reviewReducer';
 import OpenModalButton from '../OpenModalButton';
 import AddReviewModal from '../AddReviewModal';
 import DeleteReviewModal from '../DeleteReviewModal';
@@ -13,26 +13,39 @@ const ShowSpot = () => {
     const dispatch = useDispatch();
     const { spotId } = useParams();
     const missingNo = 'https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'
+    const [isReviewed, setIsReviewed] = useState(false)
 
     useEffect(() => {
         dispatch(getSpot(spotId))
         dispatch(setSpotReviews(spotId))
+        dispatch(setUserReviews())
     }, [dispatch, spotId])
 
     const spot = useSelector(state => state.spots.singleSpot)
-    const reviewState = useSelector(state => state.reviews.spot)
+    const spotReviewState = useSelector(state => state.reviews.spot)
+    const userReviewState = useSelector(state => state.reviews.user)
     const sessionUser = useSelector(state => state.session.user);
 
     if (Object.values(spot).length < 1) {
         return (<h2>Loading...</h2>)
     }
 
-    if (spot.avgRating) { spot.avgRating = parseInt(spot.avgRating).toFixed(2) }
+    // if (spot.avgRating) { spot.avgRating = parseInt(spot.avgRating).toFixed(2) }
+    // NEED TO FIX ^^ AND USE
 
-    const reviewArray = (Object.values(reviewState))
-    const reviews = reviewArray.sort((a, b) => {
+    const spotReviewArray = (Object.values(spotReviewState));
+    const spotReviews = spotReviewArray.sort((a, b) => {
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     })
+    // const userReviews = (Object.values(userReviewState));
+
+    // const reviewCheck = () => {
+    //     for (let i = 0; i < userReviews.length; i++) {
+    //         const review = userReviews[i];
+    //         if (review.spotId === spot.id) setIsReviewed(true);
+    //     }
+    //     return isReviewed;
+    // }
 
     // valid image check
     let img1;
@@ -118,20 +131,20 @@ const ShowSpot = () => {
                         )}
                     </div>
                     {sessionUser && sessionUser.id !== spot.ownerId && (
-                        <OpenModalButton
-                            className="post-review-button"
-                            buttonText="Post Your Review"
-                            modalComponent={<AddReviewModal spot={spot} />}
-                        />
-                    )}
-                    {(!reviews.length && sessionUser.id !== spot.ownerId && (
+                            <OpenModalButton
+                                className="post-review-button"
+                                buttonText="Post Your Review"
+                                modalComponent={<AddReviewModal spot={spot} />}
+                            />
+                        )}
+                    {(!spotReviews.length && sessionUser.id !== spot.ownerId && (
                         <h2>Be the first to post a review!</h2>
                     ))}
-                    {reviews.map((review) => {
+                    {spotReviews.map((review) => {
                         return (
                             <div className='review' key={review.id}>
                                 <h3>{`${review.User.firstName} ${review.User.lastName}`}</h3>
-                                <h5 className='review-date'>{`${new Date(review.createdAt).toLocaleString('default', { month: 'long' }) } ${new Date(review.createdAt).getFullYear()}`}</h5>
+                                <h5 className='review-date'>{`${new Date(review.createdAt).toLocaleString('default', { month: 'long' })} ${new Date(review.createdAt).getFullYear()}`}</h5>
                                 <p>{review.review}</p>
                                 {(sessionUser && (sessionUser.id === review.User.id)) && (
                                     <OpenModalButton

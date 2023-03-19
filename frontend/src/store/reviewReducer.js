@@ -1,4 +1,4 @@
-import { csrfFetch } from "./csrf"
+import { csrfFetch } from "./csrf";
 
 const normalizer = (arr) => {
     const obj = {};
@@ -8,7 +8,8 @@ const normalizer = (arr) => {
     return obj;
 };
 
-const SET_SPOT_REVIEWS = '/reviews/setSpotReviews'
+const SET_SPOT_REVIEWS = '/reviews/setSpotReviews';
+const SET_USER_REVIEWS = '/reviews/setUserReviews';
 
 
 //ACTIONS
@@ -19,8 +20,11 @@ export const setSpotReviewsAction = (reviews) => {
     }
 };
 export const setUserReviewsAction = (reviews) => {
-    
-}
+    return {
+        type: SET_USER_REVIEWS,
+        reviews
+    }
+};
 
 //THUNKS
 export const setSpotReviews = (spotId) => async (dispatch) => {
@@ -30,6 +34,15 @@ export const setSpotReviews = (spotId) => async (dispatch) => {
     dispatch(setSpotReviewsAction(convData))
     return convData;
 };
+
+export const setUserReviews = (userId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/reviews/current`);
+    const data = await response.json();
+    const convData = normalizer(data.Reviews);
+    dispatch(setUserReviewsAction(convData));
+    return convData;
+};
+
 export const addReview = (reviewObj) => async (dispatch) => {
     const { review, stars, spotId } = reviewObj
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
@@ -40,21 +53,24 @@ export const addReview = (reviewObj) => async (dispatch) => {
         })
     });
     const data = await response.json()
+    dispatch(setUserReviews());
     dispatch(setSpotReviews(spotId));
     return data;
-}
+};
+
 export const deleteReview = ({ reviewId, spotId }) => async (dispatch) => {
     const response = await csrfFetch(`/api/reviews/${reviewId}`, {
         method: 'DELETE'
     });
     const data = await response.json();
-    dispatch(setSpotReviews(spotId))
+    dispatch(setUserReviews());
+    dispatch(setSpotReviews(spotId));
     return data;
-}
+};
 
 const initialState = {
     spot: {},
-    user: {}, //Currently not in use, optional feature for later
+    user: {},
 };
 
 //REDUCER
@@ -66,7 +82,13 @@ const reviewReducer = (state = initialState, action) => {
                 spot: { ...action.reviews },
                 user: { ...state.user }
             }
-            return newState
+            return newState;
+        case SET_USER_REVIEWS:
+            newState = {
+                spot: { ...state.spot },
+                user: { ...action.reviews }
+            }
+            return newState;
         default:
             return state;
     }

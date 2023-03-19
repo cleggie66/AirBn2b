@@ -5,12 +5,22 @@ import { addReview } from "../../store/reviewReducer";
 import './AddReviewModal.css'
 
 const AddReviewModal = ({ spot }) => {
-    const spotId = spot.id
-    const { closeModal } = useModal();
-    const dispatch = useDispatch();
     const [rating, setRating] = useState(0)
     const [activeRating, setActiveRating] = useState(0)
-    const [review, setReview] = useState('')
+    const [review, setReview] = useState('');
+    const [disabled, setDisabled] = useState(true)
+    const [errors, setErrors] = useState([]);
+    const dispatch = useDispatch();
+    const { closeModal } = useModal();
+    const spotId = spot.id
+
+    useEffect(() => {
+        if ( review.length >= 10 && rating !== 0) {
+            setDisabled(false)
+        } else {
+            setDisabled(true)
+        }
+    }, [review, rating])
 
     useEffect(() => {
         setActiveRating(rating)
@@ -23,6 +33,10 @@ const AddReviewModal = ({ spot }) => {
             spotId
         }))
             .then(closeModal)
+            .catch(async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(Object.values(data.errors));
+            });
     }
 
     const reviewStarSetup = (num) => {
@@ -41,6 +55,11 @@ const AddReviewModal = ({ spot }) => {
     return (
         <div className="add-review-modal">
             <h2>How was your stay?</h2>
+            {errors.length > 0 && (
+                <ul>
+                    {errors.map((error, idx) => <li className="error" key={idx}>{error}</li>)}
+                </ul>
+            )}
             <textarea
                 placeholder="Leave your review here..."
                 value={review}
@@ -58,6 +77,7 @@ const AddReviewModal = ({ spot }) => {
             <button
                 className="add-review-button"
                 onClick={onSubmit}
+                disabled={disabled}
             >
                 Submit Your Review
             </button>
