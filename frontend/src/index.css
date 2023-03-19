@@ -10,4 +10,16 @@
 .page {
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.error {
+    color: red;
+    list-style-type: none;
+    text-align: center;
+}
+
+button {
+    border: none;
 }

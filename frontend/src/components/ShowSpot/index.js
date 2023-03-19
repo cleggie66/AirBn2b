@@ -1,9 +1,9 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getSpot } from "../../store/spotReducer";
-import { setSpotReviews } from '../../store/reviewReducer';
+import { setSpotReviews, setUserReviews } from '../../store/reviewReducer';
 import OpenModalButton from '../OpenModalButton';
 import AddReviewModal from '../AddReviewModal';
 import DeleteReviewModal from '../DeleteReviewModal';
@@ -13,23 +13,54 @@ const ShowSpot = () => {
     const dispatch = useDispatch();
     const { spotId } = useParams();
     const missingNo = 'https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'
+    const [isReviewed, setIsReviewed] = useState(false)
+    const [disabled, setDisabled] = useState(true)
+
+    const spot = useSelector(state => state.spots.singleSpot)
+    const spotReviewState = useSelector(state => state.reviews.spot)
+    const userReviewState = useSelector(state => state.reviews.user)
+    const sessionUser = useSelector(state => state.session.user);
+
+    const spotReviewArray = (Object.values(spotReviewState));
+    const spotReviews = spotReviewArray.sort((a, b) => {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    });
+    const userReviews = (Object.values(userReviewState));
 
     useEffect(() => {
         dispatch(getSpot(spotId))
         dispatch(setSpotReviews(spotId))
-    }, [dispatch, spotId])
+        dispatch(setUserReviews())
+    }, [dispatch, spotId, userReviews.length])
 
-    const spot = useSelector(state => state.spots.singleSpot)
-    const reviewState = useSelector(state => state.reviews.spot)
-    const sessionUser = useSelector(state => state.session.user);
+    useEffect(() => {
+        let boolean = false;
+        for (let i = 0; i < userReviews.length; i++) {
+            const review = userReviews[i];
+            if (review.spotId === spot.id) boolean = true;
+        }
+        if (boolean) {
+            setIsReviewed(true)
+        } else {
+            setIsReviewed(false)
+        };
+    }, [userReviews, setIsReviewed, spot])
+
+    useEffect(() => {
+        setDisabled(
+            (
+                sessionUser &&
+                sessionUser.id !== spot.ownerId &&
+                !isReviewed
+            ) ? false : true
+        )
+    }, [sessionUser, spot, isReviewed])
 
     if (Object.values(spot).length < 1) {
         return (<h2>Loading...</h2>)
     }
 
-    if (spot.avgRating) { spot.avgRating = parseInt(spot.avgRating).toFixed(2) }
-
-    const reviews = (Object.values(reviewState))
+    if (spot.avgRating) { spot.avgRating = parseFloat(spot.avgRating).toFixed(2) }
 
     // valid image check
     let img1;
@@ -46,8 +77,8 @@ const ShowSpot = () => {
     return (
         <div className='page'>
             <div className='show-spot'>
-                <h2>{spot.name}</h2>
-                <h3>{`${spot.city},${spot.state},${spot.country}`}</h3>
+                <h2 className='title'>{spot.name}</h2>
+                <h3 className='title-location'>{`${spot.city}, ${spot.state}, ${spot.country}`}</h3>
                 <div className='image-gallery'>
                     <div className='preview-image'>
                         <div className='preview-image-container img1'>
@@ -71,7 +102,7 @@ const ShowSpot = () => {
                 </div>
                 <div className='spot-info'>
                     <div className='spot-info-text'>
-                        <h2>{`Hosted By ${spot.Owner.firstName} ${spot.Owner.lastName}`}</h2>
+                        <h2 className='hosted-by'>{`Hosted By ${spot.Owner.firstName} ${spot.Owner.lastName}`}</h2>
                         <p>{spot.description}</p>
                     </div>
                     <div className='spot-info-action-box'>
@@ -81,35 +112,60 @@ const ShowSpot = () => {
                         </div>
                         <div className='review-totals'>
                             <i className="fa-solid fa-star"></i>
-                            <h4>{spot.avgRating}</h4>
-                            <h4>•</h4>
-                            <h4>{`${spot.numReviews} review(s)`}</h4>
+                            {spot.avgRating && (
+                                <>
+                                    <h4>{spot.avgRating}</h4>
+                                    <h4>•</h4>
+                                    <h4>{`${spot.numReviews} ${(spot.numReviews === 1) ? "review" : "reviews"}`}</h4>
+                                </>
+                            )}
+                            {!spot.avgRating && (
+                                <>
+                                    <h4>New</h4>
+                                </>
+                            )}
                         </div>
-                        <button className='reserve-button'>Reserve</button>
+                        <button className='reserve-button' onClick={() => window.alert("Feature coming soon")}>Reserve</button>
                     </div>
                 </div>
-                <hr></hr>
+                <hr className='line-break'></hr>
                 <div className='review-section'>
                     <div className='review-header'>
                         <i className="fa-solid fa-star"></i>
-                        <h2>{spot.avgRating}</h2>
-                        <h2>{`${spot.numReviews} review(s)`}</h2>
+                        {spot.avgRating && (
+                            <>
+                                <h2>{spot.avgRating}</h2>
+                                <h2>•</h2>
+                                <h2>{`${spot.numReviews} ${(spot.numReviews === 1) ? "review" : "reviews"}`}</h2>
+                            </>
+                        )}
+                        {!spot.avgRating && (
+                            <>
+                                <h2>New</h2>
+                            </>
+                        )}
                     </div>
-                    {sessionUser && (
+                    {!disabled && (
                         <OpenModalButton
+                            className="post-review-button"
+                            disabled={disabled}
                             buttonText="Post Your Review"
                             modalComponent={<AddReviewModal spot={spot} />}
                         />
                     )}
-                    {reviews.map((review) => {
+                    {(!spotReviews.length && sessionUser.id !== spot.ownerId && (
+                        <h2>Be the first to post a review!</h2>
+                    ))}
+                    {spotReviews.map((review) => {
                         return (
                             <div className='review' key={review.id}>
                                 <h3>{`${review.User.firstName} ${review.User.lastName}`}</h3>
-                                <h5>{review.createdAt}</h5>
+                                <h5 className='review-date'>{`${new Date(review.createdAt).toLocaleString('default', { month: 'long' })} ${new Date(review.createdAt).getFullYear()}`}</h5>
                                 <p>{review.review}</p>
-                                {sessionUser.id === review.User.id && (
+                                {(sessionUser && (sessionUser.id === review.User.id)) && (
                                     <OpenModalButton
                                         buttonText="Delete"
+                                        className="delete-review-button"
                                         modalComponent={<DeleteReviewModal review={review} />}
                                     />
                                 )}

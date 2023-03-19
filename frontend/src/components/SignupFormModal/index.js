@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import * as sessionActions from "../../store/session";
+import "./SignupForm.css"
 
 function SignupFormModal() {
     const dispatch = useDispatch();
@@ -12,7 +13,18 @@ function SignupFormModal() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errors, setErrors] = useState([]);
+    const [disabled, setDisabled] = useState(true)
     const { closeModal } = useModal();
+
+    useEffect(() => {
+        setDisabled(
+            (
+                (email && username && firstName && lastName && password && confirmPassword) &&
+                (username.length >= 4) &&
+                (password.length >= 6) &&
+                (password === confirmPassword)
+            ) ? false : true)
+    }, [email, username, firstName, lastName, password, confirmPassword])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -29,67 +41,86 @@ function SignupFormModal() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="signup-modal" onSubmit={handleSubmit}>
             {errors.length > 0 && (
-            <ul>
-                {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-            </ul>
+                <ul>
+                    {errors.map((error, idx) => <li className="error" key={idx}>{error}</li>)}
+                </ul>
             )}
+            <h2>Sign Up</h2>
             <label>
-                Email
+                Email:
+            </label>
+            <span>
                 <input
                     type="text"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
                 />
-            </label>
+            </span>
             <label>
-                Username
+                Username:
+            </label>
+            <span>
                 <input
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required
                 />
-            </label>
+            </span>
             <label>
-                First Name
+                First Name:
+            </label>
+            <span>
                 <input
                     type="text"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     required
                 />
-            </label>
+            </span>
             <label>
-                Last Name
+                Last Name:
+            </label>
+            <span>
                 <input
                     type="text"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     required
                 />
-            </label>
+            </span>
             <label>
-                Password
+                Password:
+            </label>
+            <span>
                 <input
-                    type="password"
+                    type="text"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
-            </label>
+            </span>
             <label>
-                Confirm Password
+                Confirm Password:
+            </label>
+            <span>
                 <input
-                    type="password"
+                    type="text"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required
                 />
-            </label>
-            <button type="submit">Sign Up</button>
+            </span>
+            <button
+                className="signup-button"
+                type="submit"
+                disabled={disabled}
+            >
+                Sign Up
+            </button>
         </form>
     );
 }

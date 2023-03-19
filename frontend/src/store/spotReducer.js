@@ -147,32 +147,46 @@ const spotReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case SET_ALL_SPOTS:
-            newState = { ...state };
-            newState.allSpots = { ...state.allSpots, ...action.spots }
+            newState = {
+                allSpots: { ...state.allSpots, ...action.spots },
+                singleSpot: { ...state.singleSpot },
+                currentSpots: { ...state.currentSpots }
+            };
             return newState
         case SET_SINGLE_SPOT:
-            newState = { ...state };
-            newState.singleSpot = action.spot;
+            newState = {
+                allSpots: { ...state.allSpots },
+                singleSpot: action.spot,
+                currentSpots: { ...state.currentSpots }
+            };
             return newState
         case SET_CURRENT_SPOTS:
-            newState = { ...state };
-            newState.currentSpots = action.spots;
+            newState = {
+                allSpots: { ...state.allSpots},
+                singleSpot: { ...state.singleSpot },
+                currentSpots: action.spots
+            };
             return newState
         case ADD_SPOT:
-            newState = { ...state };
-            newState.allSpots = { ...state.allSpots, [action.spot.id]: action.spot }
+            newState = {
+                allSpots: { ...state.allSpots, [action.spot.id]: action.spot },
+                singleSpot: { ...state.singleSpot },
+                currentSpots: { ...state.currentSpots }
+            };
             return newState
         case UPDATE_SPOT: 
-            newState = { ...state };
-            newState.allSpots = { ...state.allSpots }
-
-            newState.allSpots[action.spot.id] = action.spot
+            newState = {
+                allSpots: { ...state.allSpots, [action.spot.id]: action.spot },
+                singleSpot: { ...state.singleSpot },
+                currentSpots: { ...state.currentSpots }
+            };
             return newState;
         case DELETE_SPOT:
-            newState = { ...state };
-            newState.allSpots = { ...state.allSpots }
-            newState.currentSpots = { ...state.currentSpots }
-
+            newState = {
+                allSpots: { ...state.allSpots },
+                singleSpot: { ...state.singleSpot },
+                currentSpots: { ...state.currentSpots }
+            };
             delete newState.allSpots[action.spot.id]
             delete newState.currentSpots[action.spot.id]
             return newState

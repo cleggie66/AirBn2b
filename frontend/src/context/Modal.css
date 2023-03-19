@@ -20,5 +20,8 @@
 
 #modal-content {
     position: absolute;
-    background-color: white;
+}
+
+button {
+    font-weight: bold;
 }
