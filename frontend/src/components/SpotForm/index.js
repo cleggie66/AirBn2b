@@ -28,6 +28,13 @@ const SpotForm = ({ spot, formType }) => {
     const dispatch = useDispatch();
     const history = useHistory()
 
+    const jumpToTop = () => {
+        window.scrollTo({
+            top: 80,
+            behavior: 'auto'
+        })
+    }
+
     const onSubmit = async (e) => {
         e.preventDefault();
 
@@ -68,7 +75,11 @@ const SpotForm = ({ spot, formType }) => {
                     if (data && data.errors) setErrors(Object.values(data.errors))
                 })
         }
-        if (!errors.length) history.push(`/spots/${newSpot.id}`)
+        if (!errors.length) {
+            history.push(`/spots/${newSpot.id}`)
+        } else {
+            jumpToTop()
+        }
     }
 
     return (
@@ -230,7 +241,6 @@ const SpotForm = ({ spot, formType }) => {
                 >
                     {formType}
                 </button>
-
             </form>
         </div>
     );

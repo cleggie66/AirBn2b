@@ -23,15 +23,17 @@ const validateNewSpot = [
         .isDecimal()
         .withMessage('Longitude is not valid'),
     check('name')
-        .exists({ checkFalsy: true })
         .isLength({ max: 50 })
         .withMessage('Name must be less than 50 characters'),
-    check('description')
+    check('name')
         .exists({ checkFalsy: true })
-        .withMessage('Description is required'),
+        .withMessage('Name is required'),
     check('description')
         .custom((value) => value.length >= 30)
         .withMessage('Description needs 30 or more characters'),
+    check('description')
+        .exists({ checkFalsy: true })
+        .withMessage('Description is required'),
     check('price')
         .exists({ checkFalsy: true })
         .withMessage('Price per day is required'),
