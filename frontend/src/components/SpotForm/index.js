@@ -42,20 +42,19 @@ const SpotForm = ({ spot, formType }) => {
         let newSpot;
         let allowedImages = ["png", "jpg", 'jpeg']
 
-        if (photo1 && !allowedImages.includes(photo1.split('.')[photo1.split('.').length - 1])) return setErrors({ ...errors, photo1: 'Image URL must end in .png, .jpg, or .jpeg'})
-        if (photo2 && !allowedImages.includes(photo2.split('.')[photo2.split('.').length - 1])) return setErrors({ ...errors, photo2: 'Image URL must end in .png, .jpg, or .jpeg'})
-        if (photo3 && !allowedImages.includes(photo3.split('.')[photo3.split('.').length - 1])) return setErrors({ ...errors, photo3: 'Image URL must end in .png, .jpg, or .jpeg'})
-        if (photo4 && !allowedImages.includes(photo4.split('.')[photo4.split('.').length - 1])) return setErrors({ ...errors, photo4: 'Image URL must end in .png, .jpg, or .jpeg'})
-        if (photo5 && !allowedImages.includes(photo5.split('.')[photo5.split('.').length - 1])) return setErrors({ ...errors, photo5: 'Image URL must end in .png, .jpg, or .jpeg'})
-        setErrors({yup: "yes"})
+        if (photo1 && !allowedImages.includes(photo1.split('.')[photo1.split('.').length - 1])) return setErrors({ ...errors, photo1: 'Image URL must end in .png, .jpg, or .jpeg' })
+        if (photo2 && !allowedImages.includes(photo2.split('.')[photo2.split('.').length - 1])) return setErrors({ ...errors, photo2: 'Image URL must end in .png, .jpg, or .jpeg' })
+        if (photo3 && !allowedImages.includes(photo3.split('.')[photo3.split('.').length - 1])) return setErrors({ ...errors, photo3: 'Image URL must end in .png, .jpg, or .jpeg' })
+        if (photo4 && !allowedImages.includes(photo4.split('.')[photo4.split('.').length - 1])) return setErrors({ ...errors, photo4: 'Image URL must end in .png, .jpg, or .jpeg' })
+        if (photo5 && !allowedImages.includes(photo5.split('.')[photo5.split('.').length - 1])) return setErrors({ ...errors, photo5: 'Image URL must end in .png, .jpg, or .jpeg' })
         if (formType === 'Create Spot') {
             if (!photo1) {
-                setErrors({ ...errors, photo1: 'Preview image is required'})
+                setErrors({ ...errors, photo1: 'Preview image is required' })
             }
             newSpot = await dispatch(addNewSpot({ address, city, state, country, lat, lng, name, description, price }))
                 .catch(async (res) => {
                     const data = await res.json();
-                    if (data && data.errors) setErrors({...errors, ...data.errors})
+                    if (data && data.errors) setErrors({ ...errors, ...data.errors })
                 });
             if (newSpot) {
                 await dispatch(addNewSpotImage({ url: photo1, preview: true, spotId: newSpot.id }))
@@ -72,7 +71,6 @@ const SpotForm = ({ spot, formType }) => {
                     if (data && data.errors) setErrors({ ...errors, ...data.errors })
                 })
         }
-        console.log(errors)
         if (!Object.values(errors).length) {
             history.push(`/spots/${newSpot.id}`)
         } else {
@@ -99,7 +97,7 @@ const SpotForm = ({ spot, formType }) => {
                         onChange={(e) => setCountry(e.target.value)}
                     />
                 </span>
-                {Object.values(errors)}
+                {errors.country && (<li className='error'>{errors.country}</li>)}
                 <label>
                     Street Address:
                 </label>
@@ -111,6 +109,7 @@ const SpotForm = ({ spot, formType }) => {
                         onChange={(e) => setAddress(e.target.value)}
                     />
                 </span>
+                {errors.address && (<li className='error'>{errors.address}</li>)}
                 <div className='dual-input'>
                     <div className='city-input'>
                         <label>
@@ -122,6 +121,7 @@ const SpotForm = ({ spot, formType }) => {
                             placeholder="City"
                             onChange={(e) => setCity(e.target.value)}
                         />
+                        {errors.city && (<li className='error'>{errors.city}</li>)}
                     </div>
                     <h3>,</h3>
                     <div className='state-input'>
@@ -134,6 +134,7 @@ const SpotForm = ({ spot, formType }) => {
                             placeholder="STATE"
                             onChange={(e) => setState(e.target.value)}
                         />
+                        {errors.state && (<li className='error'>{errors.state}</li>)}
                     </div>
                 </div>
                 <hr className='spot-form-divider' />
@@ -148,6 +149,7 @@ const SpotForm = ({ spot, formType }) => {
                     placeholder="Please write at least 30 characters"
                     onChange={(e) => setDescription(e.target.value)}
                 />
+                {errors.description && (<li className='error'>{errors.description}</li>)}
                 <hr className='spot-form-divider' />
                 <h3>Create a title for your spot</h3>
                 <p>
@@ -162,6 +164,7 @@ const SpotForm = ({ spot, formType }) => {
                         onChange={(e) => setName(e.target.value)}
                     />
                 </span>
+                {errors.name && (<li className='error'>{errors.name}</li>)}
                 <hr className='spot-form-divider' />
                 <h3>Set a base price for your spot</h3>
                 <p>
@@ -179,6 +182,7 @@ const SpotForm = ({ spot, formType }) => {
                         />
                     </span>
                 </div>
+                {errors.price && (<li className='error'>{errors.price}</li>)}
                 <hr className='spot-form-divider' />
                 {formType === 'Create Spot' && (
                     <>
@@ -194,6 +198,7 @@ const SpotForm = ({ spot, formType }) => {
                                 onChange={(e) => setPhoto1(e.target.value)}
                             />
                         </span>
+                        {errors.photo1 && (<li className='error'>{errors.photo1}</li>)}
                         <span>
                             <input
                                 type="text"
@@ -202,6 +207,7 @@ const SpotForm = ({ spot, formType }) => {
                                 onChange={(e) => setPhoto2(e.target.value)}
                             />
                         </span>
+                        {errors.photo2 && (<li className='error'>{errors.photo2}</li>)}
                         <span>
                             <input
                                 type="text"
@@ -210,6 +216,7 @@ const SpotForm = ({ spot, formType }) => {
                                 onChange={(e) => setPhoto3(e.target.value)}
                             />
                         </span>
+                        {errors.photo3 && (<li className='error'>{errors.photo3}</li>)}
                         <span>
                             <input
                                 type="text"
@@ -218,6 +225,7 @@ const SpotForm = ({ spot, formType }) => {
                                 onChange={(e) => setPhoto4(e.target.value)}
                             />
                         </span>
+                        {errors.photo4 && (<li className='error'>{errors.photo4}</li>)}
                         <span>
                             <input
                                 type="text"
@@ -226,6 +234,7 @@ const SpotForm = ({ spot, formType }) => {
                                 onChange={(e) => setPhoto5(e.target.value)}
                             />
                         </span>
+                        {errors.photo4 && (<li className='error'>{errors.photo4}</li>)}
                         <hr className='spot-form-divider' />
                     </>
                 )}
