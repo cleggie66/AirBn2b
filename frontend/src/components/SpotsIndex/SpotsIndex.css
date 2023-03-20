@@ -7,70 +7,108 @@
 }
 
 .spot-index {
-    padding: 10px;
-    height: 325px;
+    padding: 20px 10px;
     width: 225px;
-    display: grid;
-    grid-template-areas:
-        "img img img"
-        "location location review"
-        "price price price";
-    grid-template-rows: 1fr 2em 2em;
-    grid-template-columns: 1fr 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
 }
 
 .image-container {
-    grid-area: img;
     width: 225px;
     height: 225px;
     overflow: hidden;
     border-radius: 5%;
     display: flex;
-        align-content: center;
-        justify-content: center;
+    align-content: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .index-preview-image {
     width: auto;
-        height: 100%;
-        object-fit: cover;
+    height: 100%;
+    object-fit: cover;
 }
 
-.spot-index>.spot-location {
-    grid-area: location;
-    align-self: center;
+.spot-index-details {
+    width: 225px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 5px;
+    cursor: pointer;
 }
 
-.spot-index>.spot-review {
-    grid-area: review;
-    justify-self: end;
-    align-self: center;
+.spot-index-details>h3 {
+    font-size: 14px;
+}
+
+.spot-review {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
-.spot-index>.spot-price {
-    grid-area: price;
+.spot-review>i {
+    font-size: 10px;
+    padding-right: 3px;
+}
+
+.spot-review>p {
+    font-size: 14px;
+}
+
+.spot-location {
     align-self: center;
+}
+
+.spot-index-price {
+    width: 225px;
+    font-size: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    cursor: pointer;
+}
+
+.spot-index-price>h3 {
+    font-size: 14px;
+    margin-right: 3px;
 }
 
 .tooltip {
     visibility: hidden;
-    position: relative;
-    top: 1em;
-    grid-area: img;
+    position: absolute;
     justify-self: center;
     font-weight: bold;
     text-align: center;
-    width: auto;
-    height: fit-content;
+    max-width: 195px;
     color: #ffffff;
     font-size: 12px;
     background-color: #329d9c;
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 10px 15px 10px 15px;
+    cursor: pointer;
 }
 
 .spot-index:hover .tooltip {
     visibility: visible;
+}
+
+.spot-index-buttons {
+    width: 225px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.spot-index-button {
+    display: block;
+    width: 80px;
+    height: 25px;
+    color: white;
+    background-color: #205072;
+    border-radius: 5px;
+    margin-top: 20px;
 }

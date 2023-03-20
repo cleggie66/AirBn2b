@@ -40,7 +40,7 @@ const SpotForm = ({ spot, formType }) => {
 
         setErrors({});
         let newSpot;
-        let allowedImages = ["png", "jpg", 'jpeg']
+        let allowedImages = ["png", "jpg", 'jpeg', 'webp']
 
         if (photo1 && !allowedImages.includes(photo1.split('.')[photo1.split('.').length - 1])) return setErrors({ ...errors, photo1: 'Image URL must end in .png, .jpg, or .jpeg' })
         if (photo2 && !allowedImages.includes(photo2.split('.')[photo2.split('.').length - 1])) return setErrors({ ...errors, photo2: 'Image URL must end in .png, .jpg, or .jpeg' })

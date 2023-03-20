@@ -39,6 +39,7 @@
     border-width: 1px;
     border-radius: 30px;
     gap: 10px;
+    cursor: pointer;
 }
 
 .fa-solid.fa-bars {

@@ -43,7 +43,7 @@ function ProfileButton({ user }) {
 
     return (
         <>
-            <div className="profile-button" style={{ cursor: 'pointer' }} onClick={openMenu}>
+            <div className="profile-button" onClick={openMenu}>
                 <i className="fa-solid fa-bars" />
                 <i className="fas fa-user-circle" />
             </div>
