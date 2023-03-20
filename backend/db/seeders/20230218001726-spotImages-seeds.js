@@ -13,12 +13,12 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {
         spotId: 1,
-        url: "https://static.wikia.nocookie.net/lotr/images/2/24/Ecthelion.jpg/revision/latest/scale-to-width-down/699?cb=20190513160047",
+        url: "https://i.etsystatic.com/17727358/r/il/b7178a/3462596045/il_fullxfull.3462596045_3eyu.jpg",
         preview: true
       },
       {
         spotId: 1,
-        url: "https://static.wikia.nocookie.net/lotr/images/e/e4/Minas_Tirith.jpg/revision/latest?cb=20141228214636",
+        url: "https://www.councilofelrond.com/wp-content/uploads/2012/10/coeminastirith02.jpg",
         preview: false
       },
       {
