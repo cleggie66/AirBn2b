@@ -13,7 +13,7 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {
         reviewId: 1,
-        url: "https://static.wikia.nocookie.net/lotr/images/2/24/Ecthelion.jpg/revision/latest/scale-to-width-down/699?cb=20190513160047",
+        url: "https://i.etsystatic.com/17727358/r/il/ed551d/3462525397/il_1140xN.3462525397_p6tj.jpg",
       },
       {
         reviewId: 2,

@@ -17,9 +17,49 @@ module.exports = {
         preview: true
       },
       {
+        spotId: 1,
+        url: "",
+        preview: false
+      },
+      {
+        spotId: 1,
+        url: "",
+        preview: false
+      },
+      {
+        spotId: 1,
+        url: "",
+        preview: false
+      },
+      {
+        spotId: 1,
+        url: "",
+        preview: false
+      },
+      {
         spotId: 2,
         url: "https://www.edwud.com/wp-content/uploads/2020/07/bag-end-hobbiton.jpg",
         preview: true
+      },
+      {
+        spotId: 2,
+        url: "",
+        preview: false
+      },
+      {
+        spotId: 2,
+        url: "",
+        preview: false
+      },
+      {
+        spotId: 2,
+        url: "",
+        preview: false
+      },
+      {
+        spotId: 2,
+        url: "",
+        preview: false
       },
       {
         spotId: 3,
@@ -27,9 +67,49 @@ module.exports = {
         preview: true
       },
       {
+        spotId: 3,
+        url: "",
+        preview: false
+      },
+      {
+        spotId: 3,
+        url: "",
+        preview: false
+      },
+      {
+        spotId: 3,
+        url: "",
+        preview: false
+      },
+      {
+        spotId: 3,
+        url: "",
+        preview: false
+      },
+      {
         spotId: 4,
         url: "https://preview.redd.it/53tly0u4ytzy.jpg?auto=webp&s=9bda24094ab19d61b62b1559f68440c6f6d493c7",
         preview: true
+      },
+      {
+        spotId: 4,
+        url: "",
+        preview: false
+      },
+      {
+        spotId: 4,
+        url: "",
+        preview: false
+      },
+      {
+        spotId: 4,
+        url: "",
+        preview: false
+      },
+      {
+        spotId: 4,
+        url: "",
+        preview: false
       },
       {
         spotId: 5,
@@ -37,24 +117,24 @@ module.exports = {
         preview: true
       },
       {
-        spotId: 6,
-        url: "https://raw.githubusercontent.com/cleggie66/AA-AirBnb/main/frontend/src/media/images/80s-McDonalds/2022-04-24.jpg",
-        preview: true
+        spotId: 5,
+        url: "",
+        preview: false
       },
       {
-        spotId: 8,
-        url: "https://github.com/cleggie66/AA-AirBnb/blob/main/frontend/src/media/images/bebop/E7v6q9nXoAMMFJI.jpg?raw=true",
-        preview: true
+        spotId: 5,
+        url: "",
+        preview: false
       },
       {
-        spotId: 9,
-        url: "https://github.com/cleggie66/AA-AirBnb/blob/main/frontend/src/media/images/breaking-bad/bb5-1556809406.jpg?raw=true",
-        preview: true
+        spotId: 5,
+        url: "",
+        preview: false
       },
       {
-        spotId: 10,
-        url: "https://raw.githubusercontent.com/cleggie66/AA-AirBnb/main/frontend/src/media/images/butterfly-mansion/mansion.png",
-        preview: true
+        spotId: 5,
+        url: "",
+        preview: false
       },
     ], {})
   },

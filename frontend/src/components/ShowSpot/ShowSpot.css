@@ -8,12 +8,12 @@
 
 .title {
     align-self: flex-start;
-    padding: 20px 0;
+    padding: 15px 0;
 }
 
 .title-location {
     align-self: flex-start;
-    padding-bottom: 20px;
+    padding-bottom: 15px;
 }
 
 .image-gallery {
@@ -28,10 +28,11 @@
     flex-direction: row;
     flex-wrap: wrap;
     gap: 5px;
+    width: auto;
 }
 
 .preview-image-container {
-    width: 480px;
+    width: 490px;
     height: 380px;
     overflow: hidden;
     display: flex;
@@ -40,7 +41,7 @@
 }
 
 .side-image-container {
-    max-width: 240px;
+    max-width: 250px;
     max-height: 187.5px;
     overflow: hidden;
     display: flex;

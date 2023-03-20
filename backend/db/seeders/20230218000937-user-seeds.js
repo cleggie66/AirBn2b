@@ -15,35 +15,35 @@ module.exports = {
         lastName: 'Elessar',
         email: 'aragorn@lotr.io',
         username: 'king_returned_33',
-        hashedPassword: bcrypt.hashSync('password1')
+        hashedPassword: bcrypt.hashSync('password')
       },
       {
         firstName: 'Frodo',
         lastName: 'Baggins',
         email: 'frodo@lotr.io',
         username: 'ring-bearer',
-        hashedPassword: bcrypt.hashSync('password2')
+        hashedPassword: bcrypt.hashSync('password')
       },
       {
         firstName: 'Gandalf',
         lastName: 'Greyhame',
         email: 'gandalf@lotr.io',
         username: 'servantOfTheSecretFIRE',
-        hashedPassword: bcrypt.hashSync('password3')
+        hashedPassword: bcrypt.hashSync('password')
       },
       {
         firstName: 'Samwise',
         lastName: 'Gamgee',
         email: 'sam@lotr.io',
         username: 's@mwi$e_the_br@ve',
-        hashedPassword: bcrypt.hashSync('password4')
+        hashedPassword: bcrypt.hashSync('password')
       },
       {
         firstName: "Durin's",
         lastName: 'Bane',
         email: 'balrog@lotr.io',
         username: 'balrog_of_morgoth',
-        hashedPassword: bcrypt.hashSync('password5')
+        hashedPassword: bcrypt.hashSync('password')
       },
       {
         firstName: "demo",
