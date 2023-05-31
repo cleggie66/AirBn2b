@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getSpot } from "../../store/spotReducer";
 import { setSpotReviews, setUserReviews } from '../../store/reviewReducer';
+import DatePicker from "react-datepicker"
 import OpenModalButton from '../OpenModalButton';
 import AddReviewModal from '../AddReviewModal';
 import DeleteReviewModal from '../DeleteReviewModal';
@@ -13,6 +14,8 @@ const ShowSpot = () => {
     const dispatch = useDispatch();
     const { spotId } = useParams();
     const missingNo = 'https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(null);
     const [isReviewed, setIsReviewed] = useState(false)
     const [disabled, setDisabled] = useState(true)
 
@@ -26,6 +29,12 @@ const ShowSpot = () => {
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     });
     const userReviews = (Object.values(userReviewState));
+
+    const onDateChange = (dates) => {
+        const [start, end] = dates;
+        setStartDate(start);
+        setEndDate(end);
+    };
 
     useEffect(() => {
         dispatch(getSpot(spotId))
@@ -73,6 +82,8 @@ const ShowSpot = () => {
     if (spot.SpotImages[2]) { img3 = spot.SpotImages[2].url }
     if (spot.SpotImages[3]) { img4 = spot.SpotImages[3].url }
     if (spot.SpotImages[4]) { img5 = spot.SpotImages[4].url }
+
+    console.log("SPOT", spot)
 
     return (
         <div className='page'>
@@ -125,6 +136,16 @@ const ShowSpot = () => {
                                 </>
                             )}
                         </div>
+                        <DatePicker
+                            selected={startDate}
+                            onChange={onDateChange}
+                            startDate={startDate}
+                            endDate={endDate}
+                            excludeDates={[new Date("06-01-2023")]}
+                            selectsRange
+                            selectsDisabledDaysInRange
+                            inline
+                        />
                         <button className='reserve-button' onClick={() => window.alert("Feature coming soon")}>Reserve</button>
                     </div>
                 </div>
