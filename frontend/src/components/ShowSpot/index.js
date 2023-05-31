@@ -43,28 +43,35 @@ const ShowSpot = () => {
         dispatch(setUserReviews())
     }, [dispatch, spotId, userReviews.length])
 
+    // Finds all booked dates for spot
     useEffect(() => {
-        const bookings = spot.Bookings;
         let bookedDates = [];
+        const bookings = spot.Bookings;
         bookings?.forEach((booking) => {
             const start = new Date(booking.startDate);
             const end = new Date(booking.endDate);
-            const datesArray = [];
             for (
                 let date = start;
                 date <= end;
                 date.setDate(date.getDate() + 1)
             ) {
-                datesArray.push(new Date(date));
+                bookedDates.push(new Date(date));
             }
-
-            console.log("TEST ARRAY", datesArray);
         })
+        // ACT OF GOD: Blocks out random dates
+        const today = new Date()
+        const randomDay = spot.name?.charCodeAt(0) % 25;
+        let date = new Date(`${today.getMonth() + 1}-${randomDay}-${today.getFullYear()}`)
+        
+        for (let i = 0; i < 3; i++) {
+            bookedDates.push(new Date(date))
+            date.setDate(date.getDate() + 1)
+        }
 
         setUnavailableDates(bookedDates);
-    
     }, [spot])
 
+    // Finds out if spot has been reviewed by current user
     useEffect(() => {
         let boolean = false;
         for (let i = 0; i < userReviews.length; i++) {
@@ -105,8 +112,6 @@ const ShowSpot = () => {
     if (spot.SpotImages[2]) { img3 = spot.SpotImages[2].url }
     if (spot.SpotImages[3]) { img4 = spot.SpotImages[3].url }
     if (spot.SpotImages[4]) { img5 = spot.SpotImages[4].url }
-
-    console.log("SPOT", spot)
 
     return (
         <div className='page'>
