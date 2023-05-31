@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     description: {
-      type: DataTypes.STRING(1000),
+      type: DataTypes.TEXT,
     },
     price: {
       type: DataTypes.DECIMAL,
