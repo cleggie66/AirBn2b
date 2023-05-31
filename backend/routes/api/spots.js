@@ -155,7 +155,7 @@ router.get('/', validateQuery, async (req, res) => {
     let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
 
     if (!page) page = 1;
-    if (!size) size = 20;
+    if (!size) size = 50;
     if (!minLat) minLat = -90;
     if (!maxLat) maxLat = 90;
     if (!minLng) minLng = -180;
