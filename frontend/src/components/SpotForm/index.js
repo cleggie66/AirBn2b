@@ -40,13 +40,7 @@ const SpotForm = ({ spot, formType }) => {
 
         setErrors({});
         let newSpot;
-        // let allowedImages = ["png", "jpg", 'jpeg', 'webp']
 
-        // if (photo1 && !allowedImages.includes(photo1.split('.')[photo1.split('.').length - 1])) return setErrors({ ...errors, photo1: 'Image URL must end in .png, .jpg, or .jpeg' })
-        // if (photo2 && !allowedImages.includes(photo2.split('.')[photo2.split('.').length - 1])) return setErrors({ ...errors, photo2: 'Image URL must end in .png, .jpg, or .jpeg' })
-        // if (photo3 && !allowedImages.includes(photo3.split('.')[photo3.split('.').length - 1])) return setErrors({ ...errors, photo3: 'Image URL must end in .png, .jpg, or .jpeg' })
-        // if (photo4 && !allowedImages.includes(photo4.split('.')[photo4.split('.').length - 1])) return setErrors({ ...errors, photo4: 'Image URL must end in .png, .jpg, or .jpeg' })
-        // if (photo5 && !allowedImages.includes(photo5.split('.')[photo5.split('.').length - 1])) return setErrors({ ...errors, photo5: 'Image URL must end in .png, .jpg, or .jpeg' })
         if (formType === 'Create Spot') {
             if (!photo1) {
                 setErrors({ ...errors, photo1: 'Preview image is required' })
@@ -175,7 +169,7 @@ const SpotForm = ({ spot, formType }) => {
                     <h4>$</h4>
                     <span>
                         <input
-                            type="text"
+                            type="number"
                             value={price}
                             placeholder="Price per night (USD)"
                             onChange={(e) => setPrice(e.target.value)}
