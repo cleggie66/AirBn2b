@@ -112,14 +112,14 @@ const ShowSpot = () => {
                         </div>
                         <div className='review-totals'>
                             <i className="fa-solid fa-star"></i>
-                            {spot.avgRating.length > 0 && (
+                            {spot.avgRating && (
                                 <>
                                     <h4>{spot.avgRating}</h4>
                                     <h4>•</h4>
                                     <h4>{`${spot.numReviews} ${(spot.numReviews === 1) ? "review" : "reviews"}`}</h4>
                                 </>
                             )}
-                            {!spot.avgRating.length > 0 && (
+                            {!spot.avgRating && (
                                 <>
                                     <h4>New</h4>
                                 </>
