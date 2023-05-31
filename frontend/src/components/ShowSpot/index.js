@@ -16,8 +16,9 @@ const ShowSpot = () => {
     const missingNo = 'https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(null);
-    const [isReviewed, setIsReviewed] = useState(false)
-    const [disabled, setDisabled] = useState(true)
+    const [unavailableDates, setUnavailableDates] = useState([]);
+    const [isReviewed, setIsReviewed] = useState(false);
+    const [disabled, setDisabled] = useState(true);
 
     const spot = useSelector(state => state.spots.singleSpot)
     const spotReviewState = useSelector(state => state.reviews.spot)
@@ -41,6 +42,28 @@ const ShowSpot = () => {
         dispatch(setSpotReviews(spotId))
         dispatch(setUserReviews())
     }, [dispatch, spotId, userReviews.length])
+
+    useEffect(() => {
+        const bookings = spot.Bookings;
+        let bookedDates = [];
+        bookings?.forEach((booking) => {
+            const start = new Date(booking.startDate);
+            const end = new Date(booking.endDate);
+            const datesArray = [];
+            for (
+                let date = start;
+                date <= end;
+                date.setDate(date.getDate() + 1)
+            ) {
+                datesArray.push(new Date(date));
+            }
+
+            console.log("TEST ARRAY", datesArray);
+        })
+
+        setUnavailableDates(bookedDates);
+    
+    }, [spot])
 
     useEffect(() => {
         let boolean = false;
@@ -141,7 +164,7 @@ const ShowSpot = () => {
                             onChange={onDateChange}
                             startDate={startDate}
                             endDate={endDate}
-                            excludeDates={[new Date("06-01-2023")]}
+                            excludeDates={unavailableDates}
                             selectsRange
                             selectsDisabledDaysInRange
                             inline
