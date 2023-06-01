@@ -84,6 +84,10 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
             const booking = bookings[i].toJSON();
             const existingStart = new Date(booking.startDate);
             const existingEnd = new Date(booking.endDate);
+            if (end - start > end - existingStart) {
+                err.errors.startDate = "Booking conflict";
+                dateError = true;
+            }
             if (start <= existingEnd && start >= existingStart) {
                 err.errors.startDate = "Start date conflicts with an existing booking";
                 dateError = true;

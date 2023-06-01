@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { getSpot } from "../../store/spotReducer";
+import { addSpotBooking, getSpot } from "../../store/spotReducer";
 import { setSpotReviews, setUserReviews } from '../../store/reviewReducer';
 import DatePicker from "react-datepicker"
 import OpenModalButton from '../OpenModalButton';
@@ -14,11 +14,12 @@ const ShowSpot = () => {
     const dispatch = useDispatch();
     const { spotId } = useParams();
     const missingNo = 'https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'
-    const [startDate, setStartDate] = useState(new Date());
+    const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [unavailableDates, setUnavailableDates] = useState([]);
     const [isReviewed, setIsReviewed] = useState(false);
     const [disabled, setDisabled] = useState(true);
+    const [errors, setErrors] = useState({});
 
     const spot = useSelector(state => state.spots.singleSpot)
     const spotReviewState = useSelector(state => state.reviews.spot)
@@ -35,6 +36,7 @@ const ShowSpot = () => {
         const [start, end] = dates;
         setStartDate(start);
         setEndDate(end);
+        setErrors({});
     };
 
     useEffect(() => {
@@ -46,7 +48,7 @@ const ShowSpot = () => {
     // Finds all booked dates for spot
     useEffect(() => {
         let bookedDates = [];
-        const bookings = spot.Bookings;
+        const bookings = spot.bookings;
         bookings?.forEach((booking) => {
             const start = new Date(booking.startDate);
             const end = new Date(booking.endDate);
@@ -62,7 +64,7 @@ const ShowSpot = () => {
         const today = new Date()
         const randomDay = spot.name?.charCodeAt(0) % 25;
         let date = new Date(`${today.getMonth() + 1}-${randomDay}-${today.getFullYear()}`)
-        
+
         for (let i = 0; i < 3; i++) {
             bookedDates.push(new Date(date))
             date.setDate(date.getDate() + 1)
@@ -113,6 +115,24 @@ const ShowSpot = () => {
     if (spot.SpotImages[3]) { img4 = spot.SpotImages[3].url }
     if (spot.SpotImages[4]) { img5 = spot.SpotImages[4].url }
 
+
+    const handleSubmit = async () => {
+
+        const res = await dispatch(addSpotBooking({
+            startDate: `${startDate.getMonth() + 1}-${startDate.getDate()}-${startDate.getFullYear()}`,
+            endDate: `${endDate.getMonth() + 1}-${endDate.getDate()}-${endDate.getFullYear()}`,
+            spotId
+        })).catch(async (res) => {
+            const data = await res.json();
+            if (data && data.errors) setErrors(data.errors);
+        });
+        setStartDate(null)
+        setEndDate(null)
+    }
+
+
+
+
     return (
         <div className='page'>
             <div className='show-spot'>
@@ -145,24 +165,26 @@ const ShowSpot = () => {
                         <p>{spot.description}</p>
                     </div>
                     <div className='spot-info-action-box'>
-                        <div className='price-per-night'>
-                            <h2>{`$${spot.price}`}</h2>
-                            <h4>night</h4>
-                        </div>
-                        <div className='review-totals'>
-                            <i className="fa-solid fa-star"></i>
-                            {spot.avgRating && (
-                                <>
-                                    <h4>{spot.avgRating}</h4>
-                                    <h4>•</h4>
-                                    <h4>{`${spot.numReviews} ${(spot.numReviews === 1) ? "review" : "reviews"}`}</h4>
-                                </>
-                            )}
-                            {!spot.avgRating && (
-                                <>
-                                    <h4>New</h4>
-                                </>
-                            )}
+                        <div className='spot-info-header'>
+                            <div className='price-per-night'>
+                                <h2>{`$${spot.price}`}</h2>
+                                <h4>/night</h4>
+                            </div>
+                            <div className='review-totals'>
+                                <i className="fa-solid fa-star"></i>
+                                {spot.avgRating && (
+                                    <>
+                                        <h4>{spot.avgRating}</h4>
+                                        <h4>•</h4>
+                                        <h4>{`${spot.numReviews} ${(spot.numReviews === 1) ? "review" : "reviews"}`}</h4>
+                                    </>
+                                )}
+                                {!spot.avgRating && (
+                                    <>
+                                        <h4>New</h4>
+                                    </>
+                                )}
+                            </div>
                         </div>
                         <DatePicker
                             selected={startDate}
@@ -174,7 +196,10 @@ const ShowSpot = () => {
                             selectsDisabledDaysInRange
                             inline
                         />
-                        <button className='reserve-button' onClick={() => window.alert("Feature coming soon")}>Reserve</button>
+                        {Object.values(errors).length !== 0 && (
+                            <li className='error'>{errors.booking}</li>
+                        )}
+                        <button className='reserve-button' onClick={handleSubmit}>Reserve</button>
                     </div>
                 </div>
                 <hr className='line-break'></hr>
