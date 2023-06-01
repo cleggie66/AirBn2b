@@ -193,13 +193,13 @@ router.get('/', validateQuery, async (req, res) => {
     for (let i = 0; i < spots.length; i++) {
         const spot = spots[i].toJSON();
 
-        for (let i = 0; i < spot.SpotImages.length; i++) {
-            const image = spot.SpotImages[i];
-            if (image.preview === true) {
-                spot.previewImage = image.url;
-            }
-        }
-        delete spot.SpotImages;
+        // for (let i = 0; i < spot.SpotImages.length; i++) {
+        //     const image = spot.SpotImages[i];
+        //     if (image.preview === true) {
+        //         spot.previewImage = image.url;
+        //     }
+        // }
+        // delete spot.SpotImages;
 
         let reviewData = await Review.findOne({
             where: {

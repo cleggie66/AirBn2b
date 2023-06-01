@@ -1,9 +1,11 @@
 import { Link, useHistory } from 'react-router-dom';
 import OpenModalButton from '../OpenModalButton';
 import DeleteSpotModal from '../DeleteSpotModal';
+import { useState } from 'react';
 
 const SpotsIndexItem = ({ spot, currentSpots }) => {
-    const history = useHistory()
+    const history = useHistory();
+    const [spotImageIndex, setSpotImageIndex] = useState(0);
 
     if (spot.avgRating) { spot.avgRating = parseInt(spot.avgRating).toFixed(2) }
 
@@ -16,9 +18,25 @@ const SpotsIndexItem = ({ spot, currentSpots }) => {
 
     return (
         <div className='spot-index'>
-            <span className="tooltip" onClick={linkDetailsPage}>{spot.name}</span>
-            <div className='image-container' onClick={linkDetailsPage}>
-                <img src={spot.previewImage} alt={spot.name} className='index-preview-image'></img>
+            <i
+                className="fa-solid fa-circle-chevron-left left-arrow"
+                style={{ display: spotImageIndex === 0 ? "none" : "" }}
+                onClick={() => setSpotImageIndex(spotImageIndex - 1)}
+            />
+            <i
+                className="fa-solid fa-circle-chevron-right right-arrow"
+                style={{ display: spotImageIndex === (spot.SpotImages.length - 1) ? "none" : "" }}
+                onClick={() => setSpotImageIndex(spotImageIndex + 1)}
+            />
+            <div
+                className='image-container'
+                onClick={linkDetailsPage}
+            >
+                <img
+                    src={spot.SpotImages[spotImageIndex].url}
+                    alt={spot.name}
+                    className='index-preview-image'
+                />
             </div>
             <div className='spot-index-details' onClick={linkDetailsPage}>
                 <h3 className='spot-location'>{`${spot.city}, ${spot.state}`}</h3>
