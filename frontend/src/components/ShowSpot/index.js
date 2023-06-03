@@ -132,7 +132,7 @@ const ShowSpot = () => {
 
 
 
-
+    console.log("SPOT", spot)
     return (
         <div className='page'>
             <div className='show-spot'>
