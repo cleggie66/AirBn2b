@@ -1,0 +1,52 @@
+.about-modal {
+    width: 35vw;
+    height: auto;
+    background-color: #ffffff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+.about-modal-top {
+    display: flex;
+    padding-bottom: 20px;
+}
+
+.about-modal-title {
+    font-size: 22px;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.about-modal>ul>li {
+    list-style-type: none;
+}
+
+.profile-image-container {
+    min-width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 50%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    margin-right: 20px;
+}
+
+.about-modal-icons {
+    display: flex;
+    gap: 20px;
+    padding-top: 40px;
+}
+
+.about-modal-icons>a>i {
+    color: #7f7f7f;
+    font-size: 32px;
+}
+
+.about-modal-icons>a>i:hover {
+    color: #d0d0d0;
+}

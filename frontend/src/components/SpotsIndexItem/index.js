@@ -11,10 +11,10 @@ const SpotsIndexItem = ({ spot, currentSpots }) => {
 
     const handleUpdate = () => {
         history.push(`/spots/${spot.id}/edit`)
-    }
+    };
     const linkDetailsPage = () => {
         history.push(`/spots/${spot.id}`)
-    }
+    };
 
     return (
         <div className='spot-index'>
