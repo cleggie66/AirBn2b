@@ -115,7 +115,6 @@ const ShowSpot = () => {
     if (spot.SpotImages[3]) { img4 = spot.SpotImages[3].url }
     if (spot.SpotImages[4]) { img5 = spot.SpotImages[4].url }
 
-
     const handleSubmit = async () => {
 
         await dispatch(addSpotBooking({
@@ -130,9 +129,6 @@ const ShowSpot = () => {
         setEndDate(null)
     }
 
-
-
-    console.log("SPOT", spot)
     return (
         <div className='page'>
             <div className='show-spot'>
