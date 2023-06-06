@@ -1,8 +1,6 @@
 import './AboutModal.css'
 
-const AboutModal = ({ spot }) => {
-
-
+const AboutModal = () => {
     return (
         <div className='about-modal'>
             <div className='about-modal-top'>
