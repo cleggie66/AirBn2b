@@ -40,8 +40,6 @@ router.get('/current', requireAuth, async (req, res) => {
             }
         }
 
-        delete spot.SpotImages;
-
         payload.Spots.push(spot)
     }
     res.json(payload)

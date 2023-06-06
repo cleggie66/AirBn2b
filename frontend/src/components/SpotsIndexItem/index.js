@@ -16,6 +16,8 @@ const SpotsIndexItem = ({ spot, currentSpots }) => {
         history.push(`/spots/${spot.id}`)
     };
 
+    console.log("SPOT HERE", spot)
+
     return (
         <div className='spot-index'>
             <i
