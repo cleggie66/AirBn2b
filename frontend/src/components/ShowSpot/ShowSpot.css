@@ -6,14 +6,16 @@
     max-width: 1000px;
 }
 
-.title {
+.show-spot>h2 {
     align-self: flex-start;
-    padding: 15px 0;
+    padding-top: 15px;
+    padding-bottom: 5px;
 }
 
-.title-location {
+.show-spot>h3 {
+    font-weight: 400;
     align-self: flex-start;
-    padding-bottom: 15px;
+    padding-bottom: 20px;
 }
 
 .image-gallery {
@@ -71,11 +73,51 @@
     width: 1000px;
     display: flex;
     justify-content: space-between;
-    padding-top: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.spot-info-text {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    margin-right: 50px;
 }
 
 .hosted-by {
-    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.host-image-container {
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    border-radius: 50%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.spot-feature {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.spot-feature-icon {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.spot-feature-details>h3 {
+    font-size: 16px;
+}
+
+.spot-feature-details>h4 {
+    font-size: 16px;
+    font-weight: 300;
 }
 
 .spot-info-action-box {
@@ -84,10 +126,8 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    border: solid;
-    border-color: rgb(113, 113, 113);
-    border-width: 2px;
     border-radius: 10px;
+    box-shadow: 0 0 10px 5px #e1e1e1;
     padding: 20px;
 }
 
@@ -125,6 +165,7 @@
 
 .review-section {
     align-self: flex-start;
+    margin-bottom: 25px;
 }
 
 .review-header {

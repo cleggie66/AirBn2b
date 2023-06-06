@@ -136,8 +136,8 @@ const ShowSpot = () => {
     return (
         <div className='page'>
             <div className='show-spot'>
-                <h2 className='title'>{spot.name}</h2>
-                <h3 className='title-location'>{`${spot.city}, ${spot.state}, ${spot.country}`}</h3>
+                <h2>{spot.name}</h2>
+                <h3>{`${spot.city}, ${spot.state}, ${spot.country}`}</h3>
                 <div className='image-gallery'>
                     <div className='preview-image'>
                         <div className='preview-image-container img1'>
@@ -161,7 +161,39 @@ const ShowSpot = () => {
                 </div>
                 <div className='spot-info'>
                     <div className='spot-info-text'>
-                        <h2 className='hosted-by'>{`Hosted By ${spot.Owner.firstName} ${spot.Owner.lastName}`}</h2>
+                        <div className='hosted-by'>
+                            <h2>{`Hosted By ${spot.Owner.firstName} ${spot.Owner.lastName}`}</h2>
+                            <div className="host-image-container">
+                                <img src="https://media.licdn.com/dms/image/D4D03AQEwK3F1BwbR2Q/profile-displayphoto-shrink_800_800/0/1670391241454?e=1691020800&v=beta&t=6pMbmMLu5uaDLBXfr-JQqc-7f8ugrGWIzZ5znmpHWgM" alt="caleb" />
+                            </div>
+                        </div>
+                        <hr className='line-break' />
+                        <div className='spot-feature'>
+                            <div className='spot-feature-icon'>
+                                <i className="fa-solid fa-medal" />
+                            </div>
+                            <div className='spot-feature-details'>
+                                <h3>{`${spot.Owner.firstName} is a superhost`}</h3>
+                                <h4>Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests.</h4>
+                            </div>
+                        </div>
+                        <div className='spot-feature'>
+                            <div className='spot-feature-icon'>
+                                <i className="fa-solid fa-door-open" />
+                            </div>
+                            <div className='spot-feature-details'>
+                                <h3>Self check-in</h3>
+                                <h4>Check yourself in with the keypad.</h4>
+                            </div>
+                        </div>
+                        <div className='spot-feature'>
+                            <div className='spot-feature-icon'>
+                                <i className="fa-solid fa-calendar-check" />
+                            </div>
+                            <div className='spot-feature-details'>
+                                <h3>Free cancellation for 48 hours</h3>
+                            </div>
+                        </div>
                         <p>{spot.description}</p>
                     </div>
                     <div className='spot-info-action-box'>
@@ -202,7 +234,7 @@ const ShowSpot = () => {
                         <button className='reserve-button' onClick={handleSubmit}>Reserve</button>
                     </div>
                 </div>
-                <hr className='line-break'></hr>
+                <hr className='line-break' />
                 <div className='review-section'>
                     <div className='review-header'>
                         <i className="fa-solid fa-star"></i>
