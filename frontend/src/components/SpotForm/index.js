@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
 import { addNewSpot, updateSpot } from "../../store/spotReducer";
@@ -22,6 +22,7 @@ const SpotForm = ({ spot, formType }) => {
     const [photo4, setPhoto4] = useState(spot.photo4)
     const [photo5, setPhoto5] = useState(spot.photo5)
     const [errors, setErrors] = useState({})
+    const missingNo = 'https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'
     let spotId;
     if (spot.id) { spotId = spot.id }
 
@@ -71,7 +72,7 @@ const SpotForm = ({ spot, formType }) => {
             jumpToTop()
         }
     }
-
+    console.log(errors)
     return (
         <div className='page'>
             <form onSubmit={onSubmit} className="create-spot-form">
@@ -192,6 +193,17 @@ const SpotForm = ({ spot, formType }) => {
                                 onChange={(e) => setPhoto1(e.target.value)}
                             />
                         </span>
+                        <img
+                            src={photo1 || missingNo}
+                            onError={() => setErrors({ ...errors, photo1: "Picture URL is not valid" })}
+                            onLoad={() => {
+                                let updatedErrors = { ...errors };
+                                delete updatedErrors.photo1;
+                                setErrors(updatedErrors)
+                            }}
+                            alt="spot preview test"
+                            style={{"display":"none"}}
+                        />
                         {errors.photo1 && (<li className='error'>{errors.photo1}</li>)}
                         <span>
                             <input
@@ -201,6 +213,17 @@ const SpotForm = ({ spot, formType }) => {
                                 onChange={(e) => setPhoto2(e.target.value)}
                             />
                         </span>
+                        <img
+                            src={photo2 || missingNo}
+                            onError={() => setErrors({ ...errors, photo2: "Picture URL is not valid" })}
+                            onLoad={() => {
+                                let updatedErrors = { ...errors };
+                                delete updatedErrors.photo2;
+                                setErrors(updatedErrors)
+                            }}
+                            alt="spot preview test"
+                            style={{ "display": "none" }}
+                        />
                         {errors.photo2 && (<li className='error'>{errors.photo2}</li>)}
                         <span>
                             <input
@@ -210,6 +233,17 @@ const SpotForm = ({ spot, formType }) => {
                                 onChange={(e) => setPhoto3(e.target.value)}
                             />
                         </span>
+                        <img
+                            src={photo3 || missingNo}
+                            onError={() => setErrors({ ...errors, photo3: "Picture URL is not valid" })}
+                            onLoad={() => {
+                                let updatedErrors = { ...errors };
+                                delete updatedErrors.photo3;
+                                setErrors(updatedErrors)
+                            }}
+                            alt="spot preview test"
+                            style={{ "display": "none" }}
+                        />
                         {errors.photo3 && (<li className='error'>{errors.photo3}</li>)}
                         <span>
                             <input
@@ -219,6 +253,17 @@ const SpotForm = ({ spot, formType }) => {
                                 onChange={(e) => setPhoto4(e.target.value)}
                             />
                         </span>
+                        <img
+                            src={photo4 || missingNo}
+                            onError={() => setErrors({ ...errors, photo4: "Picture URL is not valid" })}
+                            onLoad={() => {
+                                let updatedErrors = { ...errors };
+                                delete updatedErrors.photo4;
+                                setErrors(updatedErrors)
+                            }}
+                            alt="spot preview test"
+                            style={{ "display": "none" }}
+                        />
                         {errors.photo4 && (<li className='error'>{errors.photo4}</li>)}
                         <span>
                             <input
@@ -228,7 +273,18 @@ const SpotForm = ({ spot, formType }) => {
                                 onChange={(e) => setPhoto5(e.target.value)}
                             />
                         </span>
-                        {errors.photo4 && (<li className='error'>{errors.photo4}</li>)}
+                        <img
+                            src={photo5 || missingNo}
+                            onError={() => setErrors({ ...errors, photo5: "Picture URL is not valid" })}
+                            onLoad={() => {
+                                let updatedErrors = { ...errors };
+                                delete updatedErrors.photo5;
+                                setErrors(updatedErrors)
+                            }}
+                            alt="spot preview test"
+                            style={{ "display": "none" }}
+                        />
+                        {errors.photo5 && (<li className='error'>{errors.photo5}</li>)}
                         <hr className='spot-form-divider' />
                     </>
                 )}

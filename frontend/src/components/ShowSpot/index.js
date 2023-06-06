@@ -118,7 +118,7 @@ const ShowSpot = () => {
 
     const handleSubmit = async () => {
 
-        const res = await dispatch(addSpotBooking({
+        await dispatch(addSpotBooking({
             startDate: `${startDate.getMonth() + 1}-${startDate.getDate()}-${startDate.getFullYear()}`,
             endDate: `${endDate.getMonth() + 1}-${endDate.getDate()}-${endDate.getFullYear()}`,
             spotId
@@ -227,7 +227,7 @@ const ShowSpot = () => {
                             modalComponent={<AddReviewModal spot={spot} />}
                         />
                     )}
-                    {(!spotReviews.length && sessionUser.id !== spot.ownerId && (
+                    {(!spotReviews.length && sessionUser?.id !== spot.ownerId && (
                         <h2>Be the first to post a review!</h2>
                     ))}
                     {spotReviews.map((review) => {
