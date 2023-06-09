@@ -43,9 +43,7 @@ alt="REST Logo" height="30"> **REST API**
 
 ## Preview
 
-![airbn2b-screenshot]
-
-[airbn2b-screenshot]: ./READMEs/API-documentation/airbn2b_screenshot.png
+![Screenshot 2023-06-08 at 9 48 10 PM](https://github.com/cleggie66/AirBn2b/assets/117665526/1115e8d5-c222-44e9-9edf-70fba22199f3)
 
 ## How to launch:
 
