@@ -135,6 +135,19 @@ export const deleteSpot = (spot) => async (dispatch) => {
     dispatch(deleteSpotAction(spot))
     return data;
 }
+export const addSpotBooking = (booking) => async (dispatch) => {
+    const {startDate, endDate, spotId} = booking;
+    const response = await csrfFetch(`/api/spots/${spotId}/bookings`, {
+        method: 'POST',
+        body: JSON.stringify({
+            startDate,
+            endDate
+        })
+    });
+    const data = await response.json();
+    dispatch(getSpot(spotId))
+    return data
+}
 
 const initialState = {
     allSpots: {},

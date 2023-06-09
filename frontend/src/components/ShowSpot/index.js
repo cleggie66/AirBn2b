@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react'
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { getSpot } from "../../store/spotReducer";
+import { addSpotBooking, getSpot } from "../../store/spotReducer";
 import { setSpotReviews, setUserReviews } from '../../store/reviewReducer';
+import DatePicker from "react-datepicker"
 import OpenModalButton from '../OpenModalButton';
 import AddReviewModal from '../AddReviewModal';
 import DeleteReviewModal from '../DeleteReviewModal';
@@ -13,8 +14,12 @@ const ShowSpot = () => {
     const dispatch = useDispatch();
     const { spotId } = useParams();
     const missingNo = 'https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'
-    const [isReviewed, setIsReviewed] = useState(false)
-    const [disabled, setDisabled] = useState(true)
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const [unavailableDates, setUnavailableDates] = useState([]);
+    const [isReviewed, setIsReviewed] = useState(false);
+    const [disabled, setDisabled] = useState(true);
+    const [errors, setErrors] = useState({});
 
     const spot = useSelector(state => state.spots.singleSpot)
     const spotReviewState = useSelector(state => state.reviews.spot)
@@ -27,12 +32,48 @@ const ShowSpot = () => {
     });
     const userReviews = (Object.values(userReviewState));
 
+    const onDateChange = (dates) => {
+        const [start, end] = dates;
+        setStartDate(start);
+        setEndDate(end);
+        setErrors({});
+    };
+
     useEffect(() => {
         dispatch(getSpot(spotId))
         dispatch(setSpotReviews(spotId))
         dispatch(setUserReviews())
     }, [dispatch, spotId, userReviews.length])
 
+    // Finds all booked dates for spot
+    useEffect(() => {
+        let bookedDates = [];
+        const bookings = spot.bookings;
+        bookings?.forEach((booking) => {
+            const start = new Date(booking.startDate);
+            const end = new Date(booking.endDate);
+            for (
+                let date = start;
+                date <= end;
+                date.setDate(date.getDate() + 1)
+            ) {
+                bookedDates.push(new Date(date));
+            }
+        })
+        // ACT OF GOD: Blocks out random dates
+        const today = new Date()
+        const randomDay = spot.name?.charCodeAt(0) % 25;
+        let date = new Date(`${today.getMonth() + 1}-${randomDay}-${today.getFullYear()}`)
+
+        for (let i = 0; i < 3; i++) {
+            bookedDates.push(new Date(date))
+            date.setDate(date.getDate() + 1)
+        }
+
+        setUnavailableDates(bookedDates);
+    }, [spot])
+
+    // Finds out if spot has been reviewed by current user
     useEffect(() => {
         let boolean = false;
         for (let i = 0; i < userReviews.length; i++) {
@@ -74,11 +115,25 @@ const ShowSpot = () => {
     if (spot.SpotImages[3]) { img4 = spot.SpotImages[3].url }
     if (spot.SpotImages[4]) { img5 = spot.SpotImages[4].url }
 
+    const handleSubmit = async () => {
+
+        await dispatch(addSpotBooking({
+            startDate: `${startDate.getMonth() + 1}-${startDate.getDate()}-${startDate.getFullYear()}`,
+            endDate: `${endDate.getMonth() + 1}-${endDate.getDate()}-${endDate.getFullYear()}`,
+            spotId
+        })).catch(async (res) => {
+            const data = await res.json();
+            if (data && data.errors) setErrors(data.errors);
+        });
+        setStartDate(null)
+        setEndDate(null)
+    }
+
     return (
         <div className='page'>
             <div className='show-spot'>
-                <h2 className='title'>{spot.name}</h2>
-                <h3 className='title-location'>{`${spot.city}, ${spot.state}, ${spot.country}`}</h3>
+                <h2>{spot.name}</h2>
+                <h3>{`${spot.city}, ${spot.state}, ${spot.country}`}</h3>
                 <div className='image-gallery'>
                     <div className='preview-image'>
                         <div className='preview-image-container img1'>
@@ -102,33 +157,80 @@ const ShowSpot = () => {
                 </div>
                 <div className='spot-info'>
                     <div className='spot-info-text'>
-                        <h2 className='hosted-by'>{`Hosted By ${spot.Owner.firstName} ${spot.Owner.lastName}`}</h2>
+                        <div className='hosted-by'>
+                            <h2>{`Hosted By ${spot.Owner.firstName} ${spot.Owner.lastName}`}</h2>
+                            <div className="host-image-container">
+                                <img src="https://media.licdn.com/dms/image/D4D03AQEwK3F1BwbR2Q/profile-displayphoto-shrink_800_800/0/1670391241454?e=1691020800&v=beta&t=6pMbmMLu5uaDLBXfr-JQqc-7f8ugrGWIzZ5znmpHWgM" alt="caleb" />
+                            </div>
+                        </div>
+                        <hr className='line-break' />
+                        <div className='spot-feature'>
+                            <div className='spot-feature-icon'>
+                                <i className="fa-solid fa-medal" />
+                            </div>
+                            <div className='spot-feature-details'>
+                                <h3>{`${spot.Owner.firstName} is a superhost`}</h3>
+                                <h4>Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests.</h4>
+                            </div>
+                        </div>
+                        <div className='spot-feature'>
+                            <div className='spot-feature-icon'>
+                                <i className="fa-solid fa-door-open" />
+                            </div>
+                            <div className='spot-feature-details'>
+                                <h3>Self check-in</h3>
+                                <h4>Check yourself in with the keypad.</h4>
+                            </div>
+                        </div>
+                        <div className='spot-feature'>
+                            <div className='spot-feature-icon'>
+                                <i className="fa-solid fa-calendar-check" />
+                            </div>
+                            <div className='spot-feature-details'>
+                                <h3>Free cancellation for 48 hours</h3>
+                            </div>
+                        </div>
                         <p>{spot.description}</p>
                     </div>
                     <div className='spot-info-action-box'>
-                        <div className='price-per-night'>
-                            <h2>{`$${spot.price}`}</h2>
-                            <h4>night</h4>
+                        <div className='spot-info-header'>
+                            <div className='price-per-night'>
+                                <h2>{`$${spot.price}`}</h2>
+                                <h4>/night</h4>
+                            </div>
+                            <div className='review-totals'>
+                                <i className="fa-solid fa-star"></i>
+                                {spot.avgRating && (
+                                    <>
+                                        <h4>{spot.avgRating}</h4>
+                                        <h4>•</h4>
+                                        <h4>{`${spot.numReviews} ${(spot.numReviews === 1) ? "review" : "reviews"}`}</h4>
+                                    </>
+                                )}
+                                {!spot.avgRating && (
+                                    <>
+                                        <h4>New</h4>
+                                    </>
+                                )}
+                            </div>
                         </div>
-                        <div className='review-totals'>
-                            <i className="fa-solid fa-star"></i>
-                            {spot.avgRating && (
-                                <>
-                                    <h4>{spot.avgRating}</h4>
-                                    <h4>•</h4>
-                                    <h4>{`${spot.numReviews} ${(spot.numReviews === 1) ? "review" : "reviews"}`}</h4>
-                                </>
-                            )}
-                            {!spot.avgRating && (
-                                <>
-                                    <h4>New</h4>
-                                </>
-                            )}
-                        </div>
-                        <button className='reserve-button' onClick={() => window.alert("Feature coming soon")}>Reserve</button>
+                        <DatePicker
+                            selected={startDate}
+                            onChange={onDateChange}
+                            startDate={startDate}
+                            endDate={endDate}
+                            excludeDates={unavailableDates}
+                            selectsRange
+                            selectsDisabledDaysInRange
+                            inline
+                        />
+                        {Object.values(errors).length !== 0 && (
+                            <li className='error'>{errors.booking}</li>
+                        )}
+                        <button className='reserve-button' onClick={handleSubmit}>Reserve</button>
                     </div>
                 </div>
-                <hr className='line-break'></hr>
+                <hr className='line-break' />
                 <div className='review-section'>
                     <div className='review-header'>
                         <i className="fa-solid fa-star"></i>
@@ -153,7 +255,7 @@ const ShowSpot = () => {
                             modalComponent={<AddReviewModal spot={spot} />}
                         />
                     )}
-                    {(!spotReviews.length && sessionUser.id !== spot.ownerId && (
+                    {(!spotReviews.length && sessionUser?.id !== spot.ownerId && (
                         <h2>Be the first to post a review!</h2>
                     ))}
                     {spotReviews.map((review) => {

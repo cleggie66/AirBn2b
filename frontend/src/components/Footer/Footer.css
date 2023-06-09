@@ -1,0 +1,36 @@
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    box-shadow: 0px 0px 4px rgba(59, 59, 59, 0.6);
+    gap: 10px;
+    color: #7f7f7f;
+    font-size: 16px;
+}
+
+.about-link {
+    font-size: 16px;
+    font-weight: normal;
+    color: #7f7f7f;
+    background-color: white;
+    text-decoration: underline;
+}
+
+.about-link:hover {
+    color: #d0d0d0;
+}
+
+.footer-icons {
+    display: flex;
+    gap: 10px;
+}
+
+.footer-icons>a>i {
+    color: #7f7f7f;
+    font-size: 18px;
+}
+
+.footer-icons>a>i:hover {
+    color: #d0d0d0;
+}

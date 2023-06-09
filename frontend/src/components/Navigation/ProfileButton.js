@@ -51,11 +51,11 @@ function ProfileButton({ user }) {
                 <div className={ulClassName} ref={ulRef}>
                     <h4>{`Hello, ${user.firstName}!`}</h4>
                     <p>{user.email}</p>
-                    <hr className="profile-dropdown-divider"></hr>
+                    <hr className="profile-dropdown-divider" />
                     <h4>
                         <Link to='/spots/current'>Manage Spots</Link>
                     </h4>
-                    <hr className="profile-dropdown-divider"></hr>
+                    <hr className="profile-dropdown-divider" />
                     <button className="logout-button" onClick={logout}>Log Out</button>
                 </div>
             ) : (

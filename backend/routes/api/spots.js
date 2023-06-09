@@ -40,8 +40,6 @@ router.get('/current', requireAuth, async (req, res) => {
             }
         }
 
-        delete spot.SpotImages;
-
         payload.Spots.push(spot)
     }
     res.json(payload)
@@ -110,19 +108,26 @@ router.get('/:spotId/reviews', async (req, res, next) => {
 router.get('/:spotId', async (req, res, next) => {
     const spot = await Spot.scope('allDetails').findByPk(req.params.spotId, {
         include: [
-            { model: SpotImage },
             { model: User.scope('nameAndId'), as: 'Owner' },
+            { model: SpotImage }
         ]
     });
-
+    
     if (!spot) {
         const err = new Error();
-        err.message = "Spot couldn't be found"
+        err.message = "Spot couldn't be found";
         err.status = 404;
         next(err);
-    }
-
+    };
     const payload = spot.toJSON();
+
+    //bookings
+    const bookings = await Booking.findAll({
+        where: {
+            spotId: req.params.spotId
+        }
+    });
+    payload.bookings = bookings;
 
     //avgStarRating
     let avgReviewData = await Review.findOne({
@@ -155,7 +160,7 @@ router.get('/', validateQuery, async (req, res) => {
     let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
 
     if (!page) page = 1;
-    if (!size) size = 20;
+    if (!size) size = 50;
     if (!minLat) minLat = -90;
     if (!maxLat) maxLat = 90;
     if (!minLng) minLng = -180;
@@ -186,13 +191,13 @@ router.get('/', validateQuery, async (req, res) => {
     for (let i = 0; i < spots.length; i++) {
         const spot = spots[i].toJSON();
 
-        for (let i = 0; i < spot.SpotImages.length; i++) {
-            const image = spot.SpotImages[i];
-            if (image.preview === true) {
-                spot.previewImage = image.url;
-            }
-        }
-        delete spot.SpotImages;
+        // for (let i = 0; i < spot.SpotImages.length; i++) {
+        //     const image = spot.SpotImages[i];
+        //     if (image.preview === true) {
+        //         spot.previewImage = image.url;
+        //     }
+        // }
+        // delete spot.SpotImages;
 
         let reviewData = await Review.findOne({
             where: {
@@ -220,24 +225,31 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
             spotId: req.params.spotId
         }
     });
-
-    if (start >= end) {
-        const err = new Error();
-        err.status = 400;
-        err.message = "Validation Error";
-        err.errors = { endDate: 'endDate cannot be on or before startDate' };
-        next(err);
-    }
     if (!spot) {
         const err = new Error();
         err.message = "Spot couldn't be found";
         err.status = 404;
         next(err);
     }
+    if (start < new Date()) {
+        const err = new Error();
+        err.message = "Validation Error";
+        err.errors = { booking: 'You cannot make a booking in the past' };
+        err.status = 400;
+        return next(err);
+    }
+    if (start >= end) {
+        const err = new Error();
+        err.status = 400;
+        err.message = "Validation Error";
+        err.errors = { booking: 'End date cannot be on or before startDate' };
+        next(err);
+    }
     if (spot.ownerId === req.user.id) {
         const err = new Error();
-        err.message = "You cannot book a spot that you already own";
         err.status = 403;
+        err.message = "Validation Error";
+        err.errors = { booking: 'You cannot book a spot that you already own' };
         next(err);
     }
     if (bookings.length) {
@@ -248,12 +260,21 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
             const booking = bookings[i].toJSON();
             const existingStart = new Date(booking.startDate);
             const existingEnd = new Date(booking.endDate);
+
+            if (existingStart <= end && existingStart >= start) {
+                err.errors.booking = "Booking Conflict";
+                dateError = true;
+            };
+            if (existingEnd <= end && existingEnd >= start) {
+                err.errors.booking = 'Booking Conflict'
+                dateError = true;
+            };
             if (start <= existingEnd && start >= existingStart) {
-                err.errors.startDate = "Start date conflicts with an existing booking";
+                err.errors.booking = "Start date conflicts with an existing booking";
                 dateError = true;
             };
             if (end <= existingEnd && end >= existingStart) {
-                err.errors.endDate = 'End date conflicts with an existing booking'
+                err.errors.booking = 'End date conflicts with an existing booking'
                 dateError = true;
             };
         };

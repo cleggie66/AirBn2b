@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { Switch, Route } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
+import Footer from "./components/Footer"
 
 import CreateSpotForm from "./components/SpotForm/CreateSpotForm";
 import UpdateSpotForm from "./components/SpotForm/UpdateSpotForm";
@@ -29,6 +30,7 @@ function App() {
           <Route path="/spots/:spotId" component={ShowSpot} />
         </Switch> 
       )}
+      <Footer />
     </>
   );
 }
