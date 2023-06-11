@@ -18,16 +18,16 @@ const AboutModal = () => {
             </ul>
             <div className='about-modal-icons'>
                 <a href="https://cleggie66.github.io/" target="_blank" rel="noopener noreferrer">
-                    <i class="fa-solid fa-globe"></i>
+                    <i className="fa-solid fa-globe"></i>
                 </a>
                 <a href="https://github.com/cleggie66" target="_blank" rel="noopener noreferrer">
-                    <i class="fa-brands fa-github" />
+                    <i className="fa-brands fa-github" />
                 </a>
                 <a href="mailto: caleb@cleghorn.org" target="_blank" rel="noopener noreferrer">
-                    <i class="fa-brands fa-linkedin" />
+                    <i className="fa-brands fa-linkedin" />
                 </a>
                 <a href="mailto: caleb@cleghorn.org" target="_blank" rel="noopener noreferrer">
-                    <i class="fa-solid fa-envelope" />
+                    <i className="fa-solid fa-envelope" />
                 </a>
             </div>
         </div>
