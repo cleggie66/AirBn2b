@@ -1,3 +1,4 @@
+import resume from "../../media/caleb-cleghorn-resume.pdf"
 import './AboutModal.css'
 
 const AboutModal = () => {
@@ -28,6 +29,9 @@ const AboutModal = () => {
                 </a>
                 <a href="mailto: caleb@cleghorn.org" target="_blank" rel="noopener noreferrer">
                     <i className="fa-solid fa-envelope" />
+                </a>
+                <a href={resume} target="_blank" rel="noopener noreferrer">
+                    <i className="fa-solid fa-file" />
                 </a>
             </div>
         </div>
