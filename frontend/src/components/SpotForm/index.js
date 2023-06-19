@@ -72,7 +72,7 @@ const SpotForm = ({ spot, formType }) => {
             jumpToTop()
         }
     }
-    console.log(errors)
+
     return (
         <div className='page'>
             <form onSubmit={onSubmit} className="create-spot-form">

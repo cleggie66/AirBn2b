@@ -4,7 +4,6 @@ import { deleteReview } from "../../store/reviewReducer";
 import "./DeleteReviewModal.css"
 
 const DeleteReviewModal = ({ review }) => {
-    console.log(review)
     const { closeModal } = useModal();
     const dispatch = useDispatch();
     const reviewId = review.id;
