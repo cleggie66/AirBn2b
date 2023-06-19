@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addSpotBooking, getSpot } from "../../store/spotReducer";
 import { setSpotReviews, setUserReviews } from '../../store/reviewReducer';
+import LoginFormModal from "../LoginFormModal";
 import DatePicker from "react-datepicker"
 import OpenModalButton from '../OpenModalButton';
 import AddReviewModal from '../AddReviewModal';
@@ -19,6 +20,8 @@ const ShowSpot = () => {
     const [unavailableDates, setUnavailableDates] = useState([]);
     const [isReviewed, setIsReviewed] = useState(false);
     const [disabled, setDisabled] = useState(true);
+    const [buttonText, setButtonText] = useState("Reserve Spot");
+    const [buttonClass, setButtonClass] = useState("reserve-button");
     const [errors, setErrors] = useState({});
 
     const spot = useSelector(state => state.spots.singleSpot)
@@ -116,6 +119,8 @@ const ShowSpot = () => {
     if (spot.SpotImages[4]) { img5 = spot.SpotImages[4].url }
 
     const handleSubmit = async () => {
+        setButtonClass("reserved-button");
+        setButtonText("Reserved Successfully!");
 
         await dispatch(addSpotBooking({
             startDate: `${startDate.getMonth() + 1}-${startDate.getDate()}-${startDate.getFullYear()}`,
@@ -125,8 +130,14 @@ const ShowSpot = () => {
             const data = await res.json();
             if (data && data.errors) setErrors(data.errors);
         });
-        setStartDate(null)
-        setEndDate(null)
+
+        setStartDate(null);
+        setEndDate(null);
+
+        setTimeout(() => {
+            setButtonClass("reserve-button");
+            setButtonText("Reserve Spot")
+        }, 3000);
     }
 
     return (
@@ -227,7 +238,20 @@ const ShowSpot = () => {
                         {Object.values(errors).length !== 0 && (
                             <li className='error'>{errors.booking}</li>
                         )}
-                        <button className='reserve-button' onClick={handleSubmit}>Reserve</button>
+                        {!sessionUser && (
+                            <OpenModalButton
+                                buttonText="Log in to book spot"
+                                className="reserve-button"
+                                modalComponent={<LoginFormModal />}
+                            />
+                        )}
+                        {sessionUser && (
+                            <button
+                                onClick={handleSubmit}
+                                className={buttonClass}>
+                                {buttonText}
+                            </button>
+                        )}
                     </div>
                 </div>
                 <hr className='line-break' />
