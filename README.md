@@ -47,4 +47,4 @@ alt="REST Logo" height="30"> **REST API**
 
 ## How to launch:
 
-Visit: https://caleb-airbnb.onrender.com/
+Visit: https://airbn2b.onrender.com/
