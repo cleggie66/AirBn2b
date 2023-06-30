@@ -54,7 +54,7 @@ const AddReviewModal = ({ spot }) => {
 
     return (
         <div className="add-review-modal">
-            <div className="close-modal-icon">
+            <div className="close-modal-icon" onClick={closeModal}>
                 <i className="fa-solid fa-circle-xmark" />
             </div>
             <h2>How was your stay?</h2>

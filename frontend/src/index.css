@@ -25,5 +25,14 @@ button {
 }
 
 .close-modal-icon {
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    color: rgb(179, 179, 179);
+    font-size: 24px;
+    cursor: pointer;
+}
 
+.close-modal-icon:hover {
+    color: rgb(255, 255, 255);
 }
