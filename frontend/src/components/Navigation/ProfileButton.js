@@ -59,15 +59,16 @@ function ProfileButton({ user }) {
                     <button className="logout-button" onClick={logout}>Log Out</button>
                 </div>
             ) : (
-                <div className={ulClassName} ref={ulRef}>
-                    <h4>
+                <div className={ulClassName} ref={ulRef} >
+                    <h4 onClick={() => setShowMenu(false)}>
                         <OpenModalButton
                             buttonText="Log In"
                             className="signup-login-button"
-                            modalComponent={<LoginFormModal />}
+                            modalComponent={<LoginFormModal
+                            />}
                         />
                     </h4>
-                    <h4>
+                    <h4 onClick={() => setShowMenu(false)}>
                         <OpenModalButton
                             buttonText="Sign Up"
                             className="signup-login-button"
