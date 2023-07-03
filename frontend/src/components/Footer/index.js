@@ -16,7 +16,7 @@ function Footer() {
             />
             <p>•</p>
             <div className='footer-icons'>
-                <a href="https://cleggie66.github.io/" target="_blank" rel="noopener noreferrer">
+                <a href="https://caleb-cleghorn.onrender.com/" target="_blank" rel="noopener noreferrer">
                     <i className="fa-solid fa-globe"></i>
                 </a>
                 <a href="https://github.com/cleggie66" target="_blank" rel="noopener noreferrer">

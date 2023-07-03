@@ -1,8 +1,14 @@
+import { useModal } from '../../context/Modal';
 import './AboutModal.css'
 
 const AboutModal = () => {
+    const { closeModal } = useModal();
+
     return (
         <div className='about-modal'>
+            <div className="close-modal-icon" onClick={closeModal}>
+                <i className="fa-solid fa-circle-xmark" />
+            </div>
             <div className='about-modal-top'>
                 <div className="profile-image-container">
                     <img src="https://media.licdn.com/dms/image/D4D03AQEwK3F1BwbR2Q/profile-displayphoto-shrink_800_800/0/1670391241454?e=1691020800&v=beta&t=6pMbmMLu5uaDLBXfr-JQqc-7f8ugrGWIzZ5znmpHWgM" alt="caleb" />
@@ -17,7 +23,7 @@ const AboutModal = () => {
                 <li>⚡️ Stay cool under pressure</li>
             </ul>
             <div className='about-modal-icons'>
-                <a href="https://cleggie66.github.io/" target="_blank" rel="noopener noreferrer">
+                <a href="https://caleb-cleghorn.onrender.com/" target="_blank" rel="noopener noreferrer">
                     <i className="fa-solid fa-globe"></i>
                 </a>
                 <a href="https://github.com/cleggie66" target="_blank" rel="noopener noreferrer">
