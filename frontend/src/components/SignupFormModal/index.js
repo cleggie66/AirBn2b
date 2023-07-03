@@ -42,6 +42,9 @@ function SignupFormModal() {
 
     return (
         <form className="signup-modal" onSubmit={handleSubmit}>
+            <div className="close-modal-icon" onClick={closeModal}>
+                <i className="fa-solid fa-circle-xmark" />
+            </div>
             {errors.length > 0 && (
                 <ul>
                     {errors.map((error, idx) => <li className="error" key={idx}>{error}</li>)}
