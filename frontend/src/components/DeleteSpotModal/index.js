@@ -14,6 +14,9 @@ const DeleteSpotModal = ({ spot }) => {
 
     return (
         <div className="delete-spot-modal">
+            <div className="close-modal-icon" onClick={closeModal}>
+                <i className="fa-solid fa-circle-xmark" />
+            </div>
             <h2>Confirm Delete</h2>
             <p>Are you sure you want to remove this spot from the listings?</p>
             <button

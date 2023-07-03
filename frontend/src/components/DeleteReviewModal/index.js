@@ -16,6 +16,9 @@ const DeleteReviewModal = ({ review }) => {
 
     return (
         <div className="delete-review-modal">
+            <div className="close-modal-icon" onClick={closeModal}>
+                <i className="fa-solid fa-circle-xmark" />
+            </div>
             <h2>Confirm Delete</h2>
             <p>Are you sure you want to delete this review?</p>
             <button
