@@ -45,6 +45,9 @@ const LoginFormModal = () => {
 
     return (
         <form className="login-modal" onSubmit={onSubmit}>
+            <div className="close-modal-icon" onClick={closeModal}>
+                <i className="fa-solid fa-circle-xmark" />
+            </div>
             <h2>Log In</h2>
             {errors.length > 0 && (
                 <ul>
