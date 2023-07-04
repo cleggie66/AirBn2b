@@ -43,10 +43,10 @@ const ShowSpot = () => {
     };
 
     useEffect(() => {
-        dispatch(getSpot(spotId))
-        dispatch(setSpotReviews(spotId))
-        dispatch(setUserReviews())
-    }, [dispatch, spotId, userReviews.length])
+        dispatch(getSpot(spotId));
+        dispatch(setSpotReviews(spotId));
+        dispatch(setUserReviews());
+    }, [dispatch, spotId, userReviews.length]);
 
     // Finds all booked dates for spot
     useEffect(() => {
@@ -62,7 +62,7 @@ const ShowSpot = () => {
             ) {
                 bookedDates.push(new Date(date));
             }
-        })
+        });
         // ACT OF GOD: Blocks out random dates
         const today = new Date()
         const randomDay = spot.name?.charCodeAt(0) % 25;
