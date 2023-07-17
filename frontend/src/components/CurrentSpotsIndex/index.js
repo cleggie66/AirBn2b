@@ -1,20 +1,20 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from 'react-router-dom';
 import { setCurrentSpots } from '../../store/spotReducer';
 import SpotsIndexItem from '../SpotsIndexItem';
-import "./CurrentSpotsIndex.css"
+import "./CurrentSpotsIndex.css";
 
 
 const CurrentSpotsIndex = () => {
     const dispatch = useDispatch();
 
-    const spotState = useSelector(state => state.spots.currentSpots)
+    const spotState = useSelector(state => state.spots.currentSpots);
     const spots = Object.values(spotState);
 
     useEffect(() => {
         dispatch(setCurrentSpots())
-    }, [dispatch, spots.length])
+    }, [dispatch, spots.length]);
 
     return (
         <div className='page'>
@@ -39,6 +39,6 @@ const CurrentSpotsIndex = () => {
             )}
         </div>
     )
-}
+};
 
-export default CurrentSpotsIndex
+export default CurrentSpotsIndex;
