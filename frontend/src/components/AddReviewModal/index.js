@@ -1,30 +1,30 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux"
-import { useModal } from "../../context/Modal"
+import { useDispatch } from "react-redux";
+import { useModal } from "../../context/Modal";
 import { addReview } from "../../store/reviewReducer";
-import './AddReviewModal.css'
+import './AddReviewModal.css';
 
 const AddReviewModal = ({ spot }) => {
-    const [rating, setRating] = useState(0)
-    const [activeRating, setActiveRating] = useState(0)
+    const [rating, setRating] = useState(0);
+    const [activeRating, setActiveRating] = useState(0);
     const [review, setReview] = useState('');
-    const [disabled, setDisabled] = useState(true)
+    const [disabled, setDisabled] = useState(true);
     const [errors, setErrors] = useState([]);
     const dispatch = useDispatch();
     const { closeModal } = useModal();
-    const spotId = spot.id
+    const spotId = spot.id;
 
     useEffect(() => {
         if ( review.length >= 10 && rating !== 0) {
             setDisabled(false)
         } else {
             setDisabled(true)
-        }
-    }, [review, rating])
+        };
+    }, [review, rating]);
 
     useEffect(() => {
         setActiveRating(rating)
-    }, [rating])
+    }, [rating]);
 
     const onSubmit = () => {
         return dispatch(addReview({
@@ -37,7 +37,7 @@ const AddReviewModal = ({ spot }) => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(Object.values(data.errors));
             });
-    }
+    };
 
     const reviewStarSetup = (num) => {
         return (
@@ -49,7 +49,7 @@ const AddReviewModal = ({ spot }) => {
             >
             </i>
         )
-    }
+    };
 
 
     return (
@@ -86,6 +86,6 @@ const AddReviewModal = ({ spot }) => {
             </button>
         </div>
     )
-}
+};
 
 export default AddReviewModal;
