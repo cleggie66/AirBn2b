@@ -1,7 +1,7 @@
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
 import { deleteReview } from "../../store/reviewReducer";
-import "./DeleteReviewModal.css"
+import "./DeleteReviewModal.css";
 
 const DeleteReviewModal = ({ review }) => {
     const { closeModal } = useModal();
@@ -12,7 +12,7 @@ const DeleteReviewModal = ({ review }) => {
     const handleDelete = (e) => {
         dispatch(deleteReview({ reviewId, spotId }))
             .then(closeModal)
-    }
+    };
 
     return (
         <div className="delete-review-modal">
