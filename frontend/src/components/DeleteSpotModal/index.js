@@ -10,7 +10,7 @@ const DeleteSpotModal = ({ spot }) => {
     const handleDelete = () => {
         return dispatch(deleteSpot(spot))
             .then(closeModal)
-    }
+    };
 
     return (
         <div className="delete-spot-modal">
