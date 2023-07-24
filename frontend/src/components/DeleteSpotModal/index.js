@@ -35,4 +35,4 @@ const DeleteSpotModal = ({ spot }) => {
     )
 };
 
-export default DeleteSpotModal
+export default DeleteSpotModal;
