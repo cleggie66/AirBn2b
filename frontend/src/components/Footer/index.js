@@ -1,5 +1,5 @@
 import OpenModalButton from '../OpenModalButton';
-import AboutModal from "../AboutModal"
+import AboutModal from "../AboutModal";
 import './Footer.css';
 
 function Footer() {
@@ -31,6 +31,6 @@ function Footer() {
             </div>
         </div>
     );
-}
+};
 
 export default Footer;
