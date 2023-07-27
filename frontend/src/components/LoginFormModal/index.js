@@ -8,7 +8,7 @@ const LoginFormModal = () => {
     const [credential, setCredential] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState([]);
-    const [disabled, setDisabled] = useState(true)
+    const [disabled, setDisabled] = useState(true);
     const dispatch = useDispatch();
     const { closeModal } = useModal();
 
@@ -18,7 +18,7 @@ const LoginFormModal = () => {
         } else {
             setDisabled(true)
         }
-    }, [credential, password])
+    }, [credential, password]);
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -30,7 +30,7 @@ const LoginFormModal = () => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(Object.values(data.errors));
             });
-    }
+    };
 
     const loginDemo = (e) => {
         e.preventDefault();
@@ -41,7 +41,7 @@ const LoginFormModal = () => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(Object.values(data.errors));
             });
-    }
+    };
 
     return (
         <form className="login-modal" onSubmit={onSubmit}>
@@ -92,7 +92,7 @@ const LoginFormModal = () => {
                 Log in as a Demo User
             </button>
         </form>
-    )
-}
+    );
+};
 
 export default LoginFormModal;
