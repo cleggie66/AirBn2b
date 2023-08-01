@@ -1,4 +1,3 @@
-
 import { useModal } from "../../context/Modal";
 
 function OpenModalButton({
@@ -19,6 +18,6 @@ function OpenModalButton({
     return (
         <button className={className} onClick={onClick}>{buttonText}</button>
     );
-}
+};
 
 export default OpenModalButton;

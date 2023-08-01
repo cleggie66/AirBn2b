@@ -24,7 +24,7 @@ function ProfileButton({ user }) {
         const closeMenu = (e) => {
             if (!ulRef.current.contains(e.target)) {
                 setShowMenu(false);
-            }
+            };
         };
 
         document.addEventListener('click', closeMenu);
