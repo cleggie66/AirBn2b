@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addSpotBooking, getSpot } from "../../store/spotReducer";
 import { setSpotReviews, setUserReviews } from '../../store/reviewReducer';
 import LoginFormModal from "../LoginFormModal";
-import DatePicker from "react-datepicker"
+import DatePicker from "react-datepicker";
 import OpenModalButton from '../OpenModalButton';
 import AddReviewModal from '../AddReviewModal';
 import DeleteReviewModal from '../DeleteReviewModal';
@@ -14,7 +14,7 @@ import './ShowSpot.css';
 const ShowSpot = () => {
     const dispatch = useDispatch();
     const { spotId } = useParams();
-    const missingNo = 'https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'
+    const missingNo = 'https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg';
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [unavailableDates, setUnavailableDates] = useState([]);
@@ -24,9 +24,9 @@ const ShowSpot = () => {
     const [buttonClass, setButtonClass] = useState("reserve-button");
     const [errors, setErrors] = useState({});
 
-    const spot = useSelector(state => state.spots.singleSpot)
-    const spotReviewState = useSelector(state => state.reviews.spot)
-    const userReviewState = useSelector(state => state.reviews.user)
+    const spot = useSelector(state => state.spots.singleSpot);
+    const spotReviewState = useSelector(state => state.reviews.spot);
+    const userReviewState = useSelector(state => state.reviews.user);
     const sessionUser = useSelector(state => state.session.user);
 
     const spotReviewArray = (Object.values(spotReviewState));
@@ -55,18 +55,15 @@ const ShowSpot = () => {
         bookings?.forEach((booking) => {
             const start = new Date(booking.startDate);
             const end = new Date(booking.endDate);
-            for (
-                let date = start;
-                date <= end;
-                date.setDate(date.getDate() + 1)
-            ) {
+            for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
                 bookedDates.push(new Date(date));
-            }
+            };
         });
+
         // ACT OF GOD: Blocks out random dates
-        const today = new Date()
+        const today = new Date();
         const randomDay = spot.name?.charCodeAt(0) % 25;
-        let date = new Date(`${today.getMonth() + 1}-${randomDay}-${today.getFullYear()}`)
+        let date = new Date(`${today.getMonth() + 1}-${randomDay}-${today.getFullYear()}`);
 
         for (let i = 0; i < 3; i++) {
             bookedDates.push(new Date(date))
@@ -74,7 +71,7 @@ const ShowSpot = () => {
         }
 
         setUnavailableDates(bookedDates);
-    }, [spot])
+    }, [spot]);
 
     // Finds out if spot has been reviewed by current user
     useEffect(() => {
@@ -88,7 +85,7 @@ const ShowSpot = () => {
         } else {
             setIsReviewed(false)
         };
-    }, [userReviews, setIsReviewed, spot])
+    }, [userReviews, setIsReviewed, spot]);
 
     useEffect(() => {
         setDisabled(
@@ -98,25 +95,23 @@ const ShowSpot = () => {
                 !isReviewed
             ) ? false : true
         )
-    }, [sessionUser, spot, isReviewed])
+    }, [sessionUser, spot, isReviewed]);
 
-    if (Object.values(spot).length < 1) {
-        return (<h2>Loading...</h2>)
-    }
+    if (Object.values(spot).length < 1) { return (<h2>Loading...</h2>) };
 
-    if (spot.avgRating) { spot.avgRating = parseFloat(spot.avgRating).toFixed(2) }
+    if (spot.avgRating) { spot.avgRating = parseFloat(spot.avgRating).toFixed(2) };
 
-    // valid image check
+    // Valid image check
     let img1;
     let img2;
     let img3;
     let img4;
     let img5;
-    if (spot.SpotImages[0]) { img1 = spot.SpotImages[0].url }
-    if (spot.SpotImages[1]) { img2 = spot.SpotImages[1].url }
-    if (spot.SpotImages[2]) { img3 = spot.SpotImages[2].url }
-    if (spot.SpotImages[3]) { img4 = spot.SpotImages[3].url }
-    if (spot.SpotImages[4]) { img5 = spot.SpotImages[4].url }
+    if (spot.SpotImages[0]) { img1 = spot.SpotImages[0].url };
+    if (spot.SpotImages[1]) { img2 = spot.SpotImages[1].url };
+    if (spot.SpotImages[2]) { img3 = spot.SpotImages[2].url };
+    if (spot.SpotImages[3]) { img4 = spot.SpotImages[3].url };
+    if (spot.SpotImages[4]) { img5 = spot.SpotImages[4].url };
 
     const handleSubmit = async () => {
         setButtonClass("reserved-button");
@@ -217,12 +212,12 @@ const ShowSpot = () => {
                                         <h4>•</h4>
                                         <h4>{`${spot.numReviews} ${(spot.numReviews === 1) ? "review" : "reviews"}`}</h4>
                                     </>
-                                )}
+                                )};
                                 {!spot.avgRating && (
                                     <>
                                         <h4>New</h4>
                                     </>
-                                )}
+                                )};
                             </div>
                         </div>
                         <DatePicker
@@ -237,21 +232,21 @@ const ShowSpot = () => {
                         />
                         {Object.values(errors).length !== 0 && (
                             <li className='error'>{errors.booking}</li>
-                        )}
+                        )};
                         {!sessionUser && (
                             <OpenModalButton
                                 buttonText="Log in to book spot"
                                 className="reserve-button"
                                 modalComponent={<LoginFormModal />}
                             />
-                        )}
+                        )};
                         {sessionUser && (
                             <button
                                 onClick={handleSubmit}
                                 className={buttonClass}>
                                 {buttonText}
                             </button>
-                        )}
+                        )};
                     </div>
                 </div>
                 <hr className='line-break' />
@@ -264,12 +259,12 @@ const ShowSpot = () => {
                                 <h2>•</h2>
                                 <h2>{`${spot.numReviews} ${(spot.numReviews === 1) ? "review" : "reviews"}`}</h2>
                             </>
-                        )}
+                        )};
                         {!spot.avgRating && (
                             <>
                                 <h2>New</h2>
                             </>
-                        )}
+                        )};
                     </div>
                     {!disabled && (
                         <OpenModalButton
@@ -278,10 +273,10 @@ const ShowSpot = () => {
                             buttonText="Post Your Review"
                             modalComponent={<AddReviewModal spot={spot} />}
                         />
-                    )}
+                    )};
                     {(!spotReviews.length && sessionUser?.id !== spot.ownerId && (
                         <h2>Be the first to post a review!</h2>
-                    ))}
+                    ))};
                     {spotReviews.map((review) => {
                         return (
                             <div className='review' key={review.id}>
@@ -294,15 +289,14 @@ const ShowSpot = () => {
                                         className="delete-review-button"
                                         modalComponent={<DeleteReviewModal review={review} />}
                                     />
-                                )}
+                                )};
                             </div>
-                        )
-                    })}
+                        );
+                    })};
                 </div>
             </div>
         </div>
-    )
-
-}
+    );
+};
 
 export default ShowSpot;
