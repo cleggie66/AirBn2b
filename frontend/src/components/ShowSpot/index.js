@@ -296,7 +296,7 @@ const ShowSpot = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default ShowSpot;
