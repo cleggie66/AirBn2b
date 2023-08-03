@@ -212,12 +212,12 @@ const ShowSpot = () => {
                                         <h4>•</h4>
                                         <h4>{`${spot.numReviews} ${(spot.numReviews === 1) ? "review" : "reviews"}`}</h4>
                                     </>
-                                )}
+                                )};
                                 {!spot.avgRating && (
                                     <>
                                         <h4>New</h4>
                                     </>
-                                )}
+                                )};
                             </div>
                         </div>
                         <DatePicker
@@ -232,21 +232,21 @@ const ShowSpot = () => {
                         />
                         {Object.values(errors).length !== 0 && (
                             <li className='error'>{errors.booking}</li>
-                        )}
+                        )};
                         {!sessionUser && (
                             <OpenModalButton
                                 buttonText="Log in to book spot"
                                 className="reserve-button"
                                 modalComponent={<LoginFormModal />}
                             />
-                        )}
+                        )};
                         {sessionUser && (
                             <button
                                 onClick={handleSubmit}
                                 className={buttonClass}>
                                 {buttonText}
                             </button>
-                        )}
+                        )};
                     </div>
                 </div>
                 <hr className='line-break' />
@@ -259,12 +259,12 @@ const ShowSpot = () => {
                                 <h2>•</h2>
                                 <h2>{`${spot.numReviews} ${(spot.numReviews === 1) ? "review" : "reviews"}`}</h2>
                             </>
-                        )}
+                        )};
                         {!spot.avgRating && (
                             <>
                                 <h2>New</h2>
                             </>
-                        )}
+                        )};
                     </div>
                     {!disabled && (
                         <OpenModalButton
@@ -273,10 +273,10 @@ const ShowSpot = () => {
                             buttonText="Post Your Review"
                             modalComponent={<AddReviewModal spot={spot} />}
                         />
-                    )}
+                    )};
                     {(!spotReviews.length && sessionUser?.id !== spot.ownerId && (
                         <h2>Be the first to post a review!</h2>
-                    ))}
+                    ))};
                     {spotReviews.map((review) => {
                         return (
                             <div className='review' key={review.id}>
@@ -289,15 +289,14 @@ const ShowSpot = () => {
                                         className="delete-review-button"
                                         modalComponent={<DeleteReviewModal review={review} />}
                                     />
-                                )}
+                                )};
                             </div>
-                        )
-                    })}
+                        );
+                    })};
                 </div>
             </div>
         </div>
     )
-
 }
 
 export default ShowSpot;
