@@ -59,7 +59,7 @@ const ShowSpot = () => {
                 bookedDates.push(new Date(date));
             };
         });
-        
+
         // ACT OF GOD: Blocks out random dates
         const today = new Date();
         const randomDay = spot.name?.charCodeAt(0) % 25;
@@ -85,7 +85,7 @@ const ShowSpot = () => {
         } else {
             setIsReviewed(false)
         };
-    }, [userReviews, setIsReviewed, spot])
+    }, [userReviews, setIsReviewed, spot]);
 
     useEffect(() => {
         setDisabled(
@@ -95,25 +95,23 @@ const ShowSpot = () => {
                 !isReviewed
             ) ? false : true
         )
-    }, [sessionUser, spot, isReviewed])
+    }, [sessionUser, spot, isReviewed]);
 
-    if (Object.values(spot).length < 1) {
-        return (<h2>Loading...</h2>)
-    }
+    if (Object.values(spot).length < 1) { return (<h2>Loading...</h2>) };
 
-    if (spot.avgRating) { spot.avgRating = parseFloat(spot.avgRating).toFixed(2) }
+    if (spot.avgRating) { spot.avgRating = parseFloat(spot.avgRating).toFixed(2) };
 
-    // valid image check
+    // Valid image check
     let img1;
     let img2;
     let img3;
     let img4;
     let img5;
-    if (spot.SpotImages[0]) { img1 = spot.SpotImages[0].url }
-    if (spot.SpotImages[1]) { img2 = spot.SpotImages[1].url }
-    if (spot.SpotImages[2]) { img3 = spot.SpotImages[2].url }
-    if (spot.SpotImages[3]) { img4 = spot.SpotImages[3].url }
-    if (spot.SpotImages[4]) { img5 = spot.SpotImages[4].url }
+    if (spot.SpotImages[0]) { img1 = spot.SpotImages[0].url };
+    if (spot.SpotImages[1]) { img2 = spot.SpotImages[1].url };
+    if (spot.SpotImages[2]) { img3 = spot.SpotImages[2].url };
+    if (spot.SpotImages[3]) { img4 = spot.SpotImages[3].url };
+    if (spot.SpotImages[4]) { img5 = spot.SpotImages[4].url };
 
     const handleSubmit = async () => {
         setButtonClass("reserved-button");
