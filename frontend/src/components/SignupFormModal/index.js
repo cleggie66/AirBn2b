@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import * as sessionActions from "../../store/session";
-import "./SignupForm.css"
+import "./SignupForm.css";
 
 function SignupFormModal() {
     const dispatch = useDispatch();
@@ -13,7 +13,7 @@ function SignupFormModal() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errors, setErrors] = useState([]);
-    const [disabled, setDisabled] = useState(true)
+    const [disabled, setDisabled] = useState(true);
     const { closeModal } = useModal();
 
     useEffect(() => {
@@ -23,8 +23,8 @@ function SignupFormModal() {
                 (username.length >= 4) &&
                 (password.length >= 6) &&
                 (password === confirmPassword)
-            ) ? false : true)
-    }, [email, username, firstName, lastName, password, confirmPassword])
+            ) ? false : true);
+    }, [email, username, firstName, lastName, password, confirmPassword]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -36,7 +36,7 @@ function SignupFormModal() {
                     const data = await res.json();
                     if (data && data.errors) setErrors(Object.values(data.errors));
                 });
-        }
+        };
         return setErrors(['Passwords must match']);
     };
 
@@ -49,7 +49,7 @@ function SignupFormModal() {
                 <ul>
                     {errors.map((error, idx) => <li className="error" key={idx}>{error}</li>)}
                 </ul>
-            )}
+            )};
             <h2>Sign Up</h2>
             <label>
                 Email:
@@ -126,6 +126,6 @@ function SignupFormModal() {
             </button>
         </form>
     );
-}
+};
 
 export default SignupFormModal;
