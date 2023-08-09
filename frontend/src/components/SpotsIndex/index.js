@@ -1,8 +1,8 @@
-import { useEffect } from 'react'
-import { useSelector, useDispatch } from "react-redux"
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from "react-redux";
 import SpotsIndexItem from "../SpotsIndexItem";
 import { setAllSpots } from '../../store/spotReducer';
-import './SpotsIndex.css'
+import './SpotsIndex.css';
 
 
 const SpotsIndex = () => {
@@ -12,7 +12,7 @@ const SpotsIndex = () => {
         dispatch(setAllSpots());
     }, [dispatch]);
 
-    const spotState = useSelector(state => state.spots.allSpots)
+    const spotState = useSelector(state => state.spots.allSpots);
     const spots = Object.values(spotState);
 
     return (
@@ -20,10 +20,10 @@ const SpotsIndex = () => {
             <div className='spots-container'>
                 {spots.map(spot => {
                     return <SpotsIndexItem spot={spot} key={spot.id} />
-                })}
+                })};
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default SpotsIndex
+export default SpotsIndex;
