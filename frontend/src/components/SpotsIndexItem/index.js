@@ -7,13 +7,13 @@ const SpotsIndexItem = ({ spot, currentSpots }) => {
     const history = useHistory();
     const [spotImageIndex, setSpotImageIndex] = useState(0);
 
-    if (spot.avgRating) { spot.avgRating = parseInt(spot.avgRating).toFixed(2) }
+    if (spot.avgRating) { spot.avgRating = parseInt(spot.avgRating).toFixed(2) };
 
     const handleUpdate = () => {
-        history.push(`/spots/${spot.id}/edit`)
+        history.push(`/spots/${spot.id}/edit`);
     };
     const linkDetailsPage = () => {
-        history.push(`/spots/${spot.id}`)
+        history.push(`/spots/${spot.id}`);
     };
 
     return (
@@ -58,9 +58,9 @@ const SpotsIndexItem = ({ spot, currentSpots }) => {
                         modalComponent={<DeleteSpotModal spot={spot} />}
                     />
                 </div>
-            )}
+            )};
         </div>
-    )
-}
+    );
+};
 
 export default SpotsIndexItem;
