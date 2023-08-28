@@ -37,7 +37,7 @@ function Root() {
       </ReduxProvider>
     </ModalProvider>
   );
-}
+};
 
 ReactDOM.render(
   <React.StrictMode>
