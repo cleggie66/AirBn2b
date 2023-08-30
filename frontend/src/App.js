@@ -29,10 +29,10 @@ function App() {
           <Route path="/spots/:spotId/edit" component={UpdateSpotForm} />
           <Route path="/spots/:spotId" component={ShowSpot} />
         </Switch> 
-      )}
+      )};
       <Footer />
     </>
   );
-}
+};
 
 export default App;
