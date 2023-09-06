@@ -166,7 +166,7 @@ const ShowSpot = () => {
                         <div className='hosted-by'>
                             <h2>{`Hosted By ${spot.Owner.firstName} ${spot.Owner.lastName}`}</h2>
                             <div className="host-image-container">
-                                <img src="https://media.licdn.com/dms/image/D4D03AQEwK3F1BwbR2Q/profile-displayphoto-shrink_800_800/0/1670391241454?e=1691020800&v=beta&t=6pMbmMLu5uaDLBXfr-JQqc-7f8ugrGWIzZ5znmpHWgM" alt="caleb" />
+                                <img src="https://drive.google.com/uc?export=view&id=1sBi1cZjzbQKV-4_xHTJf12culI1c-Abz" alt="caleb" />
                             </div>
                         </div>
                         <hr className='line-break' />
