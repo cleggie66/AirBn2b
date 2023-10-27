@@ -19,8 +19,24 @@
     align-items: center;
     flex-direction: row;
     padding-right: 2em;
-    gap: 2em;
+    gap: 10px;
     list-style-type: none
+}
+
+.new-spot-link {
+    padding: 15px;
+    border-radius: 100px;
+    transition: all 0.3s ease-in-out;
+}
+
+.new-spot-link:hover {
+    background-color: #20507223;
+}
+
+.new-spot-link>a {
+    color: var(--green);
+    font-weight: 900;
+    text-decoration: none;
 }
 
 .logo {
@@ -35,34 +51,40 @@
     width: 90px;
     background-color: white;
     border: solid;
-    border-color: rgb(113, 113, 113);
-    border-width: 1px;
+    border-color: var(--dark-blue);
+    border-width: 2px;
     border-radius: 30px;
     gap: 10px;
     cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.profile-button:hover {
+    background-color: #20507223;
 }
 
 .fa-solid.fa-bars {
-    color: rgb(113, 113, 113);
+    color: var(--dark-blue);
     font-size: 20px;
 }
 
 .fas.fa-user-circle {
-    color: rgb(113, 113, 113);
+    color: var(--dark-blue);
     font-size: 30px;
 }
 
 .profile-dropdown {
+    min-width: 150px;
     width: auto;
     background-color: white;
     position: absolute;
     z-index: 1;
-    top: 70px;
+    top: 75px;
     right: 30px;
     padding: 20px;
     border: solid;
-    border-color: rgb(113, 113, 113);
-    border-width: 1px;
+    border-color: var(--dark-blue);
+    border-width: 2px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -71,7 +93,7 @@
 }
 
 .profile-dropdown-divider {
-    width: 100px;
+    width: 100%;
     margin: 5px;
 }
 
@@ -79,14 +101,26 @@
     width: 80px;
     height: 30px;
     color: white;
-    background-color: #205072;
+    background-color: var(--dark-blue);
+    border-radius: 5px;
 }
-.signup-login-button {
-    width: 120px;
+
+.profile-login-button {
+    width: 150px;
     height: 30px;
     color: white;
-    background-color: #205072;
+    background-color: var(--dark-blue);
     margin: 5px;
+    border-radius: 5px;
+}
+
+.profile-signup-button {
+    width: 150px;
+    height: 30px;
+    color: white;
+    background-color: var(--green);
+    margin: 5px;
+    border-radius: 5px;
 }
 
 .hidden {

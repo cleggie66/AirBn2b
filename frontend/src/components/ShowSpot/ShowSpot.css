@@ -155,7 +155,7 @@
     width: 300px;
     height: 50px;
     color: white;
-    background-color: #205072;
+    background-color: var(--dark-blue);
     border-radius: 5px;
     margin-top: 10px;
     transition: all .3s ease-in-out;
@@ -165,14 +165,14 @@
     width: 300px;
     height: 50px;
     color: white;
-    background-color: rgb(42, 109, 42);
+    background-color: var(--green);
     border-radius: 5px;
     margin-top: 10px;
     transition: all .3s ease-in-out;
 }
 
 .reserve-button:hover {
-    background-color: #2e6f9d;
+    background-color: var(--light-blue);
 }
 
 .line-break {
@@ -195,7 +195,7 @@
     padding: 10px;
     margin: 10px 0;
     color: white;
-    background-color: #205072;
+    background-color: var(--dark-blue);
     border-radius: 5px;
 }
 
@@ -212,7 +212,7 @@
     height: 25px;
     margin: 10px 0 10px 0;
     color: white;
-    background-color: #205072;
+    background-color: var(--dark-blue);
 }
 
 

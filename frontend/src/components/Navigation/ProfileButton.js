@@ -63,7 +63,7 @@ function ProfileButton({ user }) {
                     <h4 onClick={() => setShowMenu(false)}>
                         <OpenModalButton
                             buttonText="Log In"
-                            className="signup-login-button"
+                            className="profile-login-button"
                             modalComponent={<LoginFormModal
                             />}
                         />
@@ -71,7 +71,7 @@ function ProfileButton({ user }) {
                     <h4 onClick={() => setShowMenu(false)}>
                         <OpenModalButton
                             buttonText="Sign Up"
-                            className="signup-login-button"
+                            className="profile-signup-button"
                             modalComponent={<SignupFormModal />}
                         />
                     </h4>
