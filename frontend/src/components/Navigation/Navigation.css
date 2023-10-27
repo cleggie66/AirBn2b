@@ -39,7 +39,13 @@
     text-decoration: none;
 }
 
-.logo {
+.logo-full {
+    display: block;
+    height: 3em;
+}
+
+.logo-mini {
+    display: none;
     height: 3em;
 }
 
@@ -125,4 +131,35 @@
 
 .hidden {
     display: none
+}
+
+/* iPad Pro and Small Screens */
+@media (max-width: 1024px) {}
+
+/* iPads and Tablets */
+@media (max-width: 768px) {}
+
+/* iPhones and Phones */
+@media (max-width: 480px) {
+
+    .logo-full {
+        display: none;
+    }
+
+    .logo-mini {
+        display: block;
+    }
+
+    .nav-bar {
+        gap: 0;
+        width: 100%;
+    }
+
+    .left-nav {
+        padding-left: 1em;
+    }
+
+    .right-nav {
+        padding-right: 1em;
+    }
 }

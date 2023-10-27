@@ -6,15 +6,15 @@ function Footer() {
     return (
         <div className='footer'>
             <p>Copyright © 2023 Caleb Cleghorn</p>
-            <p>•</p>
+            <h4>•</h4>
             <p>All rights reserved</p>
-            <p>•</p>
+            <h4>•</h4>
             <OpenModalButton
                 className={"about-link"}
                 buttonText="About"
                 modalComponent={<AboutModal/>}
             />
-            <p>•</p>
+            <h4>•</h4>
             <div className='footer-icons'>
                 <a href="https://caleb-cleghorn.onrender.com/" target="_blank" rel="noopener noreferrer">
                     <i className="fa-solid fa-globe"></i>

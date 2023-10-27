@@ -94,3 +94,21 @@
     color: #666666;
     background-color: #cccccc;
 }
+
+/* iPad Pro and Small Screens */
+@media (max-width: 1024px) {}
+
+/* iPads and Tablets */
+@media (max-width: 768px) {}
+
+/* iPhones and Phones */
+@media (max-width: 480px) {
+    .create-spot-form {
+        width: 90%;
+    }
+
+    .dual-input {
+        width: 100%;
+    }
+
+}
