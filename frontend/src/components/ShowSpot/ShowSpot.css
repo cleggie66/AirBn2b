@@ -191,11 +191,11 @@
 }
 
 .post-review-button {
-    width: 150px;
-    height: 30px;
+    padding: 10px;
     margin: 10px 0;
     color: white;
     background-color: #205072;
+    border-radius: 5px;
 }
 
 .review {

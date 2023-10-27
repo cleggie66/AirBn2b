@@ -266,16 +266,22 @@ const ShowSpot = () => {
                             </>
                         )}
                     </div>
-                    {!disabled && (
+                    {sessionUser && sessionUser.id !== spot.ownerId && !isReviewed && (
                         <OpenModalButton
                             className="post-review-button"
-                            disabled={disabled}
                             buttonText="Post Your Review"
                             modalComponent={<AddReviewModal spot={spot} />}
                         />
                     )}
+                    {!sessionUser && (
+                        <OpenModalButton
+                            className="post-review-button"
+                            buttonText="Log In to Post a Review"
+                            modalComponent={<LoginFormModal />}
+                        />
+                    )}
                     {(!spotReviews.length && sessionUser?.id !== spot.ownerId && (
-                        <h2>Be the first to post a review!</h2>
+                        <h3>Be the first to post a review!</h3>
                     ))}
                     {spotReviews.map((review) => {
                         return (
