@@ -139,7 +139,34 @@
     width: 80px;
     height: 25px;
     color: white;
-    background-color: #205072;
+    background-color: var(--dark-blue);
     border-radius: 5px;
     margin-top: 20px;
+}
+
+/* iPad Pro and Small Screens */
+@media (max-width: 1024px) {}
+
+/* iPads and Tablets */
+@media (max-width: 768px) {}
+
+/* iPhones and Phones */
+@media (max-width: 480px) {
+    .spot-index {
+        width: 300px;
+        padding: 10px 10px;
+    }
+
+    .spots-container {
+        padding: 0 20px;
+    }
+
+    .image-container {
+        width: 300px;
+        height: 300px;
+    }
+
+    .spot-index-details {
+        width: 300px;
+    }
 }

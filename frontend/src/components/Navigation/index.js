@@ -2,6 +2,8 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
+import logoFull from "../../media/logos/AirBn2B-Logo.png";
+import logoMini from "../../media/logos/AirBn2B-Logo-Mini.png";
 import './Navigation.css';
 
 function Navigation({ isLoaded }) {
@@ -12,16 +14,17 @@ function Navigation({ isLoaded }) {
             <ul className='left-nav'>
                 <li className='nav'>
                     <NavLink exact to="/">
-                        <img className='logo' src='https://raw.githubusercontent.com/cleggie66/AA-AirBnb/main/frontend/src/media/logos/AirBn2B-Logo.jpg' alt='logo'></img>
+                        <img className='logo-full' src={logoFull} alt='logo'></img>
+                        <img className='logo-mini' src={logoMini} alt='logo'></img>
                     </NavLink>
                 </li>
             </ul>
             {isLoaded && (
                 <ul className='right-nav'>
                     {sessionUser && (
-                        <li className='nav'>
+                        <div className='new-spot-link'>
                             <NavLink to='/spots/new'>Create a New Spot</NavLink>
-                        </li>
+                        </div>
                     )}
                     <li>
                         <ProfileButton user={sessionUser} />

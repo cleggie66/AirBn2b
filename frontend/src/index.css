@@ -6,6 +6,12 @@
     font-family: 'Manrope', sans-serif;
 }
 
+:root {
+    --green: #55c595;
+    --dark-blue: #215273;
+    --light-blue: #2e6f9d;
+}
+
 button {
     border: none;
     cursor: pointer;

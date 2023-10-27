@@ -11,7 +11,7 @@ const AboutModal = () => {
             </div>
             <div className='about-modal-top'>
                 <div className="profile-image-container">
-                    <img src="https://media.licdn.com/dms/image/D4D03AQEwK3F1BwbR2Q/profile-displayphoto-shrink_800_800/0/1670391241454?e=1691020800&v=beta&t=6pMbmMLu5uaDLBXfr-JQqc-7f8ugrGWIzZ5znmpHWgM" alt="caleb" />
+                    <img src="https://drive.google.com/uc?export=view&id=1sBi1cZjzbQKV-4_xHTJf12culI1c-Abz" alt="caleb" />
                 </div>
                 <p><p className='about-modal-title'>Hey, I'm Caleb!</p> I'm a software engineer that can't get enough of fixing issues. My experience in media and live production helped me grasp the art of problem-solving and brought to life my passion for making things work. As a software engineer, I am able to apply what I have learned and carry on my passion for solving the puzzle.</p>
             </div>

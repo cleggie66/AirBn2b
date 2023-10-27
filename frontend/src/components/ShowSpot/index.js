@@ -66,8 +66,8 @@ const ShowSpot = () => {
         let date = new Date(`${today.getMonth() + 1}-${randomDay}-${today.getFullYear()}`);
 
         for (let i = 0; i < 3; i++) {
-            bookedDates.push(new Date(date))
-            date.setDate(date.getDate() + 1)
+            bookedDates.push(new Date(date));
+            date.setDate(date.getDate() + 1);
         }
 
         setUnavailableDates(bookedDates);
@@ -79,7 +79,7 @@ const ShowSpot = () => {
         for (let i = 0; i < userReviews.length; i++) {
             const review = userReviews[i];
             if (review.spotId === spot.id) boolean = true;
-        }
+        };
         if (boolean) {
             setIsReviewed(true)
         } else {
@@ -94,7 +94,7 @@ const ShowSpot = () => {
                 sessionUser.id !== spot.ownerId &&
                 !isReviewed
             ) ? false : true
-        )
+        );
     }, [sessionUser, spot, isReviewed]);
 
     if (Object.values(spot).length < 1) { return (<h2>Loading...</h2>) };
@@ -131,9 +131,9 @@ const ShowSpot = () => {
 
         setTimeout(() => {
             setButtonClass("reserve-button");
-            setButtonText("Reserve Spot")
+            setButtonText("Reserve Spot");
         }, 3000);
-    }
+    };
 
     return (
         <div className='page'>
@@ -166,7 +166,7 @@ const ShowSpot = () => {
                         <div className='hosted-by'>
                             <h2>{`Hosted By ${spot.Owner.firstName} ${spot.Owner.lastName}`}</h2>
                             <div className="host-image-container">
-                                <img src="https://media.licdn.com/dms/image/D4D03AQEwK3F1BwbR2Q/profile-displayphoto-shrink_800_800/0/1670391241454?e=1691020800&v=beta&t=6pMbmMLu5uaDLBXfr-JQqc-7f8ugrGWIzZ5znmpHWgM" alt="caleb" />
+                                <img src="https://drive.google.com/uc?export=view&id=1sBi1cZjzbQKV-4_xHTJf12culI1c-Abz" alt="caleb" />
                             </div>
                         </div>
                         <hr className='line-break' />
@@ -212,12 +212,12 @@ const ShowSpot = () => {
                                         <h4>•</h4>
                                         <h4>{`${spot.numReviews} ${(spot.numReviews === 1) ? "review" : "reviews"}`}</h4>
                                     </>
-                                )};
+                                )}
                                 {!spot.avgRating && (
                                     <>
                                         <h4>New</h4>
                                     </>
-                                )};
+                                )}
                             </div>
                         </div>
                         <DatePicker
@@ -232,21 +232,21 @@ const ShowSpot = () => {
                         />
                         {Object.values(errors).length !== 0 && (
                             <li className='error'>{errors.booking}</li>
-                        )};
+                        )}
                         {!sessionUser && (
                             <OpenModalButton
                                 buttonText="Log in to book spot"
                                 className="reserve-button"
                                 modalComponent={<LoginFormModal />}
                             />
-                        )};
+                        )}
                         {sessionUser && (
                             <button
                                 onClick={handleSubmit}
                                 className={buttonClass}>
                                 {buttonText}
                             </button>
-                        )};
+                        )}
                     </div>
                 </div>
                 <hr className='line-break' />
@@ -259,24 +259,30 @@ const ShowSpot = () => {
                                 <h2>•</h2>
                                 <h2>{`${spot.numReviews} ${(spot.numReviews === 1) ? "review" : "reviews"}`}</h2>
                             </>
-                        )};
+                        )}
                         {!spot.avgRating && (
                             <>
                                 <h2>New</h2>
                             </>
-                        )};
+                        )}
                     </div>
-                    {!disabled && (
+                    {sessionUser && sessionUser.id !== spot.ownerId && !isReviewed && (
                         <OpenModalButton
                             className="post-review-button"
-                            disabled={disabled}
                             buttonText="Post Your Review"
                             modalComponent={<AddReviewModal spot={spot} />}
                         />
-                    )};
+                    )}
+                    {!sessionUser && (
+                        <OpenModalButton
+                            className="post-review-button"
+                            buttonText="Log In to Post a Review"
+                            modalComponent={<LoginFormModal />}
+                        />
+                    )}
                     {(!spotReviews.length && sessionUser?.id !== spot.ownerId && (
-                        <h2>Be the first to post a review!</h2>
-                    ))};
+                        <h3>Be the first to post a review!</h3>
+                    ))}
                     {spotReviews.map((review) => {
                         return (
                             <div className='review' key={review.id}>
@@ -289,10 +295,10 @@ const ShowSpot = () => {
                                         className="delete-review-button"
                                         modalComponent={<DeleteReviewModal review={review} />}
                                     />
-                                )};
+                                )}
                             </div>
-                        );
-                    })};
+                        )
+                    })}
                 </div>
             </div>
         </div>

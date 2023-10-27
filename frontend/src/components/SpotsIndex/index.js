@@ -20,7 +20,7 @@ const SpotsIndex = () => {
             <div className='spots-container'>
                 {spots.map(spot => {
                     return <SpotsIndexItem spot={spot} key={spot.id} />
-                })};
+                })}
             </div>
         </div>
     );

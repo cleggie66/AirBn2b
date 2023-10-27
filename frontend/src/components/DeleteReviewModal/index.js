@@ -34,7 +34,7 @@ const DeleteReviewModal = ({ review }) => {
                 No (Keep Review)
             </button>
         </div>
-    )
-}
+    );
+};
 
 export default DeleteReviewModal;

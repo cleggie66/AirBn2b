@@ -32,7 +32,7 @@ const DeleteSpotModal = ({ spot }) => {
                 No (Keep Spot)
             </button>
         </div>
-    )
+    );
 };
 
 export default DeleteSpotModal;

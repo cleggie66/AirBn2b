@@ -16,12 +16,10 @@ const UpdateSpotForm = () => {
     const spot = spotState[spotId];
 
     if (spot && Object.values(spot).length < 1) {
-        return (<h2>Loading...</h2>);
+        return <h2>Loading...</h2>
     };
 
-    return (
-        <SpotForm spot={spot} formType="Update Spot" />
-    );
+    return <SpotForm spot={spot} formType="Update Spot" />
 };
 
 export default UpdateSpotForm;

@@ -21,7 +21,7 @@
     font-size: 14px;
     text-decoration: none;
 
-    background-color: #205072;
+    background-color: var(--dark-blue);
     display: flex;
     justify-content: center;
     align-items: center;

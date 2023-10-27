@@ -34,3 +34,24 @@
 .footer-icons>a>i:hover {
     color: #d0d0d0;
 }
+
+/* iPad Pro and Small Screens */
+@media (max-width: 1024px) {}
+
+/* iPads and Tablets */
+@media (max-width: 768px) {}
+
+/* iPhones and Phones */
+@media (max-width: 480px) {
+    .footer {
+        padding: 0 20px;
+    }
+
+    .footer-icons {
+        display: none;
+    }
+
+    .footer>h4 {
+        display: none;
+    }
+}
