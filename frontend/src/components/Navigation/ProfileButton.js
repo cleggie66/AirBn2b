@@ -76,7 +76,7 @@ function ProfileButton({ user }) {
                         />
                     </h4>
                 </div>
-            )};
+            )}
         </>
     );
 };

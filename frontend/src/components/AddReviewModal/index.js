@@ -48,7 +48,7 @@ const AddReviewModal = ({ spot }) => {
                 onClick={() => setRating(num)}
             >
             </i>
-        )
+        );
     };
 
 

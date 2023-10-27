@@ -49,7 +49,7 @@ function SignupFormModal() {
                 <ul>
                     {errors.map((error, idx) => <li className="error" key={idx}>{error}</li>)}
                 </ul>
-            )};
+            )}
             <h2>Sign Up</h2>
             <label>
                 Email:

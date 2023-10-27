@@ -58,7 +58,7 @@ const SpotsIndexItem = ({ spot, currentSpots }) => {
                         modalComponent={<DeleteSpotModal spot={spot} />}
                     />
                 </div>
-            )};
+            )}
         </div>
     );
 };

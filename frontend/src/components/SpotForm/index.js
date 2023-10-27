@@ -92,7 +92,7 @@ const SpotForm = ({ spot, formType }) => {
                         onChange={(e) => setCountry(e.target.value)}
                     />
                 </span>
-                {errors.country && (<li className='error'>{errors.country}</li>)};
+                {errors.country && (<li className='error'>{errors.country}</li>)}
                 <label>
                     Street Address:
                 </label>
@@ -104,7 +104,7 @@ const SpotForm = ({ spot, formType }) => {
                         onChange={(e) => setAddress(e.target.value)}
                     />
                 </span>
-                {errors.address && (<li className='error'>{errors.address}</li>)};
+                {errors.address && (<li className='error'>{errors.address}</li>)}
                 <div className='dual-input'>
                     <div className='city-input'>
                         <label>
@@ -116,7 +116,7 @@ const SpotForm = ({ spot, formType }) => {
                             placeholder="City"
                             onChange={(e) => setCity(e.target.value)}
                         />
-                        {errors.city && (<li className='error'>{errors.city}</li>)};
+                        {errors.city && (<li className='error'>{errors.city}</li>)}
                     </div>
                     <h3>,</h3>
                     <div className='state-input'>
@@ -129,7 +129,7 @@ const SpotForm = ({ spot, formType }) => {
                             placeholder="STATE"
                             onChange={(e) => setState(e.target.value)}
                         />
-                        {errors.state && (<li className='error'>{errors.state}</li>)};
+                        {errors.state && (<li className='error'>{errors.state}</li>)}
                     </div>
                 </div>
                 <hr className='spot-form-divider' />
@@ -144,7 +144,7 @@ const SpotForm = ({ spot, formType }) => {
                     placeholder="Please write at least 30 characters"
                     onChange={(e) => setDescription(e.target.value)}
                 />
-                {errors.description && (<li className='error'>{errors.description}</li>)};
+                {errors.description && (<li className='error'>{errors.description}</li>)}
                 <hr className='spot-form-divider' />
                 <h3>Create a title for your spot</h3>
                 <p>
@@ -159,7 +159,7 @@ const SpotForm = ({ spot, formType }) => {
                         onChange={(e) => setName(e.target.value)}
                     />
                 </span>
-                {errors.name && (<li className='error'>{errors.name}</li>)};
+                {errors.name && (<li className='error'>{errors.name}</li>)}
                 <hr className='spot-form-divider' />
                 <h3>Set a base price for your spot</h3>
                 <p>
@@ -177,7 +177,7 @@ const SpotForm = ({ spot, formType }) => {
                         />
                     </span>
                 </div>
-                {errors.price && (<li className='error'>{errors.price}</li>)};
+                {errors.price && (<li className='error'>{errors.price}</li>)}
                 <hr className='spot-form-divider' />
                 {formType === 'Create Spot' && (
                     <>
@@ -224,7 +224,7 @@ const SpotForm = ({ spot, formType }) => {
                             alt="spot preview test"
                             style={{ "display": "none" }}
                         />
-                        {errors.photo2 && (<li className='error'>{errors.photo2}</li>)};
+                        {errors.photo2 && (<li className='error'>{errors.photo2}</li>)}
                         <span>
                             <input
                                 type="text"
@@ -244,7 +244,7 @@ const SpotForm = ({ spot, formType }) => {
                             alt="spot preview test"
                             style={{ "display": "none" }}
                         />
-                        {errors.photo3 && (<li className='error'>{errors.photo3}</li>)};
+                        {errors.photo3 && (<li className='error'>{errors.photo3}</li>)}
                         <span>
                             <input
                                 type="text"
@@ -264,7 +264,7 @@ const SpotForm = ({ spot, formType }) => {
                             alt="spot preview test"
                             style={{ "display": "none" }}
                         />
-                        {errors.photo4 && (<li className='error'>{errors.photo4}</li>)};
+                        {errors.photo4 && (<li className='error'>{errors.photo4}</li>)}
                         <span>
                             <input
                                 type="text"

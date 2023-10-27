@@ -38,7 +38,7 @@ const CurrentSpotsIndex = () => {
 
             )}
         </div>
-    )
+    );
 };
 
 export default CurrentSpotsIndex;
